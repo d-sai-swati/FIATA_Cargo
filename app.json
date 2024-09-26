@@ -1,45 +1,56 @@
 {
-  "expo": {
-    "name": "FIATA-Cargo",
-    "slug": "FIATA-Cargo",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "permissions": [
-        "WRITE_EXTERNAL_STORAGE",
-        "READ_EXTERNAL_STORAGE"
-      ],
-      "package": "com.anonymous.FIATACargo"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "plugins": [
-      [
-        "expo-font",
-        {
-          "fonts": [
-            "./src/assets/fonts/Arial.ttf",
-            "./src/assets/fonts/Quiet.otf",
-            "./src/assets/fonts/Lato.ttf",
-            "./src/assets/fonts/Calibri.ttf"
-          ]
-        }
-      ]
-    ]
-  }
+    "expo": {
+        "name": "FIATA-Cargo",
+        "slug": "FIATA-Cargo",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/images/Company-logo.png",
+        "userInterfaceStyle": "light",
+        "splash": {
+            "image": "./assets/splash.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#ffffff"
+        },
+        "ios": {
+            "supportsTablet": true
+        },
+        "android": {
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/adaptive-icon.png",
+                "backgroundColor": "#ffffff"
+            },
+            "permissions": [
+                "WRITE_EXTERNAL_STORAGE",
+                "READ_EXTERNAL_STORAGE"
+            ],
+            "package": "com.anonymous.FIATACargo"
+        },
+        "web": {
+            "favicon": "./assets/favicon.png"
+        },
+        "plugins": [
+            [
+                "expo-font",
+                {
+                    "fonts": [
+                        "./assets/fonts/Arial_Black.ttf",
+                        "./assets/fonts/Calibri_Bold.ttf",
+                        "./assets/fonts/Calibri_Light.ttf",
+                        "./assets/fonts/Calibri_Regular.ttf",
+                        "./assets/fonts/Lato_Black.ttf",
+                        "./assets/fonts/Lato_Bold.ttf",
+                        "./assets/fonts/Lato_Light.ttf",
+                        "./assets/fonts/Lato_Regular.ttf",
+                        "./assets/fonts/Lato_Thin.ttf",
+                        "./assets/fonts/Quiet_Bold.ttf",
+                        "./assets/fonts/Quiet_ExtraBold.ttf",
+                        "./assets/fonts/Quiet_ExtraLight.ttf",
+                        "./assets/fonts/Quiet_Light.ttf",
+                        "./assets/fonts/Quiet_SemiBolds.ttf",
+                        "./assets/fonts/Quiet_Regular.ttf"
+                    ]
+                }
+            ]
+        ]
+    }
 }

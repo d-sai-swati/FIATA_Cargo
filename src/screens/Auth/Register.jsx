@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Image, ScrollView, Alert, Modal, FlatList, ActivityIndicator } from 'react-native';
 import { Hp } from '../../utils/constants/themes';
-import { Ionicons } from 'react-native-vector-icons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import axiosInstance from '../../utils/axiosInstance';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ArrowDown2 } from 'iconsax-react-native';
@@ -53,11 +53,11 @@ export default function RegisterScreen({ navigation }) {
                 Alert.alert('Registration failed');
             }
 
-        }catch (error) {
+        } catch (error) {
             if (error.response && error.response.data && error.response.data.errors) {
                 setErrors(error.response.data.errors);
             }
-        }finally {
+        } finally {
             setLoading(false);
         }
 
@@ -288,36 +288,36 @@ export default function RegisterScreen({ navigation }) {
                 </Text>
             </View>
             <Modal
-        animationType="slide"
-        transparent={true}
-        visible={otpModalVisible}
-        onRequestClose={() => {
-            setOtpModalVisible(!otpModalVisible);
-        }}>
-        <View className="p-5 flex-1 justify-center items-center" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-            <View className="bg-white p-5 w-full rounded-lg">
-                <Text className="text-center font-bold mb-4">Enter OTP</Text>
-                <Text className="text-center mb-4">Enter Verification Code we sent to your Email</Text>
-                <TextInput
-                    className="border-b border-gray-400 p-2 rounded-md"
-                    placeholder="Enter OTP"
-                    value={otp}
-                    onChangeText={setOtp}
-                    keyboardType="numeric"
-                />
+                animationType="slide"
+                transparent={true}
+                visible={otpModalVisible}
+                onRequestClose={() => {
+                    setOtpModalVisible(!otpModalVisible);
+                }}>
+                <View className="p-5 flex-1 justify-center items-center" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+                    <View className="bg-white p-5 w-full rounded-lg">
+                        <Text className="text-center font-bold mb-4">Enter OTP</Text>
+                        <Text className="text-center mb-4">Enter Verification Code we sent to your Email</Text>
+                        <TextInput
+                            className="border-b border-gray-400 p-2 rounded-md"
+                            placeholder="Enter OTP"
+                            value={otp}
+                            onChangeText={setOtp}
+                            keyboardType="numeric"
+                        />
 
-                <TouchableOpacity onPress={handleVerifyOtp} className="bg-primary py-3 mt-5 rounded-full items-center">
-                    <Text className="text-white font-bold">Verify OTP</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => setOtpModalVisible(false)} className="mt-2">
-                    <Text className="text-center text-red-500">Cancel</Text>
-                </TouchableOpacity>
-                <Text style={{ fontSize: Hp(1.5), marginTop: 10, textAlign: 'center' }}>
-                Didn't receive OTP? <Text className="text-primary">Resend OTP</Text>
-              </Text>
-            </View>
-        </View>
-    </Modal>
+                        <TouchableOpacity onPress={handleVerifyOtp} className="bg-primary py-3 mt-5 rounded-full items-center">
+                            <Text className="text-white font-bold">Verify OTP</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => setOtpModalVisible(false)} className="mt-2">
+                            <Text className="text-center text-red-500">Cancel</Text>
+                        </TouchableOpacity>
+                        <Text style={{ fontSize: Hp(1.5), marginTop: 10, textAlign: 'center' }}>
+                            Didn't receive OTP? <Text className="text-primary">Resend OTP</Text>
+                        </Text>
+                    </View>
+                </View>
+            </Modal>
         </ScrollView>
     );
 }

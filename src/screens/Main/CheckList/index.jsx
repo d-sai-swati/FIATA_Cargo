@@ -32,40 +32,40 @@ const Checklist = ({ navigation }) => {
     const [refresh, setRefresh] = useState(false);
     const [errors, setErrors] = useState({});
     const localImages = {
-        question1: require('../../../assets/images/que1.jpg'),
-        question2: require('../../../assets/images/que2.png'),
-        question3: require('../../../assets/images/que3.png'),
-        question4: require('../../../assets/images/que4-1.png'),
-        question5: require('../../../assets/images/que5.png'),
-        question6: require('../../../assets/images/que6.png'),
-        question7: require('../../../assets/images/que7.png'),
-        question8: require('../../../assets/images/que8.jpeg'),
-        question9: require('../../../assets/images/que9.png'),
-        question10: require('../../../assets/images/que10.png'),
-        question11: require('../../../assets/images/que11.png'),
-        question12: require('../../../assets/images/que12.jpg'),
-        question13: require('../../../assets/images/que13.jpg'),
-        question14: require('../../../assets/images/que14.webp'),
-        question15: require('../../../assets/images/que15.jpg'),
-        question16: require('../../../assets/images/que16.jpg'),
-        question17: require('../../../assets/images/que17.webp'),
-        question18: require('../../../assets/images/que18.webp'),
-        question19: require('../../../assets/images/que19.png'),
-        question20: require('../../../assets/images/que20.webp'),
-        question21: require('../../../assets/images/que21.jpg'),
-        question22: require('../../../assets/images/que22.jpg'),
-        question23: require('../../../assets/images/que23.jpg'),
-        question24: require('../../../assets/images/que24.jpg'),
-        question25: require('../../../assets/images/que25.jpeg'),
-        question26: require('../../../assets/images/que26.png'),
-        question27: require('../../../assets/images/que13.jpg'),
-        question28: require('../../../assets/images/que28.jpg'),
-        question29: require('../../../assets/images/que29.jpeg'),
-        question30: require('../../../assets/images/que30.png'),
-        question31: require('../../../assets/images/que31.webp'),
-        question32: require('../../../assets/images/que32.jpg'),
-        question33: require('../../../assets/images/que33.jpeg'),
-        question34: require('../../../assets/images/que34.webp')
+        question1: require('../../../../assets/images/que1.jpg'),
+        question2: require('../../../../assets/images/que2.png'),
+        question3: require('../../../../assets/images/que3.png'),
+        question4: require('../../../../assets/images/que4-1.png'),
+        question5: require('../../../../assets/images/que5.png'),
+        question6: require('../../../../assets/images/que6.png'),
+        question7: require('../../../../assets/images/que7.png'),
+        question8: require('../../../../assets/images/que8.jpeg'),
+        question9: require('../../../../assets/images/que9.png'),
+        question10: require('../../../../assets/images/que10.png'),
+        question11: require('../../../../assets/images/que11.png'),
+        question12: require('../../../../assets/images/que12.jpg'),
+        question13: require('../../../../assets/images/que13.jpg'),
+        question14: require('../../../../assets/images/que14.webp'),
+        question15: require('../../../../assets/images/que15.jpg'),
+        question16: require('../../../../assets/images/que16.jpg'),
+        question17: require('../../../../assets/images/que17.webp'),
+        question18: require('../../../../assets/images/que18.webp'),
+        question19: require('../../../../assets/images/que19.png'),
+        question20: require('../../../../assets/images/que20.webp'),
+        question21: require('../../../../assets/images/que21.jpg'),
+        question22: require('../../../../assets/images/que22.jpg'),
+        question23: require('../../../../assets/images/que23.jpg'),
+        question24: require('../../../../assets/images/que24.jpg'),
+        question25: require('../../../../assets/images/que25.jpeg'),
+        question26: require('../../../../assets/images/que26.png'),
+        question27: require('../../../../assets/images/que13.jpg'),
+        question28: require('../../../../assets/images/que28.jpg'),
+        question29: require('../../../../assets/images/que29.jpeg'),
+        question30: require('../../../../assets/images/que30.png'),
+        question31: require('../../../../assets/images/que31.webp'),
+        question32: require('../../../../assets/images/que32.jpg'),
+        question33: require('../../../../assets/images/que33.jpeg'),
+        question34: require('../../../../assets/images/que34.webp')
     }
     const goBackToContainerDetails = () => {
         setIsChecklist(false);
@@ -301,7 +301,7 @@ const Checklist = ({ navigation }) => {
                                 <View className="flex-row justify-around p-4">
                                     {question.options.map((option, i) => (
                                         <TouchableOpacity key={i} className="flex-row items-center mr-4" onPress={() => handleInputChange(option, index)}>
-                                            <Image source={answers[index] === option ? require('../../../assets/icons/Checkbox.png') : require('../../../assets/icons/UnCheckbox.png')} className="w-4 h-4" />
+                                            <Image source={answers[index] === option ? require('../../../../assets/icons/Checkbox.png') : require('../../../../assets/icons/UnCheckbox.png')} className="w-4 h-4" />
                                             <Text className="ml-2">{option}</Text>
                                         </TouchableOpacity>
                                     ))}

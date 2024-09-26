@@ -5,13 +5,13 @@ import { Hp } from '../../utils/constants/themes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const languages = [
-    { label: 'English', value: 'en', flag: require('../../assets/icons/English.png') },
-    { label: 'Russian', value: 'ru', flag: require('../../assets/icons/Russia.png') },
-    { label: 'French', value: 'fr', flag: require('../../assets/icons/France.png') },
-    { label: 'Chinese', value: 'zh', flag: require('../../assets/icons/China.png') },
-    { label: 'Italian', value: 'it', flag: require('../../assets/icons/Italy.png') },
-    { label: 'Spanish', value: 'es', flag: require('../../assets/icons/Spanish.png') },
-    { label: 'Arabic', value: 'ar', flag: require('../../assets/icons/Arabic.png') },
+    { label: 'English', value: 'en', flag: require('../../../assets/icons/English.png') },
+    { label: 'Russian', value: 'ru', flag: require('../../../assets/icons/Russia.png') },
+    { label: 'French', value: 'fr', flag: require('../../../assets/icons/France.png') },
+    { label: 'Chinese', value: 'zh', flag: require('../../../assets/icons/China.png') },
+    { label: 'Italian', value: 'it', flag: require('../../../assets/icons/Italy.png') },
+    { label: 'Spanish', value: 'es', flag: require('../../../assets/icons/Spanish.png') },
+    { label: 'Arabic', value: 'ar', flag: require('../../../assets/icons/Arabic.png') },
 ];
 
 const SelectLanguage = ({ defaultLanguageValue = "en", onSelect }) => {
@@ -25,7 +25,7 @@ const SelectLanguage = ({ defaultLanguageValue = "en", onSelect }) => {
         onSelect(language);
     };
 
- return (
+    return (
         <View className="relative bg-[#E9F3FF] py-2 px-1 rounded-lg">
             <TouchableOpacity
                 className="flex-row items-center justify-between"

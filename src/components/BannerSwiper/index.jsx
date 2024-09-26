@@ -5,22 +5,22 @@ import { Hp } from '../../utils/constants/themes';
 
 const banners = [
     {
-        image: require('../../assets/images/Banner-1.png'),
+        image: require('../../../assets/images/Banner-1.png'),
         title: "DELIVERING VALUES TO YOUR BUSINESS",
         subtitle: "SOLUTIONS TO MANAGE YOUR BUSINESS"
     },
     {
-        image: require('../../assets/images/Banner-2.png'),
+        image: require('../../../assets/images/Banner-2.png'),
         title: "DELIVERING VALUES TO YOUR BUSINESS",
         subtitle: "SOLUTIONS TO MANAGE YOUR BUSINESS"
     },
     {
-        image: require('../../assets/images/Banner-1.png'),
+        image: require('../../../assets/images/Banner-1.png'),
         title: "DELIVERING VALUES TO YOUR BUSINESS",
         subtitle: "SOLUTIONS TO MANAGE YOUR BUSINESS"
     },
     {
-        image: require('../../assets/images/Banner-2.png'),
+        image: require('../../../assets/images/Banner-2.png'),
         title: "DELIVERING VALUES TO YOUR BUSINESS",
         subtitle: "SOLUTIONS TO MANAGE YOUR BUSINESS"
     }
@@ -58,4 +58,3 @@ const BannerSwiper = () => {
 };
 
 export default BannerSwiper;
-

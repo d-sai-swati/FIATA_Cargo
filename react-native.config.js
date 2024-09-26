@@ -1,7 +1,7 @@
 module.exports = {
     project: {
-        iso: {},
+        ios: {},
         android: {}
     },
-    assets: ["./src/assets/fonts"]
-}
+    assets: ["./assets/fonts"]
+};
