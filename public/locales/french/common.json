@@ -1,0 +1,332 @@
+{
+  "companyName": "Fédération internationale des associations de transitaires",
+  "companyDescription": "La voix mondiale de la logistique du fret",
+  "2024_FIATA": "CONGRÈS MONDIAL FIATA (FWC) 2024",
+  "2024_FIATA_Description": "Le Congrès mondial FIATA (FWC) 2024 est un rassemblement annuel majeur qui rassemble des professionnels de premier plan, des leaders d'opinion, des experts et des innovateurs des secteurs de la logistique, du transport et du fret.",
+  "containerHeading": "LISTE DE CONTRÔLE D'EMBALLAGE DU CONTENEUR",
+  "containerTitle": "Une liste de contrôle pour l'emballage sûr et la prévention de la contamination parasitaire des conteneurs de fret1.",
+  "containerDescription": "Instructions : Enregistrez les détails du conteneur à emballer et complétez la liste de contrôle ci-dessous. Si l’une des réponses est « NON », arrêtez d’emballer et assurez-vous que des mesures correctives sont prises. En attendant, NE PAS expédier le conteneur. Conservez la liste de contrôle pour chaque conteneur à la fin de l'emballage.",
+  "container_number": "Numéro de conteneur",
+  "date": "Date",
+  "packing_address": "Adresse d'emballage",
+  "responsible_person": "Personne responsable",
+  "status": "Statut",
+  "questions": [
+    {
+      "question": "Le type de conteneur est-il approprié à la cargaison ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question1"
+    },
+    {
+      "question": "La position du conteneur permet d’y accéder en toute sécurité ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question2"
+    },
+    {
+      "question": "Les précautions requises ont-elles été prises afin d’éviter l’infestation pardes organismes nuisibles ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question3"
+    },
+    {
+      "question": "Un plan d’empotage a-t-il été préparé afin de prévoir la configuration des marchandises dans le conteneur ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question4"
+    },
+    {
+      "question": "Les limites de charge utile maximum du conteneur sont-elles suffisantes pour la masse de la cargaison prévue ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question5"
+    },
+    {
+      "question": "Les palettes, fardages et autres éléments d’arrimage en bois, ainsi que leurs marques d’identification sont-ils conformes aux normes ISPM-15 ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question6"
+    },
+    {
+      "question": "Le personnel responsable du chargement a-t-il été formé aux pratiques de chargement sécurité et de prévention des infestations ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question7"
+    },
+    {
+      "question": "Avez-vous pu constater l’absence de terre ou autres signes d’infestation à l’extérieur du conteneur ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question8"
+    },
+    {
+      "question": "L’extérieur du conteneur est-il en bon état, sans déformation ni fissuration ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question9"
+    },
+    {
+      "question": "Le conteneur est-il équipé d’une plaque d’homologation (CSC) valide ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question10"
+    },
+    {
+      "question": "Avez-vous pu constater l’absence de signes de dégât, d’entrée d’eau, de rouille, de résidus ou de tâches à l’intérieur du conteneur ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question11"
+    },
+    {
+      "question": "Avez-vous pu constater l’absence de terre ou autres signes d’infestation à l’intérieur du conteneur ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question12"
+    },
+    {
+      "question": "Avez-vous pu constater l’absence de terre ou d’autres signes d’infestation sur la cargaison ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question13"
+    },
+    {
+      "question": "Les cargaisons les plus lourdes ont-elles été positionnées en bas du conteneur, et les cargaisons les plus légères gerbées dessus ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question14"
+    },
+    {
+      "question": "La cargaison est-elle distribuée de manière équilibrée sur la surface du conteneur ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question15"
+    },
+    {
+      "question": "Le centre de gravité est-il placé au centre du conteneur ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question16"
+    },
+    {
+      "question": "Les différentes cargaisons sont-elles réparties en épaisseurs relativement équilibrées ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question17"
+    },
+    {
+      "question": "Les colis dont l’emballage précisent la direction sont-ils placés dans le bon sens ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question18"
+    },
+    {
+      "question": "La cargaison est-elle immobilisée à l’aide de sangles, de cales et d’autres méthodes d’arrimage afin de l’empêcher de glisser ou de se renverser dans le conteneur ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question19"
+    },
+    {
+      "question": "Les marchandises dangereuses sont-elles correctement identifiées et étiquetées, conformément au Code IMDG ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question20"
+    },
+    {
+      "question": "Les marchandises dangereuses sont-elles correctement emballées et visiblement en bon état ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question21"
+    },
+    {
+      "question": "Si les marchandises dangereuses ne constituent qu’une partie de la cargaison, celles-ci sont-elles placées près de la porte ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question22"
+    },
+    {
+      "question": "Les affiches identifiant le conteneur sont-elles conformes aux recommandations du Code IMDG ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question23"
+    },
+    {
+      "question": "Les espaces vides entre les colis et/ou les parois du conteneur ont-ilstous été remplis ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question24"
+    },
+    {
+      "question": "Les forces d’arrimage et d’étayage sont-elles distribuées à travers une surface suffisante dans le conteneur (le cas échéant, par des poutres d’équilibrage ou des traverses) ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question25"
+    },
+    {
+      "question": "Les sangles sont-elles attachées au conteneur de manière à limiter les tensions sur sa structure ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question26"
+    },
+    {
+      "question": "Avez-vous pu confirmer que l’intérieur et l’extérieur du conteneur ainsi que la cargaison ne présentent pas de signes visibles d’infestations par des organismes nuisibles ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question27"
+    },
+    {
+      "question": "Les portes sont-elles correctement verrouillées et sécurisées ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question28"
+    },
+    {
+      "question": "Les scellés ou étiquettes inviolables requises ont-ils bien été apposés et leurs références ont-elles été enregistrées ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question29"
+    },
+    {
+      "question": "Après chargement, la masse brute vérifiée du conteneur a-t-elle bien été communiquée à l’opérateur, le plus tôt possible ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question30"
+    },
+    {
+      "question": "Après chargement, l’identité du conteneur et la référence des scellés ont-elles bien été communiquées à l’opérateur, le plus tôt possible ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question31"
+    },
+    {
+      "question": "Une description exacte et détaillée de la cargaison (classification incluse) a-t-elle bien été communiquée à l’opérateur, le plus tôt possible ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question32"
+    },
+    {
+      "question": "Le nombre de colis, la nature des marchandises et leur masse (pour les contrôles douaniers) ont-ils bien été communiqués à l’opérateur, le plus tôt possible ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question33"
+    },
+    {
+      "question": "Pour les marchandises dangereuses, la déclaration de l’expéditeur et, le cas échéant, le certificat d’empotage ont-ils bien été communiqués à l’opérateur, le plus tôt possible ?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question34"
+    }
+  ],
+  "sectionTitles": {
+    "packingArea": "Zone de chargement",
+    "containerCondition": "État du conteneur",
+    "packingContainer": "Chargement/Empotage du conteneur",
+    "dangerousGoods": "Marchandises dangereuses",
+    "afterPacking": "Après chargement et avant de fermer les portes du conteneur",
+    "closingContainer": "Fermeture du conteneur",
+    "dispatchingContainer": "Expédition du conteneur"
+  },
+  "submit": "Soumettre"
+}

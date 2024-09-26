@@ -1,0 +1,45 @@
+{
+  "expo": {
+    "name": "FIATA-Cargo",
+    "slug": "FIATA-Cargo",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "WRITE_EXTERNAL_STORAGE",
+        "READ_EXTERNAL_STORAGE"
+      ],
+      "package": "com.anonymous.FIATACargo"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./src/assets/fonts/Arial.ttf",
+            "./src/assets/fonts/Quiet.otf",
+            "./src/assets/fonts/Lato.ttf",
+            "./src/assets/fonts/Calibri.ttf"
+          ]
+        }
+      ]
+    ]
+  }
+}

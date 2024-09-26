@@ -1,0 +1,333 @@
+{
+  "companyName": "International Federation of Freight Forwarders Associations",
+  "companyDescription":"The global voice of freight logistics",
+  "2024_FIATA": "2024 FIATA WORLD CONGRESS (FWC)",
+  "2024_FIATA_Description": "The 2024 FIATA World Congress (FWC) is a major annual gathering that brings together leading professionals, thought leaders, experts, and innovators from the logistics, transportation, and freight industries",
+  "containerHeading": "CONTAINER PACKING CHECKLIST",
+  "containerTitle": "A checklist for the safe packing and avoidance of pest contamination of freight containers1.",
+  "containerDescription": "Instructions: Record the details of the container being packed and complete the checklist below. If ANY of the answers are ‘NO’, stop packing and ensure corrective action is taken. Until that is done, DO NOT dispatch the container. Save the checklist for each container at conclusion of packing",
+  "container_number": "Container Number",
+  "date": "Shipping Date",
+  "packing_address": "Packing Address",
+  "responsible_person": "Responsible Person",
+  "status": "Status",
+  "created": "Create on",
+  "questions": [
+    {
+      "question": "Is the type of container appropriate for the cargo to be carried?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question1"
+    },
+    {
+      "question": "Is the container positioned so that it can be accessed safely?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question2"
+    },
+    {
+      "question": "Have steps been taken to avoid contamination of the packing area by pests?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question3"
+    },
+    {
+      "question": "Has a packing plan been prepared showing the arrangements of goods in the container?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question4"
+    },
+    {
+      "question": "Are the maximum permitted payload limits of the container sufficient for the intended load?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question5"
+    },
+    {
+      "question": "Do all timber pallets, dunnage or other wood packing material meet ISPM-15 standards and show the required markings?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question6"
+    },
+    {
+      "question": "Have staff assigned to pack the container been trained to understand the practices of safe packing and securing and avoidance of pest contamination?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question7"
+    },
+    {
+      "question": "Is the container exterior free from soil or other visible infestation by pests?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question8"
+    },
+    {
+      "question": "Is the container exterior in good condition, and not significantly distorted, cracked or bent?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question9"
+    },
+    {
+      "question": "Does the container have a valid (CSC) Approval Plate?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question10"
+    },
+    {
+      "question": "Is the container interior free from signs of damage, signs of water ingress, rust, residues, stains or debris?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question11"
+    },
+    {
+      "question": "Is the container interior free from soil or other visible infestation by pests?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question12"
+    },
+    {
+      "question": "Is the cargo to be packed free from soil or other visible infestation by pests?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question13"
+    },
+    {
+      "question": "Has the heavier cargo been packed at the bottom of the container with any lighter weight cargo on top?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question14"
+    },
+    {
+      "question": "Is the cargo distributed evenly across the floor of the container to spread the load?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question15"
+    },
+    {
+      "question": "Is the centre of gravity approximately in the centre of the container?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question16"
+    },
+    {
+      "question": "Has the cargo been packed in approximately even layers?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question17"
+    },
+    {
+      "question": "Have packages with package orientation labels been stowed the correct way up?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question18"
+    },
+    {
+      "question": "Has locking, blocking or lashing been used to prevent the cargo from sliding and tipping in the container in any direction?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question19"
+    },
+    {
+      "question": "Are all Dangerous Goods packages marked and labelled in accordance with the IMDG Code?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question20"
+    },
+    {
+      "question": "Are all Dangerous Goods packages undamaged and in sound condition?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question21"
+    },
+    {
+      "question": "Where Dangerous Goods comprise only part of the cargo, are they packed as close to the doors as possible?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question22"
+    },
+    {
+      "question": "Has the container been placarded in accordance with the IMDG Code?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question23"
+    },
+    {
+      "question": "Have all void spaces (gaps) within the cargo stow and/or between the cargo and container structure been filled?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question24"
+    },
+    {
+      "question": "Is the cargo blocking and bracing distributed over a sufficiently large area of the container (e.g. by use of spreader beams)?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question25"
+    },
+    {
+      "question": "Are lashings secured to the container so as not to over-stress its structure?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question26"
+    },
+    {
+      "question": "Are both the interior and the exterior of the container, and its cargo, free of soil, or other visible infestation by pests?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question27"
+    },
+    {
+      "question": "Have the doors of the container been securely closed and latched?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question28"
+    },
+    {
+      "question": "Has a seal been affixed to the container and its number recorded?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question29"
+    },
+    {
+      "question": "For the packed container, has the Verified Gross Mass been communicated to the carrier as early as required by the carrier?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question30"
+    },
+    {
+      "question": "For the packed container, has the identity of the container and the seal number been communicated to the carrier as early as required by the carrier?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question31"
+    },
+    {
+      "question": "For the cargo, has an accurate description (including classification) of the cargo itself and the packaging been communicated to the carrier, as early as required by the carrier?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question32"
+    },
+    {
+      "question": "For the cargo, have the number and types of packages and the cargo mass (for Customs purposes) been communicated to the carrier, as early as required by the carrier?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question33"
+    },
+    {
+      "question": "For Dangerous Goods, has a Shipper’s Declaration and, where required, a Packing Certificate declaration been made and communicated to the carrier as early as required by the carrier?",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question34"
+    }
+  ],
+  "sectionTitles": {
+    "packingArea": "The Packing Area",
+    "containerCondition": "Container Condition",
+    "packingContainer": "Packing the Container",
+    "dangerousGoods": "Dangerous Goods",
+    "afterPacking": "After Packing the Container but Before Closing the Doors",
+    "closingContainer": "Closing the Container",
+    "dispatchingContainer": "Dispatching the Container"
+  },
+  "submit": "Submit"
+}

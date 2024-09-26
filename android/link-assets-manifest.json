@@ -1,0 +1,109 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/Arial/ARIALBD.TTF",
+      "sha1": "03ea55d42903c041b1ff64c2bd593fb7b9d3a843"
+    },
+    {
+      "path": "src/assets/fonts/Arial/ARIALBI.TTF",
+      "sha1": "706d164d403264f8ba313e82efcd6e356b6cee29"
+    },
+    {
+      "path": "src/assets/fonts/Arial/ARIALBLACKITALIC.TTF",
+      "sha1": "e72c3388d2948e3632e5f5beb25fee0928a7d644"
+    },
+    {
+      "path": "src/assets/fonts/Arial/ArialCEBoldItalic.ttf",
+      "sha1": "b40a612ab8031fcbce0361bd049cfd1f60477df0"
+    },
+    {
+      "path": "src/assets/fonts/Arial/ArialCEItalic.ttf",
+      "sha1": "c50f938f2f47428ae712939b53f3f93c29c1403c"
+    },
+    {
+      "path": "src/assets/fonts/Arial/ArialCEMTBlack.ttf",
+      "sha1": "830da1099561ee305c5e5b9b8f74b6e033cc84a7"
+    },
+    {
+      "path": "src/assets/fonts/Arial/ARIALI.TTF",
+      "sha1": "c04eaf9e6eb0b462049309bf670a49a4ed7e6725"
+    },
+    {
+      "path": "src/assets/fonts/Arial/ArialMdm.ttf",
+      "sha1": "f500ce2af19b434fcca06e91ac27747155bf2f91"
+    },
+    {
+      "path": "src/assets/fonts/Arial.ttf",
+      "sha1": "66154062e9902d6664f9855bfc04138e8b0c7c53"
+    },
+    {
+      "path": "src/assets/fonts/Calibri.ttf",
+      "sha1": "52a7651a84943d17eebf42304b4aca0006cfbacf"
+    },
+    {
+      "path": "src/assets/fonts/Lato/Lato-Black.ttf",
+      "sha1": "a001eb827743636e04f8efa7d4aeedf0541c46ac"
+    },
+    {
+      "path": "src/assets/fonts/Lato/Lato-BlackItalic.ttf",
+      "sha1": "b490ec02c69bb74f5b4f487c59e984891c8da71c"
+    },
+    {
+      "path": "src/assets/fonts/Lato/Lato-Bold.ttf",
+      "sha1": "542498221d97bee5bdbccf86ee8890bf8e8005c9"
+    },
+    {
+      "path": "src/assets/fonts/Lato/Lato-BoldItalic.ttf",
+      "sha1": "6bf491e78e16d3b9c8a55752e1bd658e15ed7f19"
+    },
+    {
+      "path": "src/assets/fonts/Lato/Lato-Italic.ttf",
+      "sha1": "190187b720ec2f2ff2e4281237e301000e09673f"
+    },
+    {
+      "path": "src/assets/fonts/Lato/Lato-Light.ttf",
+      "sha1": "ad0d178564445a535b15d417f5b18019923d3bab"
+    },
+    {
+      "path": "src/assets/fonts/Lato/Lato-LightItalic.ttf",
+      "sha1": "34388d9a3b64380c9f08d424d0adaa88a0d1650a"
+    },
+    {
+      "path": "src/assets/fonts/Lato/Lato-Thin.ttf",
+      "sha1": "07290446bee3f81ce501a3c3dbfde6097c70ca15"
+    },
+    {
+      "path": "src/assets/fonts/Lato/Lato-ThinItalic.ttf",
+      "sha1": "ff4a1a9fe2dcc41d993f4c5067a3baa1c456ff97"
+    },
+    {
+      "path": "src/assets/fonts/Lato.ttf",
+      "sha1": "e923c72eda5e50a87e18ff5c71e9ef4b3b6455a3"
+    },
+    {
+      "path": "src/assets/fonts/Quiet/Flatit  Quiet Sans Bold.otf",
+      "sha1": "3cb9d864d0ecc383e0b76975b9ed7e331b898716"
+    },
+    {
+      "path": "src/assets/fonts/Quiet/Flatit  QuietSansExtraBold.otf",
+      "sha1": "8fc57d179bb3f140b3d5a26de5fe181171dd90c8"
+    },
+    {
+      "path": "src/assets/fonts/Quiet/Flatit  QuietSansExtraLight.otf",
+      "sha1": "e2b84f7a112110bc2b7efdcb2bd06d8ebf29feda"
+    },
+    {
+      "path": "src/assets/fonts/Quiet/Flatit  QuietSansLight.otf",
+      "sha1": "d02b90b8161b0a98b88903dcbf6a168a697d8fe5"
+    },
+    {
+      "path": "src/assets/fonts/Quiet/Flatit  QuietSansSemiBold.otf",
+      "sha1": "19afc0f25d7a8b89e383ef38209a3208899e020b"
+    },
+    {
+      "path": "src/assets/fonts/Quiet.otf",
+      "sha1": "75cc149d89a60c410303a75148914ece2bb421ae"
+    }
+  ]
+}

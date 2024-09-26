@@ -1,0 +1,332 @@
+{
+  "companyName": "國際貨運代理協會聯合會",
+  "companyDescription": "貨運物流的全球聲音",
+  "2024_FIATA": "2024 年國際汽聯世界大會 (FWC)",
+  "2024_FIATA_Description": "2024 年 FIATA 世界大會 (FWC) 是一次重要的年度盛會，匯聚了來自物流、運輸和貨運行業的領先專業人士、思想領袖、專家和創新者",
+  "containerHeading": "貨櫃裝箱清單",
+  "containerTitle": "貨運貨櫃安全包裝和避免蟲害污染的檢查表1。",
+  "containerDescription": "說明：記錄正在包裝的容器的詳細資訊並填寫下面的清單。如果任何一個答案為“否”，請停止包裝並確保採取糾正措施。在此之前，請勿發送貨櫃。包裝結束時保存每個貨櫃的清單",
+  "container_number": "貨櫃號",
+  "date": "Date",
+  "packing_address": "裝箱地址",
+  "responsible_person": "負責人",
+  "status": "地位",
+  "questions": [
+    {
+      "question": "貨櫃類型是否適合所運輸的貨物？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+       "image": "question1"
+    },
+    {
+      "question": "容器的位置是否可以安全地存取？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+       "image": "question2"
+    },
+    {
+      "question": "是否已採取措施避免包裝區域受到害蟲污染？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+       "image": "question3"
+    },
+    {
+      "question": "是否已準備好顯示貨櫃內貨物排列的包裝計畫？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+       "image": "question4"
+    },
+    {
+      "question": "貨櫃的最大允許有效負載限制是否足以滿足預期負載？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question5"
+    },
+    {
+      "question": "所有木托盤、墊料或其他木質包裝材料是否符合 ISPM-15 標準並顯示所需的標記",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question6"
+    },
+    {
+      "question": "分配包裝貨櫃的工作人員是否接受過培訓，了解安全包裝、固定和避免害蟲污染的做法？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question7"
+    },
+    {
+      "question": "容器外部是否沒有土壤或其他明顯的害蟲侵擾？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question8"
+    },
+    {
+      "question": "貨櫃外部狀況是否良好，沒有明顯變形、破裂或彎曲？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+       "image": "question9"
+    },
+    {
+      "question": "貨櫃是否有有效的 (CSC) 核准牌照？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question10"
+    },
+    {
+      "question": "容器內部是否沒有損壞跡象、進水跡象、生鏽、殘留物、污漬或碎片？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+       "image": "question11"
+    },
+    {
+      "question": "容器內部是否沒有土壤或其他明顯的害蟲侵擾？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question12"
+    },
+    {
+      "question": "貨物包裝時是否沒有土壤或其他明顯的害蟲侵擾？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+       "image": "question13"
+    },
+    {
+      "question": "較重的貨物是否裝在貨櫃底部，而較輕的貨物則裝在頂部？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question14"
+    },
+    {
+      "question": "貨物是否均勻分佈在貨櫃地板上以分散負載？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question15"
+    },
+    {
+      "question": "重心大約在容器的中心嗎？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question16"
+    },
+    {
+      "question": "貨物是否以大致均勻的層數包裝？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question17"
+    },
+    {
+      "question": "帶有包裝方向標籤的包裝是否以正確的方式存放？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question18"
+    },
+    {
+      "question": "是否使用鎖定、阻擋或綁紮來防止貨物在貨櫃內向任何方向滑動和傾翻？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question19"
+    },
+    {
+      "question": "所有危險品包裝是否均依照 IMDG 規則進行標記和標示？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question20"
+    },
+    {
+      "question": "所有危險物品包裝是否完好無損？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question21"
+    },
+    {
+      "question": "如果危險物品僅佔貨物的一部分，它們是否盡可能靠近門包裝？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question22"
+    },
+    {
+      "question": "貨櫃是否已依照 IMDG 規則進行張貼？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question23"
+    },
+    {
+      "question": "貨物裝載內和/或貨物與貨櫃結構之間的所有空隙（間隙）是否已填充？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question24"
+    },
+    {
+      "question": "貨物阻擋和支撐是否分佈在貨櫃的足夠大的區域上（例如透過使用吊架梁）？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+      "image": "question25"
+    },
+    {
+      "question": "綁紮裝置是否固定在貨櫃上，以免其結構承受過多的壓力？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+       "image": "question26"
+    },
+    {
+      "question": "貨櫃及其貨物的內部和外部是否沒有土壤或其他明顯的害蟲侵擾？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+       "image": "question27"
+    },
+    {
+      "question": "貨櫃門是否已牢固關閉並鎖好？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+       "image": "question28"
+    },
+    {
+      "question": "貨櫃上是否貼有封條並記錄了其編號？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+       "image": "question29"
+    },
+    {
+      "question": "對於包裝好的貨櫃，是否已按照承運人的要求儘早向承運人傳達了驗證總重量？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+       "image": "question30"
+    },
+    {
+      "question": "對於已包裝的貨櫃，貨櫃的身份和封條號碼是否已按照承運人的要求儘早傳達給承運人？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+       "image": "question31"
+    },
+    {
+      "question": "對於已包裝的貨櫃，貨櫃的身份和封條號碼是否已按照承運人的要求儘早傳達給承運人？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+       "image": "question32"
+    },
+    {
+      "question": "對於貨物，是否按照承運人的要求儘早將包裹的數量和類型以及貨物品質（用於海關目的）告知承運人？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+       "image": "question33"
+    },
+    {
+      "question": "對於危險貨物，是否已按照承運人的要求儘早製作並傳達給承運人的托運人聲明以及包裝證書聲明（如果需要）？",
+      "options": [
+        "Yes",
+        "No",
+       "N/A"
+      ],
+       "image": "question34"
+    }
+  ],
+  "sectionTitles": {
+    "packingArea": "包裝區",
+    "containerCondition": "貨櫃狀況",
+    "packingContainer": "包裝容器",
+    "dangerousGoods": "危險品",
+    "afterPacking": "包裝貨櫃後但關門前",
+    "closingContainer": "關閉容器",
+    "dispatchingContainer": "調度貨櫃"
+  },
+  "submit": "提交"
+}

@@ -1,0 +1,332 @@
+{
+    "companyName": "Federación Internacional de Asociaciones de Transitarios",
+  "companyDescription":"La voz global de la logística de mercancías",
+    "2024_FIATA": "CONGRESO MUNDIAL FIATA 2024 (FWC)",
+    "2024_FIATA_Description": "El Congreso Mundial FIATA 2024 (FWC) es una importante reunión anual que reúne a destacados profesionales, líderes de opinión, expertos e innovadores de las industrias de logística, transporte y carga.",
+    "containerHeading": "LISTA DE VERIFICACIÓN DEL EMBALAJE DEL CONTENEDOR",
+    "containerTitle": "Una lista de verificación para el embalaje seguro y la prevención de la contaminación por plagas de los contenedores de carga1.",
+    "containerDescription": "Instrucciones: Registre los detalles del contenedor que se está empacando y complete la lista de verificación a continuación. Si CUALQUIERA de las respuestas es 'NO', deje de empacar y asegúrese de que se tomen medidas correctivas. Hasta que esto se haga, NO envíe el contenedor. Guarde la lista de verificación para cada contenedor al finalizar el embalaje.",
+    "container_number": "Número de contenedor",
+    "date": "Date",
+    "packing_address": "Dirección de embalaje",
+    "responsible_person": "Persona Responsable",
+    "status": "Estado",
+    "questions": [
+        {
+            "question": "¿Es apropiado el tipo de contenedor para la carga que se va a transportar?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question1"
+        },
+        {
+            "question": "¿Está el contenedor colocado de forma que se pueda acceder a él con seguridad?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question2"
+        },
+        {
+            "question": "¿Se han tomado medidas para evitar la contaminación de la zona de envasado por plagas?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question3"
+        },
+        {
+            "question": "¿Se ha preparado un plan de embalaje que muestre la disposición de las mercancías en el contenedor?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question4"
+        },
+        {
+            "question": "¿Son los límites máximos de carga útil permitidos del contenedor suficiente para la carga prevista?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question5"
+        },
+        {
+            "question": "¿Cumplen todos los palés de madera, maderos de estibar u otro material de embalaje de madera normas NIMF-15 y muestran las marcas requeridas?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question6"
+        },
+        {
+            "question": "¿El personal encargado de embalar el contenedor ha sido formado en las prácticas seguras de embalaje y sujeción de la carga y de evitación de contaminación por plagas?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question7"
+        },
+        {
+            "question": "¿Está el exterior del contenedor libre de tierra u otra infestación visible por plagas?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question8"
+        },
+        {
+            "question": "¿Está el exterior del contenedor en buen estado y no presenta deformaciones importantes agrietado o doblado?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question9"
+        },
+        {
+            "question": "¿Tiene el contenedor una placa de homologación (CSC) válida?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question10"
+        },
+        {
+            "question": "¿Está el interior del contenedor libre de signos de daños, signos de entrada de agua, óxido, residuos, manchas o escombros?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question11"
+        },
+        {
+            "question": "¿Está el interior del contenedor libre de tierra u otra infestación visible por plagas?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question12"
+        },
+        {
+            "question": "¿Está la carga que se va a embalar libre de tierra u otra infestación visible por plagas?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question13"
+        },
+        {
+            "question": "¿Se ha embalado la carga más pesada en el fondo del contenedor con alguna carga más ligera en la parte superior?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question14"
+        },
+        {
+            "question": "¿Está la carga distribuida uniformemente por el suelo del contenedor para repartir la carga?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question15"
+        },
+        {
+            "question": "¿Está el centro de gravedad aproximadamente en el centro del contenedor?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question16"
+        },
+        {
+            "question": "¿Se ha embalado la carga en capas aproximadamente uniformes?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question17"
+        },
+        {
+            "question": "¿Se han estibado correctamente los bultos con etiquetas de orientación de bultos hacia arriba?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question18"
+        },
+        {
+            "question": "¿Se han utilizado cierres, bloqueos o amarres para impedir que la carga deslizamiento y vuelco del contenedor en cualquier dirección?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question19"
+        },
+        {
+            "question": "¿Están todos los bultos de mercancías peligrosas marcados y etiquetados de acuerdo con el Código IMDG?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question20"
+        },
+        {
+            "question": "¿Están todos los bultos de mercancías peligrosas intactos y en buen estado?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question21"
+        },
+        {
+            "question": "Cuando las mercancías peligrosas sólo forman parte de la carga, se embalan lo más cerca posible de las puertas?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question22"
+        },
+        {
+            "question": "¿Se ha rotulado el contenedor de conformidad con el Código IMDG?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question23"
+        },
+        {
+            "question": "¿Se han rellenado todos los espacios vacíos (huecos) dentro de la estiba de carga y/o entre la carga y la estructura del contenedor?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question24"
+        },
+        {
+            "question": "¿Están distribuidos el bloqueo y el arriostramiento de la carga en una superficie suficientemente grande del contenedor (por ejemplo, mediante vigas separadoras)?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question25"
+        },
+        {
+            "question": "¿Están aseguradas las eslingas al contenedor para no sobrecargar su estructura?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question26"
+        },
+        {
+            "question": "¿Están el interior y el exterior del contenedor, y su carga, libres de tierra uotra infestación visible por plagas?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question27"
+        },
+        {
+            "question": "¿Se han cerrado bien las puertas del contenedor?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question28"
+        },
+        {
+            "question": "¿Se ha colocado un precinto en el contenedor y se ha registrado su número?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question29"
+        },
+        {
+            "question": "Para el contenedor embalado, ¿se ha comunicado al transportista la Masa Bruta Verificada con la antelación requerida por el transportista?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question30"
+        },
+        {
+            "question": "En el caso del contenedor embalado, ¿se ha comunicado al transportista la identidad del contenedor y el número de precinto con la antelación exigida por el transportista?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question31"
+        },
+        {
+            "question": "Para la carga, ¿se ha comunicado al transportista una descripción exacta (incluida la clasificación) de la propia carga y del embalaje, con la antelación requerida por el transportista?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question32"
+        },
+        {
+            "question": "Para la carga, ¿se han comunicado al transportista el número y los tipos de bultos y la masa de la carga (a efectos aduaneros), con la antelación requerida por el transportista?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question33"
+        },
+        {
+            "question": "En el caso de las mercancías peligrosas, ¿se ha realizado y comunicado al transportista una declaración del expedidor y, en su caso, una declaración de certificado de embalaje con la antelación requerida por el transportista?",
+            "options": [
+                "Yes",
+                "No",
+               "N/A"
+            ],
+             "image": "question34"
+        }
+    ],
+    "sectionTitles": {
+        "packingArea": "El área de embalaje",
+        "containerCondition": "Condición del contenedor",
+        "packingContainer": "Embalar el contenedor",
+        "dangerousGoods": "Mercancías peligrosas",
+        "afterPacking": "Después de empacar el contenedor pero antes de cerrar las puertas",
+        "closingContainer": "Cerrar el contenedor",
+        "dispatchingContainer": "Despachar el contenedor"
+    },
+    "submit": "Entregar"
+}

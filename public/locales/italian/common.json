@@ -1,0 +1,332 @@
+{
+  "companyName": "Federazione internazionale delle associazioni degli spedizionieri",
+  "companyDescription": "La voce globale della logistica delle merci",
+  "2024_FIATA": "CONGRESSO MONDIALE FIATA 2024 (FWC)",
+  "2024_FIATA_Description": "Il FIATA World Congress (FWC) del 2024 è un importante incontro annuale che riunisce professionisti di spicco, leader di pensiero, esperti e innovatori dei settori della logistica, dei trasporti e delle merci",
+  "containerHeading": "LISTA DI CONTROLLO DELL'IMBALLAGGIO DEL CONTENITORE",
+  "containerTitle": "Una lista di controllo per l'imballaggio sicuro e per evitare la contaminazione da parassiti dei contenitori merci1.",
+  "containerDescription": "Istruzioni: registrare i dettagli del contenitore da imballare e completare la lista di controllo seguente. Se QUALSIASI risposta è 'NO', smetti di fare le valigie e assicurati che venga intrapresa un'azione correttiva. Fino a quando ciò non sarà fatto, NON spedire il contenitore. Conservare la lista di controllo per ciascun contenitore al termine dell'imballaggio",
+  "container_number": "Numero del contenitore",
+  "date": "Date",
+  "packing_address": "Indirizzo di imballaggio",
+  "responsible_person": "Persona responsabile",
+  "status": "Stato",
+  "questions": [
+    {
+      "question": "Il tipo di contenitore è adeguato al carico da trasportare?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question1"
+    },
+    {
+      "question": "Il contenitore è posizionato in modo da potervi accedere in sicurezza?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question2"
+    },
+    {
+      "question": "Il contenitore è posizionato in modo da potervi accedere in sicurezza?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question3"
+    },
+    {
+      "question": "È stato preparato un piano di imballaggio che indichi la disposizione delle merci nel contenitore?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question4"
+    },
+    {
+      "question": "I limiti massimi di carico utile consentiti del container sono sufficienti per il carico previsto?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question5"
+    },
+    {
+      "question": "Tutti i pallet in legno, il pagliolo o altro materiale da imballaggio in legno soddisfano gli standard ISPM-15 e mostrano le marcature richieste?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question6"
+    },
+    {
+      "question": "Il personale assegnato all'imballaggio del contenitore è stato formato per comprendere le pratiche di imballaggio e fissaggio sicuri ed evitare la contaminazione da parassiti?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question7"
+    },
+    {
+      "question": "L'esterno del contenitore è privo di terra o di altre infestazioni visibili da parte di parassiti?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question8"
+    },
+    {
+      "question": "L'esterno del contenitore è in buone condizioni e non significativamente distorto, rotto o piegato?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question9"
+    },
+    {
+      "question": "Il contenitore ha una targa di approvazione (CSC) valida?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question10"
+    },
+    {
+      "question": "L'interno del contenitore è esente da segni di danneggiamento, segni di infiltrazione d'acqua, ruggine, residui, macchie o detriti?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question11"
+    },
+    {
+      "question": "L'interno del contenitore è privo di terra o di altre infestazioni visibili da parte di parassiti?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question12"
+    },
+    {
+      "question": "Il carico deve essere imballato esente da terra o da altre infestazioni visibili da parte di parassiti?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question13"
+    },
+    {
+      "question": "Il carico più pesante è stato imballato sul fondo del container e sopra c’è del carico più leggero?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question14"
+    },
+    {
+      "question": "Il carico è distribuito uniformemente sul pavimento del container per distribuire il carico?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question15"
+    },
+    {
+      "question": "Il baricentro è approssimativamente al centro del contenitore?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question16"
+    },
+    {
+      "question": "Il carico è stato imballato in strati approssimativamente uniformi?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question17"
+    },
+    {
+      "question": "I pacchi con le etichette di orientamento del pacco sono stati sistemati nel modo corretto?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question18"
+    },
+    {
+      "question": "Sono stati utilizzati dispositivi di bloccaggio, bloccaggio o ancoraggio per evitare che il carico scivoli e si ribalti nel container in qualsiasi direzione?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question19"
+    },
+    {
+      "question": "Tutti i pacchi di merci pericolose sono contrassegnati ed etichettati in conformità con il Codice IMDG?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question20"
+    },
+    {
+      "question": "Tutti i pacchi di merci pericolose sono integri e in buone condizioni?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question21"
+    },
+    {
+      "question": "Se le merci pericolose costituiscono solo una parte del carico, vengono imballate il più vicino possibile alle porte?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question22"
+    },
+    {
+      "question": "Il contenitore è stato etichettato in conformità al Codice IMDG?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question23"
+    },
+    {
+      "question": "Sono stati riempiti tutti gli spazi vuoti (spazi vuoti) all'interno della stiva del carico e/o tra il carico e la struttura del container?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question24"
+    },
+    {
+      "question": "Il bloccaggio e il rinforzo del carico sono distribuiti su un'area sufficientemente ampia del container (ad esempio utilizzando travi distanziatrici)?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question25"
+    },
+    {
+      "question": "Le imbracature sono fissate al container in modo da non sovraccaricarne la struttura?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question26"
+    },
+    {
+      "question": "Sia l'interno che l'esterno del container e del suo carico sono privi di terra o di altre infestazioni visibili da parte di parassiti?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question27"
+    },
+    {
+      "question": "Le porte del container sono state chiuse e bloccate saldamente?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question28"
+    },
+    {
+      "question": "È stato apposto un sigillo sul contenitore e ne è stato registrato il numero?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question29"
+    },
+    {
+      "question": "Per il contenitore imballato, la massa lorda verificata è stata comunicata al vettore non appena richiesto dal vettore?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question30"
+    },
+    {
+      "question": "Per il contenitore imballato, l'identità del contenitore e il numero del sigillo sono stati comunicati al vettore non appena richiesto dal vettore?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question31"
+    },
+    {
+      "question": "Per la merce, è stata comunicata al vettore una descrizione accurata (inclusa la classificazione) della merce stessa e dell'imballaggio, non appena richiesto dal vettore?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question32"
+    },
+    {
+      "question": "Per la merce, il numero, la tipologia dei colli e la massa del carico (ai fini doganali) sono stati comunicati al vettore, tempestivamente come richiesto dal vettore?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question33"
+    },
+    {
+      "question": "Per le merci pericolose, è stata effettuata e comunicata al vettore una dichiarazione del mittente e, ove richiesto, un certificato di imballaggio?",
+      "options": [
+        "Yes",
+        "No",
+        "N/A"
+      ],
+      "image": "question34"
+    }
+  ],
+  "sectionTitles": {
+    "packingArea": "L'area di imballaggio",
+    "containerCondition": "Condizioni del contenitore",
+    "packingContainer": "Imballaggio del contenitore",
+    "dangerousGoods": "Dangerous Goods",
+    "afterPacking": "Dopo aver imballato il contenitore ma prima di chiudere le porte",
+    "closingContainer": "Chiusura del contenitore",
+    "dispatchingContainer": "Spedizione del contenitore"
+  },
+  "submit": "Invia"
+}
