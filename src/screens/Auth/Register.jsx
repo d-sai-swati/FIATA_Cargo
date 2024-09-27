@@ -127,7 +127,7 @@ export default function RegisterScreen({ navigation }) {
 
     return (
         <ScrollView className="bg-white" contentContainerStyle={{ flexGrow: 1 }}>
-            <View className="py-16 mb-7 rounded-b-3xl items-center">
+            <View className="py-10 mb-7 rounded-b-3xl items-center">
             </View>
             <View className="flex-grow px-5 py-10 bg-bgBlue rounded-t-3xl">
                 <Text style={{ fontSize: Hp(2.5) }} className="font-bold">Create Account</Text>
