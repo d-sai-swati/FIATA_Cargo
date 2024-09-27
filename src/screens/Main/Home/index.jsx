@@ -21,8 +21,8 @@ const HomeScreen = () => {
             <View className="flex-row items-center gap-2 pt-[20%] px-2 pb-5  border-b border-gray-300">
                 <Image source={require('../../../../assets/images/Company-logo.png')} className="w-10 h-10" />
                 <View className="flex-col flex-1">
-                    <Text style={{ fontSize: Hp(2), fontFamily: 'Calibri' }} className="font-bold text-primary border-b border-primary pb-1 mb-1">{t('companyName')}</Text>
-                    <Text style={{ fontSize: Hp(2), fontStyle: 'italic', fontFamily: 'Calibri' }} className="text-primary">{t('companyDescription')}</Text>
+                    <Text style={{ fontSize: Hp(2.2), fontFamily: 'Calibri-Bold' }} className="text-primary border-b border-primary pb-1 mb-1">{t('companyName')}</Text>
+                    <Text style={{ fontSize: Hp(2), fontStyle: 'italic', fontFamily: 'Calibri-Regular' }} className="text-primary">{t('companyDescription')}</Text>
                 </View>
                 <View className="flex-row items-center">
                     <SelectLanguage
@@ -39,8 +39,8 @@ const HomeScreen = () => {
                             className="w-48"
                             resizeMode='contain'
                         />
-                        <Text style={{ fontSize: Hp(2.2), fontFamily: 'Lato' }} className="font-bold text-center mt-4">{t('2024_FIATA')}</Text>
-                        <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato' }} className="mt-2 text-black text-center">{t('2024_FIATA_Description')}</Text>
+                        <Text style={{ fontSize: Hp(2.2), fontFamily: 'Lato-Bold' }} className="text-center mt-4">{t('2024_FIATA')}</Text>
+                        <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }} className="mt-2 text-black text-center">{t('2024_FIATA_Description')}</Text>
                     </View>
                 </View>
             </ScrollView>

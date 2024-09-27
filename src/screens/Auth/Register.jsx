@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Image, ScrollView, Alert, Modal, FlatList, ActivityIndicator } from 'react-native';
 import { Hp } from '../../utils/constants/themes';
-import Ionicons from '@expo/vector-icons/Ionicons';
 import axiosInstance from '../../utils/axiosInstance';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ArrowDown2 } from 'iconsax-react-native';
+import { ArrowDown2, Eye, EyeSlash } from 'iconsax-react-native';
 
 export default function RegisterScreen({ navigation }) {
     const [name, setName] = useState('');
@@ -239,13 +238,13 @@ export default function RegisterScreen({ navigation }) {
                         onChangeText={(value) => handleInputChange('password', value)}
                         secureTextEntry={!showPassword}
                     />
+
                     <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                        <Ionicons
-                            name={showPassword ? "eye-off" : "eye"}
-                            size={24}
-                            color="gray"
-                            style={{ marginLeft: 10 }}
-                        />
+                        {showPassword ? (
+                            <Eye size={Hp(3)} color="gray" />
+                        ) : (
+                            <EyeSlash size={Hp(3)} color="gray" />
+                        )}
                     </TouchableOpacity>
                 </View>
                 {errors.password && <TextInput style={{ color: 'red' }}>{errors.password[0]}</TextInput>}
@@ -259,12 +258,11 @@ export default function RegisterScreen({ navigation }) {
                         secureTextEntry={!showConfirmPassword}
                     />
                     <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
-                        <Ionicons
-                            name={showConfirmPassword ? "eye-off" : "eye"}
-                            size={24}
-                            color="gray"
-                            style={{ marginLeft: 10 }}
-                        />
+                        {showConfirmPassword ? (
+                            <Eye size={Hp(3)} color="gray" />
+                        ) : (
+                            <EyeSlash size={Hp(3)} color="gray" />
+                        )}
                     </TouchableOpacity>
                 </View>
                 <TouchableOpacity className="bg-primary py-3 mt-5 rounded-full items-center" onPress={handleRegister}>

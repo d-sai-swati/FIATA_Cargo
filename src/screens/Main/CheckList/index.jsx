@@ -209,18 +209,18 @@ const Checklist = ({ navigation }) => {
                     <Header title={t('containerHeading')} />
                     <ScrollView>
                         <View className="p-4">
-                            <Text style={{ fontSize: Hp(2.2) }} className="font-bold text-center pb-5">{t('containerTitle')}</Text>
-                            <Text style={{ fontSize: Hp(1.8) }} className="font-semibold text-center">{t('containerDescription')}</Text>
+                            <Text style={{ fontSize: Hp(2.2), fontFamily: 'Lato-Bold'  }} className="text-center pb-5">{t('containerTitle')}</Text>
+                            <Text style={{ fontSize: Hp(2), fontFamily: 'Lato-Regular'  }} className="text-center">{t('containerDescription')}</Text>
                         </View>
                         <View className="p-4">
                             <TextInput
-                                style={{ fontSize: Hp(1.8) }}
+                                style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular'  }}
                                 className="border-b border-gray-300 p-3 rounded-lg mb-1"
                                 placeholder="Language"
                                 value={language}
                             />
                             <TextInput
-                                style={{ fontSize: Hp(1.8) }}
+                                style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular'  }}
                                 className="border-b border-gray-300 p-3 rounded-lg mb-1"
                                 placeholder="Container number"
                                 value={containerNumber}
@@ -237,7 +237,7 @@ const Checklist = ({ navigation }) => {
                                     setShowDatePicker(true);
                                     setErrors(prevErrors => ({ ...prevErrors, date: null }));
                                 }}
-                                style={{ fontSize: Hp(1.8) }}
+                                style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular'  }}
                                 className="border-b border-gray-300 p-3 py-4 rounded-lg mb-1"
                             >
                                 <Text className={`${date ? 'text-black' : 'text-gray-400'}`}>{date || 'Select Date'}</Text>
@@ -245,7 +245,7 @@ const Checklist = ({ navigation }) => {
                             {errors.date && <Text className="text-red-500 ml-3" style={{ fontSize: Hp(1.5) }}>{errors.date}</Text>}
 
                             <TextInput
-                                style={{ fontSize: Hp(1.8) }}
+                                style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
                                 className="border-b border-gray-300 p-3 rounded-lg mb-1"
                                 placeholder="Packing address (City/Country)"
                                 value={packingAddress}
@@ -257,7 +257,7 @@ const Checklist = ({ navigation }) => {
                             {errors.packingAddress && <Text className="text-red-500 ml-3" style={{ fontSize: Hp(1.5) }}>{errors.packingAddress}</Text>}
 
                             <TextInput
-                                style={{ fontSize: Hp(1.8) }}
+                                style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular'  }}
                                 className="border-b border-gray-300 p-3 rounded-lg mb-1"
                                 placeholder="Responsible person"
                                 value={responsiblePerson}
@@ -269,7 +269,7 @@ const Checklist = ({ navigation }) => {
                             {errors.responsiblePerson && <Text className="text-red-500 ml-3" style={{ color: 'red', fontSize: Hp(1.5) }}>{errors.responsiblePerson}</Text>}
 
                             <TouchableOpacity className="bg-primary py-3 rounded-full items-center mt-5" onPress={handleProceed}>
-                                <Text style={{ fontSize: Hp(1.8) }} className="text-white py-1 font-bold">Proceed</Text>
+                                <Text style={{ fontSize: Hp(1.8),fontFamily: 'Lato-Bold'}} className="text-white py-1">Proceed</Text>
                             </TouchableOpacity>
                         </View>
                     </ScrollView>
@@ -297,7 +297,7 @@ const Checklist = ({ navigation }) => {
                     >
                         {questions.map((question, index) => (
                             <View key={index} style={{ width }}>
-                                <Text className="text-base font-semibold p-4">{`${index + 1}. ${question.question}`}</Text>
+                                <Text style={{ fontSize: Hp(2.2), fontFamily: 'Lato-Bold', textAlign: 'justify' }} className="p-4">{`${index + 1}. ${question.question}`}</Text>
                                 <View className="flex-row justify-around p-4">
                                     {question.options.map((option, i) => (
                                         <TouchableOpacity key={i} className="flex-row items-center mr-4" onPress={() => handleInputChange(option, index)}>

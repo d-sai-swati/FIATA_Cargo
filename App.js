@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, ActivityIndicator, Text } from 'react-native';
+import { View, ActivityIndicator, Text, LogBox } from 'react-native';
 import Navigation from './src/navigation/Navigation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SplashScreen from 'expo-splash-screen';
@@ -13,6 +13,7 @@ export default function App() {
 
     // Load custom fonts (without Ionicons)
     const [loaded, error] = useFonts({
+        'Arial-Black': require('./assets/fonts/Arial_Black.ttf'),
         'Lato-Black': require('./assets/fonts/Lato_Black.ttf'),
         'Lato-Bold': require('./assets/fonts/Lato_Bold.ttf'),
         'Lato-Light': require('./assets/fonts/Lato_Light.ttf'),
@@ -46,10 +47,11 @@ export default function App() {
         if (loaded || error) {
             SplashScreen.hideAsync();
         }
-
+        // LogBox.ignoreLogs(['Warning: ...']);
         checkToken();
     }, [loaded, error]);
-
+    
+    LogBox.ignoreAllLogs()
     if (!loaded && !error) {
         return null; // Don't show anything until fonts are loaded
     }

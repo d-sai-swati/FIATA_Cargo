@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, ScrollView, Alert, ActivityIndicator } from 'react-native';
 import { Hp } from '../../utils/constants/themes';
 import axiosInstance from '../../utils/axiosInstance';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import { Eye, EyeSlash } from 'iconsax-react-native';
 
 export default function ForgotPassword({ navigation }) {
     const [loading, setLoading] = useState(false);
@@ -181,8 +181,13 @@ export default function ForgotPassword({ navigation }) {
                                     onChangeText={(text) => setResetPassword(text)}
                                     secureTextEntry={!showPassword}
                                 />
+                            
                                 <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                                    <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} color="gray" style={{ marginLeft: 10 }} />
+                                    {showPassword ? (
+                                        <Eye size={Hp(3)} color="gray" />
+                                    ) : (
+                                        <EyeSlash size={Hp(3)} color="gray" />
+                                    )}
                                 </TouchableOpacity>
                             </View>
 
@@ -195,8 +200,12 @@ export default function ForgotPassword({ navigation }) {
                                     onChangeText={(text) => setConfirmPassword(text)}
                                     secureTextEntry={!showConfirmPassword}
                                 />
-                                <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
-                                    <Ionicons name={showConfirmPassword ? "eye-off" : "eye"} size={24} color="gray" style={{ marginLeft: 10 }} />
+                                 <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
+                                    {showConfirmPassword ? (
+                                        <Eye size={Hp(3)} color="gray" />
+                                    ) : (
+                                        <EyeSlash size={Hp(3)} color="gray" />
+                                    )}
                                 </TouchableOpacity>
                             </View>
                             {errors.confirmpassword && <Text style={{ color: 'red' }}>{errors.confirmpassword}</Text>}

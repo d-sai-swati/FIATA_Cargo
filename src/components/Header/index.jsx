@@ -27,7 +27,7 @@ const Header = ({ title, isRightIcon, onPress , onBackPress}) => {
             <TouchableOpacity onPress={onBackPress || navigation.goBack}>
                 <ArrowLeft2 size={Hp(2.5)} color="white" />
             </TouchableOpacity>
-            <Text className="font-bold flex-1 text-center text-white" styles={{ fontSize: Hp(2) }}>{title}</Text>
+            <Text className="flex-1 text-center text-white" style={{ fontSize: Hp(2.5) , fontFamily:'Calibri-Bold' }}>{title}</Text>
             {isRightIcon && <Setting2 size="24" color='white'onPress={onPress}/>}
 
         </View>

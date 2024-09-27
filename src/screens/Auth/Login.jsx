@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Image, ScrollView, Alert, ActivityIndicator } from 'react-native';
 import { Hp } from '../../utils/constants/themes';
 import axiosInstance from '../../utils/axiosInstance';
-import Ionicons from '@expo/vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import { EyeIcon, EyeOffIcon } from 'react-native-heroicons/outline';
+import { Eye, EyeSlash } from 'iconsax-react-native';
 
 export default function LoginScreen({ }) {
     const [email, setEmail] = useState('');
@@ -70,7 +71,7 @@ export default function LoginScreen({ }) {
             <View className="flex-1 justify-end">
                 <View className="px-5 py-10 bg-bgBlue rounded-t-3xl">
                     <Text style={{
-                        fontSize: Hp(2.5), fontFamily: 'QuietSemiBold'
+                        fontSize: Hp(2.5), fontFamily: 'Calibri-Regular'
                     }} className="font-bold">Log In</Text>
                     < TextInput
                         style={{ fontSize: Hp(1.8) }}
@@ -90,13 +91,13 @@ export default function LoginScreen({ }) {
                             secureTextEntry={!showPassword}
                         />
                         <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                            <Ionicons
-                                name={showPassword ? "eye-off" : "eye"}
-                                size={24}
-                                color="gray"
-                                style={{ marginLeft: 10 }}
-                            />
+                            {showPassword ? (
+                                <Eye size={Hp(3)} color="gray" />
+                            ) : (
+                                <EyeSlash size={Hp(3)} color="gray" />
+                            )}
                         </TouchableOpacity>
+
                     </View>
                     {errors.password && <TextInput style={{ color: 'red' }}>{errors.password[0]}</TextInput>}
 

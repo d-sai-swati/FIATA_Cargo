@@ -6,8 +6,8 @@ import { Hp } from '../../../utils/constants/themes';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Ionicons from '@expo/vector-icons/Ionicons';
 import axiosInstance from '../../../utils/axiosInstance';
+import i18next from 'i18next';
 
 const ProfileScreen = () => {
     const { t } = useTranslation();
@@ -21,7 +21,9 @@ const ProfileScreen = () => {
         name: '',
         mobile: '',
         email: '',
-        gender: ''
+        country: '',
+        gender: '',
+
     });
 
     const openSettings = () => {
@@ -60,6 +62,7 @@ const ProfileScreen = () => {
                 name: updatedUser.name,
                 mobile: updatedUser.mobile,
                 email: updatedUser.email,
+                country: updatedUser.country,
                 gender: updatedUser.gender
             }
             const response = await axiosInstance.post(`profile/${user.id}`, payload, {
@@ -82,14 +85,14 @@ const ProfileScreen = () => {
 
     const handleLogout = async () => {
         try {
-            await AsyncStorage.removeItem('token');
-            // await AsyncStorage.removeItem('language')
-
+            await AsyncStorage.clear();
+            i18next.changeLanguage("en");
+            
             navigation.navigate('Login');
-            // navigation.reset({
-            //   index: 0,
-            //   routes: [{ name: 'Home' }],
-            // })
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Home' }],
+            })
         } catch (error) {
             console.error('Failed to log out:', error);
             Alert.alert('Logout Error', 'There was an error logging out. Please try again.');
@@ -128,33 +131,36 @@ const ProfileScreen = () => {
         <View className="bg-white flex-1">
             <Header title="Profile" isRightIcon={true} onPress={openSettings} />
             <ScrollView>
-                <View className="bg-bgBlue mx-5 mt-5 p-5 rounded-2xl shadow-lg items-center relative mt-[35%]">
+                <View className="bg-bgBlue mx-5 p-5 h-[400px] rounded-2xl shadow-lg items-center relative mt-[20%]">
 
 
                     <View className="w-full">
                         <View className="flex-row justify-between items-center">
-                            <Text style={{ fontSize: Hp(2.5) }} className="text-xl font-bold text-center text-black mr-4">
+                            <Text style={{ fontSize: Hp(2.5), fontFamily: 'Lato-Bold'}} className="text-center text-black mr-4">
                                 {user.name}
                             </Text>
                             <TouchableOpacity className="flex-row items-center" onPress={() => setModalVisible(true)}>
                                 <Edit2 size={Hp(2.5)} color="#0291C9" variant="Bold" />
-                                <Text className="text-primary font-semibold ml-2">Edit</Text>
+                                <Text style={{ fontSize: Hp(2), fontFamily: 'Lato-Regular' }} className="text-primary font-semibold ml-2">Edit</Text>
                             </TouchableOpacity>
                         </View>
 
-                        <View className="border-t border-primary my-3 w-full" />
+                        <View className="border-t border-primary my-5 w-full" />
 
-                        <Text style={{ fontSize: Hp(2.2) }} className="text-primary font-semibold">Personal Info</Text>
-                        <View className="mt-2">
-                            <Text style={{ fontSize: Hp(1.8) }} className="text-gray-500 mt-4">Mobile Phone</Text>
-                            <Text style={{ fontSize: Hp(2) }} className="text-black mt-2">{user.mobile}</Text>
+                        <Text style={{ fontSize: Hp(2.5), fontFamily: 'Lato-Regular'  }} className="text-primary font-semibold underline">Personal Info</Text>
+                        <View >
+                            <Text style={{ fontSize: Hp(2.2), fontFamily: 'Lato-Regular'  }} className="text-gray-500 mt-4">Email</Text>
+                            <Text style={{ fontSize: Hp(2), fontFamily: 'Lato-Regular'  }} className="text-black mt-2">{user.email}</Text>
 
-                            <Text style={{ fontSize: Hp(1.8) }} className="text-gray-500 mt-4">Email</Text>
-                            <Text style={{ fontSize: Hp(2) }} className="text-black mt-2">{user.email}</Text>
+                            <Text style={{ fontSize: Hp(2.2), fontFamily: 'Lato-Regular'  }} className="text-gray-500 mt-4">Mobile Phone</Text>
+                            <Text style={{ fontSize: Hp(2), fontFamily: 'Lato-Regular'  }} className="text-black mt-2">{user.mobile}</Text>
 
-                            <Text style={{ fontSize: Hp(1.8) }} className="text-gray-500 mt-4">Gender</Text>
-                            <Text style={{ fontSize: Hp(2) }} className="text-black mt-2">{user.gender}</Text>
 
+                            <Text style={{ fontSize: Hp(2.2), fontFamily: 'Lato-Regular'  }} className="text-gray-500 mt-4">Country</Text>
+                            <Text style={{ fontSize: Hp(2), fontFamily: 'Lato-Regular'  }} className="text-black mt-2">{user.country}</Text>
+
+                            <Text style={{ fontSize: Hp(2.2), fontFamily: 'Lato-Regular'  }} className="text-gray-500 mt-4">Gender</Text>
+                            <Text style={{ fontSize: Hp(2), fontFamily: 'Lato-Regular'  }} className="text-black mt-2">{user.gender}</Text>
                         </View>
                     </View>
                 </View>
@@ -171,7 +177,9 @@ const ProfileScreen = () => {
                     <View className="w-64 h-full bg-white p-5 shadow-lg">
                         <View className="flex-row items-center justify-between">
                             <Text className="font-bold mb-2" style={{ fontSize: Hp(2.2) }}>Settings</Text>
-                            <Ionicons name="close" size={24} color="black" onPress={() => setSidebarVisible(false)} />
+                            <TouchableOpacity onPress={() => setSidebarVisible(false)}>
+                            <Image source={require('../../../../assets/icons/cross-icon.png')} className="w-3 h-3" onPress={() => setSidebarVisible(false)} />
+                            </TouchableOpacity>
                         </View>
 
                         <TouchableOpacity className="mt-5">
@@ -262,7 +270,9 @@ const ProfileScreen = () => {
                     <View className="bg-white p-5 rounded-xl shadow-lg w-11/12">
                         <View className="flex-row items-center justify-between">
                             <Text className="font-bold text-center" style={{ fontSize: Hp(2.2) }}>Edit Profile</Text>
-                            <Ionicons name="close" size={24} color="black" onPress={() => setModalVisible(false)} />
+                            <TouchableOpacity onPress={() => setModalVisible(false)} >
+                            <Image source={require('../../../../assets/icons/cross-icon.png')} className="w-3 h-3" />
+                            </TouchableOpacity>
                         </View>
 
                         {/* Editable fields */}
@@ -284,8 +294,15 @@ const ProfileScreen = () => {
                             value={updatedUser.email}
                             onChangeText={(text) => setUpdatedUser({ ...updatedUser, email: text })}
                             placeholder="Email"
-                            className="border-b border-gray-300 pt-5 pb-2 text-black"
+                            className="border-b border-gray-300 pt-5 pb-2 text-gray"
                             keyboardType="email-address"
+                            editable={false}
+                        />
+                        <TextInput
+                            value={updatedUser.country}
+                            onChangeText={(text) => setUpdatedUser({ ...updatedUser, country: text })}
+                            placeholder="Country"
+                            className="border-b border-gray-300 pt-5 pb-2 text-black"
                         />
                         <TextInput
                             value={updatedUser.gender}

@@ -43,10 +43,10 @@ const BannerSwiper = () => {
                             resizeMode="cover"
                         />
                         <View className="absolute bottom-4 left-5">
-                            <Text style={{ fontSize: Hp(1.8) }} className="font-quiet text-white font-bold">
+                            <Text style={{ fontSize: Hp(1.8), fontFamily:'Calibri-Bold' }} className="text-white">
                                 {banner.title}
                             </Text>
-                            <Text style={{ fontSize: Hp(1.5) }} className="font-quiet text-white pt-2">
+                            <Text style={{ fontSize: Hp(1.5), fontFamily:'Calibri-Regular' }} className="text-white pt-2">
                                 {banner.subtitle}
                             </Text>
                         </View>
