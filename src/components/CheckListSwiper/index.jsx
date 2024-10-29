@@ -11,7 +11,7 @@ const { width } = Dimensions.get('window');
 
 const ChecklistSwiper = ({ navigation }) => {
 
-    
+
     const { t } = useTranslation();
     const questions = t('questions', { returnObjects: true });
     const [currentIndex, setCurrentIndex] = useState(0)
@@ -76,7 +76,7 @@ const ChecklistSwiper = ({ navigation }) => {
                 >
                     <ArrowLeft2 size="24" color="white" />
                 </TouchableOpacity>
-                
+
                 {currentIndex === questions.length - 1 ? (
                     <TouchableOpacity
                         className="bg-primary p-3 rounded-lg flex-row justify-end items-center"

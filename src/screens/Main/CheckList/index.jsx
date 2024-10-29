@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useRef, useState } from 'react'
-import { ScrollView, TextInput, Alert, Dimensions, Image, Text, TouchableOpacity, View, Platform, ActivityIndicator } from 'react-native'
+import { ScrollView, TextInput, Alert, Dimensions, Image, Text, TouchableOpacity, View, Platform, ActivityIndicator, KeyboardAvoidingView } from 'react-native'
 
 import Swiper from 'react-native-swiper'
 import { ArrowLeft2, ArrowRight2 } from 'iconsax-react-native';
@@ -10,13 +10,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axiosInstance from '../../../utils/axiosInstance';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import * as FileSystem from 'expo-file-system';
 
 const { width } = Dimensions.get('window');
 
 const Checklist = ({ navigation }) => {
     const { t } = useTranslation();
-    const [refreshing, setRefreshing] = useState(false);
     const questions = t('questions', { returnObjects: true });
     const [currentIndex, setCurrentIndex] = useState(0)
     const [answers, setAnswers] = useState(Array(questions.length).fill(''));
@@ -27,10 +27,9 @@ const Checklist = ({ navigation }) => {
     const [date, setDate] = useState('');
     const [packingAddress, setPackingAddress] = useState('');
     const [responsiblePerson, setResponsiblePerson] = useState('');
-    const [showDatePicker, setShowDatePicker] = useState(false);
     const [isChecklist, setIsChecklist] = useState(false)
-    const [refresh, setRefresh] = useState(false);
     const [errors, setErrors] = useState({});
+
     const localImages = {
         question1: require('../../../../assets/images/que1.jpg'),
         question2: require('../../../../assets/images/que2.png'),
@@ -111,13 +110,28 @@ const Checklist = ({ navigation }) => {
         setIsChecklist(!isChecklist);
     };
 
-    const onDateChange = (event, selectedDate) => {
-        setShowDatePicker(Platform.OS === 'ios');
-        if (selectedDate) {
-            const formattedDate = selectedDate.toLocaleDateString();
-            setDate(formattedDate);
-        }
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+    const showDatePicker = () => {
+        setDatePickerVisibility(true);
+        setErrors(prevErrors => ({ ...prevErrors, date: null }));
     };
+
+    const hideDatePicker = () => {
+        setDatePickerVisibility(false);
+    };
+
+    const handleConfirm = (selectedDate) => {
+        console.warn("A date has been picked: ", selectedDate);
+        setDate(selectedDate);
+        hideDatePicker();
+    };
+
+    const formatDate = (date) => {
+        if (!date) return '';
+        return date.toLocaleDateString();
+    };
+
     useFocusEffect(() => {
         const fetchSelectedLanguage = async () => {
             const storedLanguage = await AsyncStorage.getItem('language');
@@ -207,80 +221,81 @@ const Checklist = ({ navigation }) => {
             {!isChecklist ?
                 <View className="flex-1 bg-white">
                     <Header title={t('containerHeading')} />
-                    <ScrollView>
+                        <KeyboardAvoidingView
+                            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                            style={{ flex: 1 }}
+                        >
+                    <ScrollView className="ios:pt-10">
                         <View className="p-4">
-                            <Text style={{ fontSize: Hp(2.2), fontFamily: 'Lato-Bold'  }} className="text-center pb-5">{t('containerTitle')}</Text>
-                            <Text style={{ fontSize: Hp(2), fontFamily: 'Lato-Regular'  }} className="text-center">{t('containerDescription')}</Text>
+                            <Text style={[{ fontSize: Hp(2.2), fontFamily: 'Lato-Bold', textAlign: 'justify' }, Platform.select({ ios: { fontSize: Hp(2) } })]} className="text-center pb-5">{t('containerTitle')}</Text>
+                            <Text style={[{ fontSize: Hp(2), fontFamily: 'Lato-Regular', textAlign: 'justify' }, Platform.select({ ios: { fontSize: Hp(1.8) } })]} className="text-center">{t('containerDescription')}</Text>
                         </View>
-                        <View className="p-4">
-                            <TextInput
-                                style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular'  }}
-                                className="border-b border-gray-300 p-3 rounded-lg mb-1"
-                                placeholder="Language"
-                                value={language}
-                            />
-                            <TextInput
-                                style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular'  }}
-                                className="border-b border-gray-300 p-3 rounded-lg mb-1"
-                                placeholder="Container number"
-                                value={containerNumber}
-                                onChangeText={setContainerNumber}
-                                onFocus={() => {
-                                    setErrors(prevErrors => ({ ...prevErrors, containerNumber: null }));
-                                }}
-                            />
-                            {errors.containerNumber && <Text className="text-red-500 ml-3" style={{ fontSize: Hp(1.5) }}>{errors.containerNumber}</Text>}
+                            <View className="p-4">
+                                <TextInput
+                                    style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular',}}
+                                    className="border-b border-gray-300 p-3 rounded-lg mb-1 hidden"
+                                    placeholder="Language"
+                                    value={language}
+                                    editable={false}
+                                />
+                                <TextInput
+                                    style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular', }}
+                                    className="border-b border-gray-300 p-3 ios:py-5 rounded-lg mb-1"
+                                    placeholder={t('container_number')}
+                                    value={containerNumber}
+                                    onChangeText={setContainerNumber}
+                                    onFocus={() => {
+                                        setErrors(prevErrors => ({ ...prevErrors, containerNumber: null }));
+                                    }}
+                                />
+                                {errors.containerNumber && <Text className="text-red-500 ml-3" style={{ fontSize: Hp(1.5) }}>{errors.containerNumber}</Text>}
 
-                            <TouchableOpacity
-                                // onPress={() => setShowDatePicker(true)}
-                                onPress={() => {
-                                    setShowDatePicker(true);
-                                    setErrors(prevErrors => ({ ...prevErrors, date: null }));
-                                }}
-                                style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular'  }}
-                                className="border-b border-gray-300 p-3 py-4 rounded-lg mb-1"
-                            >
-                                <Text className={`${date ? 'text-black' : 'text-gray-400'}`}>{date || 'Select Date'}</Text>
-                            </TouchableOpacity>
-                            {errors.date && <Text className="text-red-500 ml-3" style={{ fontSize: Hp(1.5) }}>{errors.date}</Text>}
+                                <TouchableOpacity
+                                    onPress={showDatePicker}
+                                    className="border-b border-gray-300 p-3 py-4 ios:py-5 rounded-lg mb-1"
+                                >
+                                    <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }} className={`${date ? 'text-black' : 'text-gray-400'}`}>
+                                        {formatDate(date) || t('select_date')}
+                                    </Text>
+                                </TouchableOpacity>
+                                {errors.date && <Text className="text-red-500 ml-3" style={{ fontSize: Hp(1.5) }}>{errors.date}</Text>}
 
-                            <TextInput
-                                style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
-                                className="border-b border-gray-300 p-3 rounded-lg mb-1"
-                                placeholder="Packing address (City/Country)"
-                                value={packingAddress}
-                                onChangeText={setPackingAddress}
-                                onFocus={() => {
-                                    setErrors(prevErrors => ({ ...prevErrors, packingAddress: null }));
-                                }}
-                            />
-                            {errors.packingAddress && <Text className="text-red-500 ml-3" style={{ fontSize: Hp(1.5) }}>{errors.packingAddress}</Text>}
+                                <TextInput
+                                    style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
+                                    className="border-b border-gray-300 p-3 ios:py-5 rounded-lg mb-1"
+                                    placeholder={t('packing_address')}
+                                    value={packingAddress}
+                                    onChangeText={setPackingAddress}
+                                    onFocus={() => {
+                                        setErrors(prevErrors => ({ ...prevErrors, packingAddress: null }));
+                                    }}
+                                />
+                                {errors.packingAddress && <Text className="text-red-500 ml-3" style={{ fontSize: Hp(1.5) }}>{errors.packingAddress}</Text>}
 
-                            <TextInput
-                                style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular'  }}
-                                className="border-b border-gray-300 p-3 rounded-lg mb-1"
-                                placeholder="Responsible person"
-                                value={responsiblePerson}
-                                onChangeText={setResponsiblePerson}
-                                onFocus={() => {
-                                    setErrors(prevErrors => ({ ...prevErrors, responsiblePerson: null }));
-                                }}
-                            />
-                            {errors.responsiblePerson && <Text className="text-red-500 ml-3" style={{ color: 'red', fontSize: Hp(1.5) }}>{errors.responsiblePerson}</Text>}
+                                <TextInput
+                                    style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
+                                    className="border-b border-gray-300 p-3 ios:py-5 rounded-lg mb-1"
+                                    placeholder={t('responsible_person')}
+                                    value={responsiblePerson}
+                                    onChangeText={setResponsiblePerson}
+                                    onFocus={() => {
+                                        setErrors(prevErrors => ({ ...prevErrors, responsiblePerson: null }));
+                                    }}
+                                />
+                                {errors.responsiblePerson && <Text className="text-red-500 ml-3" style={{ color: 'red', fontSize: Hp(1.5) }}>{errors.responsiblePerson}</Text>}
 
-                            <TouchableOpacity className="bg-primary py-3 rounded-full items-center mt-5" onPress={handleProceed}>
-                                <Text style={{ fontSize: Hp(1.8),fontFamily: 'Lato-Bold'}} className="text-white py-1">Proceed</Text>
-                            </TouchableOpacity>
-                        </View>
+                                <TouchableOpacity className="bg-primary py-3 rounded-full items-center mt-6" onPress={handleProceed}>
+                                    <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Bold' }} className="text-white py-1">Proceed</Text>
+                                </TouchableOpacity>
+                            </View>
                     </ScrollView>
-                    {showDatePicker && (
-                        <DateTimePicker
-                            value={new Date()}
-                            mode="date"
-                            display="calendar"
-                            onChange={onDateChange}
-                        />
-                    )}
+                        </KeyboardAvoidingView>
+                    <DateTimePickerModal
+                        isVisible={isDatePickerVisible}
+                        mode="date"
+                        onConfirm={handleConfirm}
+                        onCancel={hideDatePicker}
+                    />
                 </View> :
                 <View className="flex-1 bg-white">
                     <Header title={currentTitle()} onBackPress={goBackToContainerDetails} />

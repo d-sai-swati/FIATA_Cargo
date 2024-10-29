@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Text, View, Image, TouchableOpacity, ScrollView, Modal, TextInput, Button, Alert } from 'react-native';
+import { Text, View, Image, TouchableOpacity, ScrollView, Modal, TextInput, Button, Alert, Platform, KeyboardAvoidingView } from 'react-native';
 import Header from '../../../components/Header';
 import { Edit2, LogoutCurve, ProfileDelete, Verify } from 'iconsax-react-native';
 import { Hp } from '../../../utils/constants/themes';
@@ -81,13 +81,11 @@ const ProfileScreen = () => {
             console.error('Update failed:', error);
         }
     };
-
-
-    const handleLogout = async () => {
+    const handleLogout = () => {
         try {
-            await AsyncStorage.clear();
+            AsyncStorage.clear();
             i18next.changeLanguage("en");
-            
+
             navigation.navigate('Login');
             navigation.reset({
                 index: 0,
@@ -118,6 +116,8 @@ const ProfileScreen = () => {
                 await AsyncStorage.removeItem('shipments');
                 setDeleteModalVisible(false);
                 Alert.alert(response.data.message);
+
+                navigation.navigate('Login');
             } else {
                 Alert.alert('Error', 'There was an issue deleting your account.');
             }
@@ -131,12 +131,10 @@ const ProfileScreen = () => {
         <View className="bg-white flex-1">
             <Header title="Profile" isRightIcon={true} onPress={openSettings} />
             <ScrollView>
-                <View className="bg-bgBlue mx-5 p-5 h-[400px] rounded-2xl shadow-lg items-center relative mt-[20%]">
-
-
+                <View className="bg-bgBlue mx-5 p-5 h-[400px] ios:h-[470px] rounded-2xl shadow-lg items-center relative mt-[20%]">
                     <View className="w-full">
                         <View className="flex-row justify-between items-center">
-                            <Text style={{ fontSize: Hp(2.5), fontFamily: 'Lato-Bold'}} className="text-center text-black mr-4">
+                            <Text style={{ fontSize: Hp(2.5), fontFamily: 'Lato-Bold' }} className="text-center text-black mr-4">
                                 {user.name}
                             </Text>
                             <TouchableOpacity className="flex-row items-center" onPress={() => setModalVisible(true)}>
@@ -147,20 +145,20 @@ const ProfileScreen = () => {
 
                         <View className="border-t border-primary my-5 w-full" />
 
-                        <Text style={{ fontSize: Hp(2.5), fontFamily: 'Lato-Regular'  }} className="text-primary font-semibold underline">Personal Info</Text>
+                        <Text style={[{ fontSize: Hp(2.5), fontFamily: 'Lato-Regular' }, Platform.select({ ios: { fontSize: Hp(2.3) } })]} className="text-primary font-semibold underline">Personal Info</Text>
                         <View >
-                            <Text style={{ fontSize: Hp(2.2), fontFamily: 'Lato-Regular'  }} className="text-gray-500 mt-4">Email</Text>
-                            <Text style={{ fontSize: Hp(2), fontFamily: 'Lato-Regular'  }} className="text-black mt-2">{user.email}</Text>
+                            <Text style={[{ fontSize: Hp(2.2), fontFamily: 'Lato-Regular' }, Platform.select({ ios: { fontSize: Hp(2) } })]} className="text-gray-500 mt-4">Email</Text>
+                            <Text style={[{ fontSize: Hp(2), fontFamily: 'Lato-Regular' }, Platform.select({ ios: { fontSize: Hp(1.8) } })]} className="text-black mt-2">{user.email}</Text>
 
-                            <Text style={{ fontSize: Hp(2.2), fontFamily: 'Lato-Regular'  }} className="text-gray-500 mt-4">Mobile Phone</Text>
-                            <Text style={{ fontSize: Hp(2), fontFamily: 'Lato-Regular'  }} className="text-black mt-2">{user.mobile}</Text>
+                            <Text style={[{ fontSize: Hp(2.2), fontFamily: 'Lato-Regular' }, Platform.select({ ios: { fontSize: Hp(2) } })]} className="text-gray-500 mt-4">Mobile Phone</Text>
+                            <Text style={[{ fontSize: Hp(2), fontFamily: 'Lato-Regular' }, Platform.select({ ios: { fontSize: Hp(1.8) } })]} className="text-black mt-2">{user.mobile}</Text>
 
 
-                            <Text style={{ fontSize: Hp(2.2), fontFamily: 'Lato-Regular'  }} className="text-gray-500 mt-4">Country</Text>
-                            <Text style={{ fontSize: Hp(2), fontFamily: 'Lato-Regular'  }} className="text-black mt-2">{user.country}</Text>
+                            <Text style={[{ fontSize: Hp(2.2), fontFamily: 'Lato-Regular' }, Platform.select({ ios: { fontSize: Hp(2) } })]} className="text-gray-500 mt-4">Country</Text>
+                            <Text style={[{ fontSize: Hp(2), fontFamily: 'Lato-Regular' }, Platform.select({ ios: { fontSize: Hp(1.8) } })]} className="text-black mt-2">{user.country}</Text>
 
-                            <Text style={{ fontSize: Hp(2.2), fontFamily: 'Lato-Regular'  }} className="text-gray-500 mt-4">Gender</Text>
-                            <Text style={{ fontSize: Hp(2), fontFamily: 'Lato-Regular'  }} className="text-black mt-2">{user.gender}</Text>
+                            <Text style={[{ fontSize: Hp(2.2), fontFamily: 'Lato-Regular' }, Platform.select({ ios: { fontSize: Hp(2) } })]} className="text-gray-500 mt-4">Gender</Text>
+                            <Text style={[{ fontSize: Hp(2), fontFamily: 'Lato-Regular' }, Platform.select({ ios: { fontSize: Hp(1.8) } })]} className="text-black mt-2">{user.gender}</Text>
                         </View>
                     </View>
                 </View>
@@ -174,35 +172,35 @@ const ProfileScreen = () => {
                 onRequestClose={() => setSidebarVisible(false)}
             >
                 <View className="flex-1 justify-end items-end" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-                    <View className="w-64 h-full bg-white p-5 shadow-lg">
+                    <View className="w-64 ios:w-72 h-full bg-white p-5 shadow-lg ios:pt-14">
                         <View className="flex-row items-center justify-between">
-                            <Text className="font-bold mb-2" style={{ fontSize: Hp(2.2) }}>Settings</Text>
-                            <TouchableOpacity onPress={() => setSidebarVisible(false)}>
-                            <Image source={require('../../../../assets/icons/cross-icon.png')} className="w-3 h-3" onPress={() => setSidebarVisible(false)} />
+                            <Text className="font-bold" style={{ fontSize: Hp(2.2) }}>Settings</Text>
+                            <TouchableOpacity className="p-3" onPress={() => setSidebarVisible(false)}>
+                                <Image source={require('../../../../assets/icons/cross-icon.png')} className="w-4 h-4" onPress={() => setSidebarVisible(false)} />
                             </TouchableOpacity>
                         </View>
 
-                        <TouchableOpacity className="mt-5">
-                            <Text className="text-black font-semibold border-b border-gray-300 pb-5">{t('About Us')}</Text>
+                        {/* <TouchableOpacity className="mt-5 border-b border-gray-300 ">
+                            <Text style={[{ fontSize: Hp(2), fontFamily: 'Lato-Regular'}, Platform.select({ ios: { fontSize: Hp(1.8)}})]} className="text-black pb-5">{t('About Us')}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity className="mt-5">
-                            <Text className="text-black font-semibold border-b border-gray-300 pb-5">{t('Contact Us')}</Text>
+                        <TouchableOpacity className="mt-5 border-b border-gray-300 ">
+                            <Text style={[{ fontSize: Hp(2), fontFamily: 'Lato-Regular'}, Platform.select({ ios: { fontSize: Hp(1.8)}})]}  className="text-black pb-5">{t('Contact Us')}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity className="mt-5">
-                            <Text className="text-black font-semibold border-b border-gray-300 pb-5">{t('Terms and Conditions')}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity className="mt-5">
-                            <Text className="text-black font-semibold border-b border-gray-300 pb-5">{t('Privacy Policy')}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity className="flex-row items-center mt-5 border-b border-gray-300 pb-5" onPress={() => setLogoutModal(true)}>
-                            <Text className="text-red-500 font-semibold mr-2">{t('Log Out')}</Text>
+                        <TouchableOpacity className="mt-5 border-b border-gray-300 ">
+                            <Text style={[{ fontSize: Hp(2), fontFamily: 'Lato-Regular'}, Platform.select({ ios: { fontSize: Hp(1.8)}})]}  className="text-black pb-5">{t('Terms and Conditions')}</Text>
+                        </TouchableOpacity> */}
+                        {/* <TouchableOpacity className="mt-5 border-b border-gray-300 ">
+                            <Text style={[{ fontSize: Hp(2), fontFamily: 'Lato-Regular'}, Platform.select({ ios: { fontSize: Hp(1.8)}})]}  className="text-black pb-5">{t('Privacy Policy')}</Text>
+                        </TouchableOpacity> */}
+                        <TouchableOpacity className="flex-row items-center mt-5 pb-5 border-b border-gray-300 " onPress={() => setLogoutModal(true)}>
+                            <Text style={[{ fontSize: Hp(2), fontFamily: 'Lato-Regular' }, Platform.select({ ios: { fontSize: Hp(1.8) } })]} className="text-red-500 mr-2">{t('Log Out')}</Text>
                             <LogoutCurve
                                 size={Hp(2.2)}
                                 color="red"
                             />
                         </TouchableOpacity>
                         <TouchableOpacity className="flex-row items-center my-5" onPress={() => setDeleteModalVisible(true)}>
-                            <Text className="text-red-500 font-semibold mr-2">{t('Delete Account')}</Text>
+                            <Text style={[{ fontSize: Hp(2), fontFamily: 'Lato-Regular' }, Platform.select({ ios: { fontSize: Hp(1.8) } })]} className="text-red-500 mr-2">{t('Delete Account')}</Text>
                             <ProfileDelete size={Hp(2.2)}
                                 color="red" />
                         </TouchableOpacity>
@@ -247,7 +245,6 @@ const ProfileScreen = () => {
                     <View className="bg-white p-5 rounded-xl shadow-lg w-11/12">
                         <Text className="font-bold text-center mb-4" style={{ fontSize: Hp(2.2) }}>Delete Account</Text>
                         <Text className="text-center mb-4">Are you sure you want to delete your account? This action cannot be undone.</Text>
-
                         <View className="flex-row justify-around">
                             <TouchableOpacity className="bg-gray-300 py-2 px-5 rounded-full" onPress={() => setDeleteModalVisible(false)}>
                                 <Text>Cancel</Text>
@@ -266,57 +263,62 @@ const ProfileScreen = () => {
                 visible={modalVisible}
                 onRequestClose={() => setModalVisible(false)}
             >
-                <View className="flex-1 justify-center items-center" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-                    <View className="bg-white p-5 rounded-xl shadow-lg w-11/12">
-                        <View className="flex-row items-center justify-between">
-                            <Text className="font-bold text-center" style={{ fontSize: Hp(2.2) }}>Edit Profile</Text>
-                            <TouchableOpacity onPress={() => setModalVisible(false)} >
-                            <Image source={require('../../../../assets/icons/cross-icon.png')} className="w-3 h-3" />
-                            </TouchableOpacity>
-                        </View>
+                <KeyboardAvoidingView
+                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                    style={{ flex: 1 }}
+                >
+                    <View className="flex-1 justify-center items-center" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+                        <View className="bg-white p-5 rounded-xl shadow-lg w-11/12">
+                            <View className="flex-row items-center justify-between">
+                                <Text className="font-bold text-center" style={{ fontSize: Hp(2.2) }}>Edit Profile</Text>
+                                <TouchableOpacity onPress={() => setModalVisible(false)} >
+                                    <Image source={require('../../../../assets/icons/cross-icon.png')} className="w-3 h-3" />
+                                </TouchableOpacity>
+                            </View>
 
-                        {/* Editable fields */}
-                        <TextInput
-                            value={updatedUser.name}
-                            onChangeText={(text) => setUpdatedUser({ ...updatedUser, name: text })}
-                            placeholder="Name"
-                            className="border-b border-gray-300 pt-5 pb-2 text-black"
-                        />
+                            {/* Editable fields */}
+                            <TextInput
+                                value={updatedUser.name}
+                                onChangeText={(text) => setUpdatedUser({ ...updatedUser, name: text })}
+                                placeholder="Name"
+                                className="border-b border-gray-300 pt-5 pb-2 text-black"
+                            />
 
-                        <TextInput
-                            value={updatedUser.mobile}
-                            onChangeText={(text) => setUpdatedUser({ ...updatedUser, mobile: text })}
-                            placeholder="Mobile Phone"
-                            className="border-b border-gray-300 pt-5 pb-2 text-black"
-                            keyboardType="phone-pad"
-                        />
-                        <TextInput
-                            value={updatedUser.email}
-                            onChangeText={(text) => setUpdatedUser({ ...updatedUser, email: text })}
-                            placeholder="Email"
-                            className="border-b border-gray-300 pt-5 pb-2 text-gray"
-                            keyboardType="email-address"
-                            editable={false}
-                        />
-                        <TextInput
-                            value={updatedUser.country}
-                            onChangeText={(text) => setUpdatedUser({ ...updatedUser, country: text })}
-                            placeholder="Country"
-                            className="border-b border-gray-300 pt-5 pb-2 text-black"
-                        />
-                        <TextInput
-                            value={updatedUser.gender}
-                            onChangeText={(text) => setUpdatedUser({ ...updatedUser, gender: text })}
-                            placeholder="Gender"
-                            className="border-b border-gray-300 pt-5 pb-2 text-black"
-                        />
-                        <View className="flex-row items-center justify-end">
-                            <TouchableOpacity className="bg-primary py-3 rounded-full w-1/2 items-center mt-5" onPress={handleUpdate} >
-                                <Text style={{ fontSize: Hp(1.8) }} className="text-white py-1 font-bold">Save</Text>
-                            </TouchableOpacity>
+                            <TextInput
+                                value={updatedUser.mobile}
+                                onChangeText={(text) => setUpdatedUser({ ...updatedUser, mobile: text })}
+                                placeholder="Mobile Phone"
+                                className="border-b border-gray-300 pt-5 pb-2 text-black"
+                                keyboardType="phone-pad"
+                            />
+                            <TextInput
+                                value={updatedUser.email}
+                                onChangeText={(text) => setUpdatedUser({ ...updatedUser, email: text })}
+                                placeholder="Email"
+                                className="border-b border-gray-300 pt-5 pb-2 ios:text-gray-300"
+                                keyboardType="email-address"
+                                editable={false}
+                            />
+                            <TextInput
+                                value={updatedUser.country}
+                                onChangeText={(text) => setUpdatedUser({ ...updatedUser, country: text })}
+                                placeholder="Country"
+                                className="border-b border-gray-300 pt-5 pb-2 text-black"
+                            />
+                            <TextInput
+                                value={updatedUser.gender}
+                                onChangeText={(text) => setUpdatedUser({ ...updatedUser, gender: text })}
+                                placeholder="Gender"
+                                className="border-b border-gray-300 pt-5 pb-2 text-black"
+                            />
+                            <View className="flex-row items-center justify-end">
+                                <TouchableOpacity className="bg-primary py-3 rounded-full w-1/2 items-center mt-5" onPress={handleUpdate} >
+                                    <Text style={{ fontSize: Hp(1.8) }} className="text-white py-1 font-bold">Save</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
-                </View>
+                </KeyboardAvoidingView>
             </Modal>
         </View>
     );

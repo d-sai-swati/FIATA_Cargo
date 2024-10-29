@@ -7,6 +7,7 @@
   "containerTitle": "A checklist for the safe packing and avoidance of pest contamination of freight containers1.",
   "containerDescription": "Instructions: Record the details of the container being packed and complete the checklist below. If ANY of the answers are ‘NO’, stop packing and ensure corrective action is taken. Until that is done, DO NOT dispatch the container. Save the checklist for each container at conclusion of packing",
   "container_number": "Container Number",
+  "select_date":"Select Date",
   "date": "Shipping Date",
   "packing_address": "Packing Address",
   "responsible_person": "Responsible Person",

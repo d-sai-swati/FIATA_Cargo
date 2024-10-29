@@ -1,8 +1,9 @@
 import { ArrowDown2 } from 'iconsax-react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Modal, FlatList, Pressable, Image } from 'react-native';
 import { Hp } from '../../utils/constants/themes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import i18next from 'i18next';
 
 const languages = [
     { label: 'English', value: 'en', flag: require('../../../assets/icons/English.png') },
@@ -14,7 +15,8 @@ const languages = [
     { label: 'Arabic', value: 'ar', flag: require('../../../assets/icons/Arabic.png') },
 ];
 
-const SelectLanguage = ({ defaultLanguageValue = "en", onSelect }) => {
+const SelectLanguage = ({ defaultLanguageValue='en' , onSelect }) => {
+    console.log("select555555555555555555555555555",defaultLanguageValue)
     const [selectedLanguage, setSelectedLanguage] = useState(
         languages.find(language => language.value === defaultLanguageValue)
     );
@@ -24,9 +26,20 @@ const SelectLanguage = ({ defaultLanguageValue = "en", onSelect }) => {
         setSelectedLanguage(language);
         onSelect(language);
     };
-
+    const getLanguage = async() => {
+        const storedLanguage = await AsyncStorage.getItem('language');
+        if (storedLanguage !== null) {
+            console.log('hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii', storedLanguage)
+            i18next.changeLanguage(storedLanguage);
+            setSelectedLanguage(languages.find(language => language.value === storedLanguage));
+        }
+    } 
+    useEffect( () => {
+        getLanguage()
+    },[]);
+    
     return (
-        <View className="relative bg-[#E9F3FF] py-2 px-1 rounded-lg">
+        <View className="relative bg-[#E9F3FF] py-2 px-1 ios:py-2.5 rounded-lg">
             <TouchableOpacity
                 className="flex-row items-center justify-between"
                 onPress={() => setIsOpen(!isOpen)}
@@ -58,7 +71,7 @@ const SelectLanguage = ({ defaultLanguageValue = "en", onSelect }) => {
                                         }}
                                     >
                                         <Image source={item.flag} className="h-5 w-7 mr-2" />
-                                        <Text style={{ fontSize: Hp(1.8) }}>{item.label}</Text>
+                                        <Text style={{ fontSize: Hp(1.8), fontFamily:'Lato-Regular'}}>{item.label}</Text>
                                     </TouchableOpacity>
                                 )}
                             />

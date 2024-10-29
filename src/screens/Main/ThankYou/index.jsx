@@ -39,10 +39,10 @@ const ThankYou = ({ navigation }) => {
   return (
     <View className="flex-1 bg-white">
       <TouchableOpacity
-        className="flex-row mt-20 mx-5 justify-end"
+        className="flex-row mt-20 mx-5 p-3 justify-end"
         onPress={handleCloseModal}
       >
-        <Image source={require('../../../../assets/icons/cross-icon.png')} className="w-3 h-3" />
+        <Image source={require('../../../../assets/icons/cross-icon.png')} className="w-4 h-4" />
 
       </TouchableOpacity>
       <View className="flex-1 justify-center items-center bg-white px-5">

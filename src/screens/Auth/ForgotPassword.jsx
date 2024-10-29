@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, ScrollView, Alert, ActivityIndicator } from 'react-native';
-import { Hp } from '../../utils/constants/themes';
+import { View, Text, TextInput, TouchableOpacity, Image, ScrollView, Alert, ActivityIndicator, KeyboardAvoidingView, Platform } from 'react-native';
+import { Hp, Wp } from '../../utils/constants/themes';
 import axiosInstance from '../../utils/axiosInstance';
 import { Eye, EyeSlash } from 'iconsax-react-native';
 
@@ -99,127 +99,143 @@ export default function ForgotPassword({ navigation }) {
     };
 
     return (
-        <ScrollView className="bg-white">
-            <View className="flex-grow bg-bgBlue">
-                <View className="bg-bgBlue py-20 flex-row justify-center items-center">
-                    <Image className="w-56 h-56" source={require('../../../assets/images/Company-logo.png')} />
+        <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={{ flex: 1 }}
+        >
+            <ScrollView className="bg-white" contentContainerStyle={{ flexGrow: 1 }}>
+                {/* <View className="flex-grow"> */}
+                <View className="pt-20 ios:pt-20 flex-1 justify-center items-center">
+                    <Image
+                        className="w-56 h-56 ios:w-60 ios:h-60"
+                        // style={{ width: Wp(60), height: Hp(30)}}
+                        source={require('../../../assets/images/Company-logo.png')}
+                    />
                 </View>
-                <View className="flex-grow p-5 bg-white rounded-t-3xl">
-                    <Text style={{ fontSize: Hp(2.5) }} className="font-bold">Reset Password</Text>
+                <View className="flex-1 justify-end">
+                    <View className="px-5 py-10 ios:px-5 ios:pt-10 ios:pb-32 bg-bgBlue rounded-t-3xl">
+                        <Text style={{ fontSize: Hp(2.5) , fontFamily:'Lato-Bold'}} className="font-bold ios:pb-3">Reset Password</Text>
 
-                    {/* Email Input */}
-                    {!otpSent && (
-                        <>
-                            <TextInput
-                                style={{ fontSize: Hp(1.8) }}
-                                className="border-b border-gray-400 pt-5 pb-2 text-black"
-                                placeholder="Email"
-                                value={email}
-                                onChangeText={(text) => setEmail(text)}
-                            />
-                            {errors.email && <Text style={{ color: 'red', marginTop: 5 }}>{errors.email}</Text>}
-
-                            <TouchableOpacity
-                                className="bg-primary py-3 rounded-full items-center mt-5"
-                                onPress={handleSendOtp}
-                            >
-                                {loading ? (
-                                    <ActivityIndicator color="white" />
-                                ) : (
-                                    <Text style={{ fontSize: Hp(1.8) }} className="text-white py-1 font-bold">Send OTP</Text>
-                                )}
-                            </TouchableOpacity>
-                        </>
-                    )}
-
-                    {/* Verification Code Input */}
-                    {otpSent && !emailVerified && (
-                        <>
-                            <TextInput
-                                style={{ fontSize: Hp(1.8) }}
-                                className="border-b border-gray-400 pt-5 pb-2 text-black"
-                                placeholder="Verification Code"
-                                value={otp}
-                                onChangeText={setOtp}
-                            />
-                            {errors.otp && <Text style={{ color: 'red', marginTop: 5 }}>{errors.otp}</Text>}
-
-                            <TouchableOpacity
-                                className="bg-primary py-3 rounded-full items-center mt-5"
-                                onPress={handleVerifyOtp}
-                            >
-                                <Text style={{ fontSize: Hp(1.8) }} className="text-white py-1 font-bold">Confirm</Text>
-                            </TouchableOpacity>
-                            <Text style={{ fontSize: Hp(1.5), marginTop: 10, textAlign: 'center' }}>
-                                Didn't receive OTP? <Text className="text-primary" onPress={handleSendOtp}>Resend OTP</Text>
-                            </Text>
-                        </>
-
-                    )}
-
-                    {/* Reset Password Inputs */}
-                    {emailVerified && (
-                        <>
-                            <TextInput
-                                style={{ fontSize: Hp(1.8) }}
-                                className="border-b border-gray-400 pt-5 pb-2 text-black hidden"
-                                placeholder="Email"
-                                value={email}
-                            />
-                            <TextInput
-                                style={{ fontSize: Hp(1.8) }}
-                                className="border-b border-gray-400 pt-5 pb-2 text-black hidden"
-                                placeholder="Email Verification Token"
-                                value={emailVerificationToken}
-                            />
-                            <View className="flex-row items-center border-b border-gray-400 pt-4">
+                        {/* Email Input */}
+                        {!otpSent && (
+                            <>
                                 <TextInput
-                                    style={{ fontSize: Hp(1.8) }}
-                                    className="flex-1 pb-2 text-black"
-                                    placeholder="Reset Password"
-                                    value={resetpassword}
-                                    onChangeText={(text) => setResetPassword(text)}
-                                    secureTextEntry={!showPassword}
+                                    style={{ fontSize: Hp(1.8), fontFamily:'Lato-Regular'}}
+                                    className="border-b border-gray-400 pt-5 pb-2 ios:py-5 text-black"
+                                    placeholder="Email"
+                                    value={email}
+                                    onChangeText={(text) => setEmail(text)}
                                 />
-                            
-                                <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                                    {showPassword ? (
-                                        <Eye size={Hp(3)} color="gray" />
+                                {errors.email && <Text style={{ color: 'red', marginTop: 5 }}>{errors.email}</Text>}
+
+                                <TouchableOpacity
+                                    className="bg-primary py-3 rounded-full items-center mt-5 ios:mt-8"
+                                    onPress={handleSendOtp}
+                                >
+                                    {loading ? (
+                                        <ActivityIndicator color="white" />
                                     ) : (
-                                        <EyeSlash size={Hp(3)} color="gray" />
+                                        <Text style={{ fontSize: Hp(1.8) , fontFamily:'Lato-Bold'}} className="text-white py-1 font-bold">Send OTP</Text>
                                     )}
                                 </TouchableOpacity>
-                            </View>
+                            </>
+                        )}
 
-                            <View className="flex-row items-center border-b border-gray-400 pt-4">
+                        {/* Verification Code Input */}
+                        {otpSent && !emailVerified && (
+                            <>
                                 <TextInput
-                                    style={{ fontSize: Hp(1.8) }}
-                                    className="flex-1 pb-2 text-black"
-                                    placeholder="Confirm Password"
-                                    value={confirmpassword}
-                                    onChangeText={(text) => setConfirmPassword(text)}
-                                    secureTextEntry={!showConfirmPassword}
+                                    style={{ fontSize: Hp(1.8), fontFamily:'Lato-Regular' }}
+                                    className="border-b border-gray-400 pt-5 pb-2 ios:py-5 text-black"
+                                    placeholder="Verification Code"
+                                    value={otp}
+                                    onChangeText={setOtp}
                                 />
-                                 <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
-                                    {showConfirmPassword ? (
-                                        <Eye size={Hp(3)} color="gray" />
+                                {errors.otp && <Text style={{ color: 'red', marginTop: 5 }}>{errors.otp}</Text>}
+
+                                <TouchableOpacity
+                                    className="bg-primary py-3 rounded-full items-center mt-5 ios:mt-8"
+                                    onPress={handleVerifyOtp}
+                                >
+                                    <Text style={{ fontSize: Hp(1.8), fontFamily:'Lato-Bold' }} className="text-white py-1 font-bold">Confirm</Text>
+                                </TouchableOpacity>
+                                <Text style={{ fontSize: Hp(1.5), textAlign: 'center' , fontFamily:'Lato-Regular' }} className=" mt-6">
+                                    Didn't receive OTP? <Text className="text-primary" onPress={handleSendOtp}>Resend OTP</Text>
+                                </Text>
+                            </>
+
+                        )}
+
+                        {/* Reset Password Inputs */}
+                        {emailVerified && (
+                            <>
+                                <TextInput
+                                    style={{ fontSize: Hp(1.8), fontFamily:'Lato-Regular' }}
+                                    className="border-b border-gray-400 pt-5 pb-2 text-black hidden"
+                                    placeholder="Email"
+                                    value={email}
+                                />
+                                <TextInput
+                                    style={{ fontSize: Hp(1.8), fontFamily:'Lato-Regular' }}
+                                    className="border-b border-gray-400 pt-5 pb-2 text-black hidden"
+                                    placeholder="Email Verification Token"
+                                    value={emailVerificationToken}
+                                />
+                                <View className="flex-row items-center border-b border-gray-400 ios:pb-3 ios:pt-6 pt-4">
+                                    <TextInput
+                                        style={{ fontSize: Hp(1.8), fontFamily:'Lato-Regular' }}
+                                        className="flex-1 pb-2 text-black"
+                                        placeholder="Reset Password"
+                                        value={resetpassword}
+                                        onChangeText={(text) => setResetPassword(text)}
+                                        secureTextEntry={!showPassword}
+                                    />
+
+                                    <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                                        {showPassword ? (
+                                            <Eye size={Hp(3)} color="gray" />
+                                        ) : (
+                                            <EyeSlash size={Hp(3)} color="gray" />
+                                        )}
+                                    </TouchableOpacity>
+                                </View>
+
+                                <View className="flex-row items-center border-b border-gray-400 ios:pb-3 ios:pt-6 pt-4">
+                                    <TextInput
+                                        style={{ fontSize: Hp(1.8), fontFamily:'Lato-Regular' }}
+                                        className="flex-1 pb-2 text-black"
+                                        placeholder="Confirm Password"
+                                        value={confirmpassword}
+                                        onChangeText={(text) => setConfirmPassword(text)}
+                                        secureTextEntry={!showConfirmPassword}
+                                    />
+                                    <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
+                                        {showConfirmPassword ? (
+                                            <Eye size={Hp(3)} color="gray" />
+                                        ) : (
+                                            <EyeSlash size={Hp(3)} color="gray" />
+                                        )}
+                                    </TouchableOpacity>
+                                </View>
+                                {errors.confirmpassword && <Text style={{ color: 'red' }}>{errors.confirmpassword}</Text>}
+
+                                <TouchableOpacity
+                                    className="bg-primary py-3 rounded-full items-center mt-5 ios:mt-8"
+                                    onPress={handleResetPassword}
+                                >
+                                    {loading ? (
+                                        <ActivityIndicator color="white" />
                                     ) : (
-                                        <EyeSlash size={Hp(3)} color="gray" />
+                                        <Text style={{ fontSize: Hp(1.8), fontFamily:'Lato-Bold' }} className="text-white py-1 font-bold">Reset Password</Text>
                                     )}
                                 </TouchableOpacity>
-                            </View>
-                            {errors.confirmpassword && <Text style={{ color: 'red' }}>{errors.confirmpassword}</Text>}
 
-                            <TouchableOpacity
-                                className="bg-primary py-3 rounded-full items-center mt-5"
-                                onPress={handleResetPassword}
-                            >
-                                <Text style={{ fontSize: Hp(1.8) }} className="text-white py-1 font-bold">Reset Password</Text>
-                            </TouchableOpacity>
-                        </>
-                    )}
+                            </>
+                        )}
+                    </View>
                 </View>
-            </View>
-        </ScrollView>
+                {/* </View> */}
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
 }

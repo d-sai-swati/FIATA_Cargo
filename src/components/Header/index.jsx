@@ -6,7 +6,7 @@ import SelectLanguage from '../SelectLanguage';
 import { Hp } from '../../utils/constants/themes';
 
 
-const Header = ({ title, isRightIcon, onPress , onBackPress}) => {
+const Header = ({ title, isRightIcon, onPress, onBackPress }) => {
     const navigation = useNavigation();
     const [selectedLanguage, setSelectedLanguage] = useState({ label: 'Lang', value: '' });
     return (
@@ -27,9 +27,12 @@ const Header = ({ title, isRightIcon, onPress , onBackPress}) => {
             <TouchableOpacity onPress={onBackPress || navigation.goBack}>
                 <ArrowLeft2 size={Hp(2.5)} color="white" />
             </TouchableOpacity>
-            <Text className="flex-1 text-center text-white" style={{ fontSize: Hp(2.5) , fontFamily:'Calibri-Bold' }}>{title}</Text>
-            {isRightIcon && <Setting2 size="24" color='white'onPress={onPress}/>}
-
+            <Text className="flex-1 text-center text-white" style={[{ fontSize: Hp(2.5), fontFamily: 'Calibri-Bold'}, Platform.select({ ios: { fontSize: Hp(2.3) } })]}>{title}</Text>
+            {isRightIcon &&
+                <TouchableOpacity onPress={onPress}>
+                    <Setting2 size="24" color='white' />
+                </TouchableOpacity>
+            }
         </View>
     )
 }

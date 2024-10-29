@@ -7,6 +7,7 @@
   "containerTitle": "Une liste de contrôle pour l'emballage sûr et la prévention de la contamination parasitaire des conteneurs de fret1.",
   "containerDescription": "Instructions : Enregistrez les détails du conteneur à emballer et complétez la liste de contrôle ci-dessous. Si l’une des réponses est « NON », arrêtez d’emballer et assurez-vous que des mesures correctives sont prises. En attendant, NE PAS expédier le conteneur. Conservez la liste de contrôle pour chaque conteneur à la fin de l'emballage.",
   "container_number": "Numéro de conteneur",
+  "select_date": "sélectionner date",
   "date": "Date",
   "packing_address": "Adresse d'emballage",
   "responsible_person": "Personne responsable",

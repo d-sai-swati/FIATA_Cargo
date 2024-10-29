@@ -5,6 +5,8 @@ import ProfileScreen from '../screens/Main/Profile';
 import HistoryScreen from '../screens/Main/History';
 import { Clock, DocumentText, Home, User } from 'iconsax-react-native';
 import Checklist from '../screens/Main/CheckList';
+import { Hp } from '../utils/constants/themes';
+import { Platform } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 const Tabs = () => {
@@ -28,7 +30,20 @@ const Tabs = () => {
                 },
                 tabBarActiveTintColor: 'white',
                 tabBarInactiveTintColor: 'white',
-                tabBarStyle: { backgroundColor: '#0092C8',  paddingBottom: 10, paddingTop: 10, height: 65 },
+                tabBarStyle: Platform.select({
+                    ios: {
+                      backgroundColor: '#0092C8',
+                      paddingBottom: 30,
+                      paddingTop: 10,
+                      height: Hp(10),
+                    },
+                    android: {
+                      backgroundColor: '#0092C8',
+                      paddingBottom: 10,
+                      paddingTop: 10,
+                      height: Hp(10),
+                    },
+                  }),
                 tabBarActiveBackgroundColor: '#0092C8',
                 tabBarLabelStyle: {
                     fontSize: 12,

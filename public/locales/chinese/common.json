@@ -7,6 +7,7 @@
   "containerTitle": "貨運貨櫃安全包裝和避免蟲害污染的檢查表1。",
   "containerDescription": "說明：記錄正在包裝的容器的詳細資訊並填寫下面的清單。如果任何一個答案為“否”，請停止包裝並確保採取糾正措施。在此之前，請勿發送貨櫃。包裝結束時保存每個貨櫃的清單",
   "container_number": "貨櫃號",
+  "select_date": "選擇日期",
   "date": "Date",
   "packing_address": "裝箱地址",
   "responsible_person": "負責人",

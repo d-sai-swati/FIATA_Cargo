@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Image, ScrollView, Alert, ActivityIndicator } from 'react-native';
-import { Hp } from '../../utils/constants/themes';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Image, ScrollView, Alert, ActivityIndicator, Platform, KeyboardAvoidingView } from 'react-native';
+import { Hp, Wp } from '../../utils/constants/themes';
 import axiosInstance from '../../utils/axiosInstance';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -43,7 +43,6 @@ export default function LoginScreen({ }) {
             setLoading(false);
         }
     };
-
     // Update the email and clear error on change
     const handleEmailChange = (text) => {
         setEmail(text);
@@ -61,72 +60,78 @@ export default function LoginScreen({ }) {
     };
 
     return (
-        <ScrollView className="bg-white" contentContainerStyle={{ flexGrow: 1 }}>
-            <View className="pt-20 flex-1 justify-center items-center">
-                <Image
-                    className="w-56 h-56"
-                    source={require('../../../assets/images/Company-logo.png')}
-                />
-            </View>
-            <View className="flex-1 justify-end">
-                <View className="px-5 py-10 bg-bgBlue rounded-t-3xl">
-                    <Text style={{
-                        fontSize: Hp(2.5), fontFamily: 'Calibri-Regular'
-                    }} className="font-bold">Log In</Text>
-                    < TextInput
-                        style={{ fontSize: Hp(1.8) }}
-                        className="border-b border-gray-400 pt-5 pb-2 text-black"
-                        placeholder="Email"
-                        value={email}
-                        onChangeText={handleEmailChange}
+        <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={{ flex: 1 }}
+        >
+            <ScrollView className="bg-white" contentContainerStyle={{ flexGrow: 1 }}>
+                <View className="pt-20 ios:pt-20 flex-1 justify-center items-center">
+                    <Image
+                        className="w-56 h-56 ios:w-60 ios:h-60"
+                        // style={{ width: Wp(60), height: Hp(30)}}
+                        source={require('../../../assets/images/Company-logo.png')}
                     />
-                    {errors.email && <Text style={{ color: 'red', marginTop: 5 }}>{errors.email[0]}</Text>}
-                    <View className="flex-row items-center pt-4 border-b border-gray-400">
-                        <TextInput
-                            style={{ fontSize: Hp(1.8) }}
-                            className="flex-1 pb-2 text-black"
-                            placeholder="Password"
-                            value={password}
-                            onChangeText={handlePasswordChange}
-                            secureTextEntry={!showPassword}
+                </View>
+                <View className="flex-1 justify-end">
+                    <View className="px-5 py-10 ios:px-5 ios:py-10 bg-bgBlue rounded-t-3xl">
+                        <Text style={{
+                            fontSize: Hp(2.5), fontFamily: 'Calibri-Regular'
+                        }} className="font-bold">Log In</Text>
+                        < TextInput
+                            style={{ fontSize: Hp(1.8), fontFamily:'Lato-Regular' }}
+                            className="border-b border-gray-400 py-3 ios:pb-3 ios:pt-8 text-black"
+                            placeholder="Email"
+                            value={email}
+                            onChangeText={handleEmailChange}
                         />
-                        <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                            {showPassword ? (
-                                <Eye size={Hp(3)} color="gray" />
+                        {errors.email && <Text style={{ color: 'red', marginTop: 5 }}>{errors.email[0]}</Text>}
+
+                        <View className="flex-row items-center pt-4 ios:pb-2 ios:pt-6 border-b border-gray-400">
+                            <TextInput
+                                style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
+                                className="flex-1 ios:pb-2 pb-2 text-black"
+                                placeholder="Password"
+                                value={password}
+                                onChangeText={handlePasswordChange}
+                                secureTextEntry={!showPassword}
+                            />
+                            <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                                {showPassword ? (
+                                    <Eye size={Hp(3)} color="gray" />
+                                ) : (
+                                    <EyeSlash size={Hp(3)} color="gray" />
+                                )}
+                            </TouchableOpacity>
+
+                        </View>
+                        {errors.password && <TextInput style={{ color: 'red' }}>{errors.password[0]}</TextInput>}
+
+                        <TouchableOpacity className="bg-primary ios:py-3 mt-5 ios:mt-8 py-3 rounded-full items-center " onPress={handleLogin}>
+                            {loading ? (
+                                <ActivityIndicator color="white" /> // Show loader when loading
                             ) : (
-                                <EyeSlash size={Hp(3)} color="gray" />
+                                <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Bold' }} className="text-white ios:py-1 py-1">Log In</Text>
                             )}
                         </TouchableOpacity>
 
-                    </View>
-                    {errors.password && <TextInput style={{ color: 'red' }}>{errors.password[0]}</TextInput>}
-
-                    <TouchableOpacity className="bg-primary py-3 rounded-full items-center mt-5" onPress={handleLogin}>
-                        {loading ? (
-                            <ActivityIndicator color="white" /> // Show loader when loading
-                        ) : (
-                            <Text style={{ fontSize: Hp(1.8) }} className="text-white py-1 font-bold">Log In</Text>
-                        )}
-                    </TouchableOpacity>
-
-                    <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
-                        <Text className="text-center text-primary py-5 font-bold">Forgot Password?</Text>
-                    </TouchableOpacity>
-                    {/* <Text className="text-center text-gray-400 py-5">Or continue with</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
+                            <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Bold' }} className="text-center text-primary py-5">Forgot Password?</Text>
+                        </TouchableOpacity>
+                        {/* <Text className="text-center text-gray-400 py-5">Or continue with</Text>
 
           <TouchableOpacity className="bg-btnGray py-3 mb-4 rounded-full flex-row justify-center gap-2 items-center">
             <Image source={require('../../assets/icons/google.png')} className="w-4 h-4" />
             <Text style={{ fontSize: Hp(1.8) }} className="text-black font-semibold">Google</Text>
           </TouchableOpacity> */}
 
-                    <Text className="text-center text-gray-500">
-                        Dont have an account?{' '}
-                        <Text style={{ fontSize: Hp(1.8) }} className="text-primary font-bold" onPress={() => navigation.navigate('Register')}>Creat now</Text>
-                    </Text>
+                        <Text className="text-center text-gray-500">
+                            Dont have an account?{' '}
+                            <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Bold' }} className="text-primary" onPress={() => navigation.navigate('Register')}>Creat now</Text>
+                        </Text>
 
+                    </View>
                 </View>
-            </View>
-
-        </ScrollView>
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
 }

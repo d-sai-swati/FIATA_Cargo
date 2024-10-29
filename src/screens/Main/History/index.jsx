@@ -47,15 +47,15 @@ const HistoryScreen = () => {
       fetchHistoryData();
     }, [])
   );
-  // const arrayBufferToBase64 = (buffer) => {
-  //   let binary = '';
-  //   const bytes = new Uint8Array(buffer);
-  //   const len = bytes.byteLength;
-  //   for (let i = 0; i < len; i++) {
-  //     binary += String.fromCharCode(bytes[i]);
-  //   }
-  //   return btoa(binary);
-  // };
+  const arrayBufferToBase64 = (buffer) => {
+    let binary = '';
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary);
+  };
 
   const downloadPdf = async (id) => {
     setLoading(id);
@@ -68,16 +68,15 @@ const HistoryScreen = () => {
         responseType: 'arraybuffer',
       });
 
-      // const base64Data = arrayBufferToBase64(response.data);
-      // const base64Data = encode(response.data);
-      const base64Data = encode(String.fromCharCode(...new Uint8Array(response.data)));
-
+      const base64Data = arrayBufferToBase64(response.data);
       const fileUri = FileSystem.documentDirectory + `checklist_${id}.pdf`;
 
       await FileSystem.writeAsStringAsync(fileUri, base64Data, {
         encoding: FileSystem.EncodingType.Base64,
       });
-
+      if (Platform.OS !== 'web' && await Sharing.isAvailableAsync()) {
+        await Sharing.shareAsync(fileUri);
+      }
       Alert.alert('Success', 'PDF downloaded successfully.', [
         { text: 'OK', onPress: () => console.log('PDF saved at:', fileUri) }
       ]);
@@ -89,43 +88,6 @@ const HistoryScreen = () => {
     }
   };
 
-  // const downloadPdf = async (id) => {
-  //   setLoading(id);
-
-  //   try {
-  //     const token = await AsyncStorage.getItem('token');
-  //     // const url = `http://192.168.0.101/api/downloadPdf/${id}`;
-  //     const url = await axiosInstance.get(`/downloadPdf/${id}`);
-
-  //     // Log the URL to check if it's correct
-  //     console.log('Downloading PDF from:', url);
-
-  //     const fileUri = FileSystem.documentDirectory + `checklist_${id}.pdf`;
-
-  //     const downloadResponse = await FileSystem.downloadAsync(url, fileUri, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
-
-  //     if (downloadResponse.status === 200) {
-  //       Alert.alert('Success', 'PDF downloaded successfully.');
-
-  //       if (Platform.OS !== 'web' && await Sharing.isAvailableAsync()) {
-  //         await Sharing.shareAsync(fileUri);
-  //       }
-  //     } else {
-  //       Alert.alert('Error', 'Failed to download PDF.');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error downloading PDF:', error);
-  //     Alert.alert('Error', 'Failed to download PDF.');
-  //   } finally {
-  //     setLoading(null);
-  //   }
-  // };
-
-
   return (
     <View className="bg-white flex-1">
       <Header title="History" />
@@ -136,7 +98,7 @@ const HistoryScreen = () => {
           </View>
         ) : (
           historyData.map((items, index) => (
-            <View key={index} className="p-4 bg-bgBlue m-5 rounded-2xl">
+            <View key={index} className="p-4 bg-bgBlue m-5 rounded-2xl mt-10">
               <View className="flex-row flex-wrap">
                 <View style={{ width: '50%', padding: 8 }}>
                   <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }} className="text-gray-500">{t('container_number')}</Text>

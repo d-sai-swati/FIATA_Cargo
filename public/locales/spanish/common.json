@@ -7,6 +7,7 @@
     "containerTitle": "Una lista de verificación para el embalaje seguro y la prevención de la contaminación por plagas de los contenedores de carga1.",
     "containerDescription": "Instrucciones: Registre los detalles del contenedor que se está empacando y complete la lista de verificación a continuación. Si CUALQUIERA de las respuestas es 'NO', deje de empacar y asegúrese de que se tomen medidas correctivas. Hasta que esto se haga, NO envíe el contenedor. Guarde la lista de verificación para cada contenedor al finalizar el embalaje.",
     "container_number": "Número de contenedor",
+    "select_date": "Seleccionar fecha",
     "date": "Date",
     "packing_address": "Dirección de embalaje",
     "responsible_person": "Persona Responsable",

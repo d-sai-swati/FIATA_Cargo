@@ -7,7 +7,7 @@
     "icon": "./assets/images/Company-logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/images/Company-logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -16,11 +16,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/images/Company-logo.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.anonymous.FIATACargo",
-      "permissions": ["INTERNET"]
+      "permissions": ["INTERNET"],
+      "usesClearTextTraffic": true
     },
     "web": {
       "favicon": "./assets/favicon.png"
