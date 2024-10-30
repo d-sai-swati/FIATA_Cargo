@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Image, ScrollView, Alert, ActivityIndicator, Platform, KeyboardAvoidingView } from 'react-native';
-import { Hp, Wp } from '../../utils/constants/themes';
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, Image, ScrollView, Alert, ActivityIndicator, Platform, KeyboardAvoidingView } from 'react-native';
+import { Hp} from '../../utils/constants/themes';
 import axiosInstance from '../../utils/axiosInstance';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
-import { EyeIcon, EyeOffIcon } from 'react-native-heroicons/outline';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { Eye, EyeSlash } from 'iconsax-react-native';
 
 export default function LoginScreen({ }) {
@@ -58,6 +57,14 @@ export default function LoginScreen({ }) {
             setErrors((prevErrors) => ({ ...prevErrors, password: null }));
         }
     };
+    useFocusEffect(
+        React.useCallback(() => {
+            return () => {
+                setEmail('');
+                setPassword('');
+            };
+        }, [])
+    );
 
     return (
         <KeyboardAvoidingView
@@ -74,11 +81,9 @@ export default function LoginScreen({ }) {
                 </View>
                 <View className="flex-1 justify-end">
                     <View className="px-5 py-10 ios:px-5 ios:py-10 bg-bgBlue rounded-t-3xl">
-                        <Text style={{
-                            fontSize: Hp(2.5), fontFamily: 'Calibri-Regular'
-                        }} className="font-bold">Log In</Text>
-                        < TextInput
-                            style={{ fontSize: Hp(1.8), fontFamily:'Lato-Regular' }}
+                        <Text style={{ fontSize: Hp(2.5), fontFamily: 'Calibri-Regular'}} className="font-bold">Log In</Text>
+                        <TextInput
+                            style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
                             className="border-b border-gray-400 py-3 ios:pb-3 ios:pt-8 text-black"
                             placeholder="Email"
                             value={email}
@@ -128,7 +133,6 @@ export default function LoginScreen({ }) {
                             Dont have an account?{' '}
                             <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Bold' }} className="text-primary" onPress={() => navigation.navigate('Register')}>Creat now</Text>
                         </Text>
-
                     </View>
                 </View>
             </ScrollView>

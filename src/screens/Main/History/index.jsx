@@ -10,6 +10,7 @@ import { useFocusEffect } from '@react-navigation/native'
 import * as Sharing from 'expo-sharing';
 // import * as Permissions from 'expo-permissions';
 import { encode } from 'base64-arraybuffer';
+import { StatusBar } from 'expo-status-bar'
 const HistoryScreen = () => {
   const { t } = useTranslation()
 
@@ -77,9 +78,9 @@ const HistoryScreen = () => {
       if (Platform.OS !== 'web' && await Sharing.isAvailableAsync()) {
         await Sharing.shareAsync(fileUri);
       }
-      Alert.alert('Success', 'PDF downloaded successfully.', [
-        { text: 'OK', onPress: () => console.log('PDF saved at:', fileUri) }
-      ]);
+      // Alert.alert('Success', 'PDF downloaded successfully.', [
+      //   { text: 'OK', onPress: () => console.log('PDF saved at:', fileUri) }
+      // ]);
     } catch (error) {
       console.error('Error downloading PDF:', error);
       Alert.alert('Error', 'Failed to download PDF.');
@@ -90,6 +91,7 @@ const HistoryScreen = () => {
 
   return (
     <View className="bg-white flex-1">
+      <StatusBar style="light" translucent backgroundColor="transparent" />
       <Header title="History" />
       <ScrollView>
         {historyData.length === 0 ? (

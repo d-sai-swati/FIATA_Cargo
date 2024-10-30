@@ -32,8 +32,11 @@ export default function ForgotPassword({ navigation }) {
             console.log(response)
             Alert.alert('Success', response.data.message);
         } catch (error) {
-            console.log(error)
-            Alert.alert('Error', error.response.data.message);
+            if (error.response && error.response.data && error.response.data.errors) {
+                setErrors(error.response.data.errors);
+            }
+            console.log('invalid email=======================',error)
+            // Alert.alert('Error', error.response.data.message);
         } finally {
             setLoading(false);
         }
@@ -87,7 +90,7 @@ export default function ForgotPassword({ navigation }) {
             console.log(emailVerificationToken)
 
             if (response.data) {
-                Alert.alert('Success', response.data.message);
+                // Alert.alert('Success', response.data.message);
                 navigation.navigate('Login');
             }
         } catch (error) {
@@ -114,11 +117,11 @@ export default function ForgotPassword({ navigation }) {
                 </View>
                 <View className="flex-1 justify-end">
                     <View className="px-5 py-10 ios:px-5 ios:pt-10 ios:pb-32 bg-bgBlue rounded-t-3xl">
-                        <Text style={{ fontSize: Hp(2.5) , fontFamily:'Lato-Bold'}} className="font-bold ios:pb-3">Reset Password</Text>
 
                         {/* Email Input */}
                         {!otpSent && (
                             <>
+                            <Text style={{ fontSize: Hp(2.5) , fontFamily:'Lato-Bold'}} className="font-bold ios:pb-3">Reset Password</Text>
                                 <TextInput
                                     style={{ fontSize: Hp(1.8), fontFamily:'Lato-Regular'}}
                                     className="border-b border-gray-400 pt-5 pb-2 ios:py-5 text-black"
@@ -144,6 +147,8 @@ export default function ForgotPassword({ navigation }) {
                         {/* Verification Code Input */}
                         {otpSent && !emailVerified && (
                             <>
+                            <Text style={{ fontSize: Hp(2.5) , fontFamily:'Lato-Bold'}} className="font-bold ios:pb-3">Verification Code</Text>
+                            <Text className="pt-2 text-gray-500" style={{ fontSize: Hp(1.5) , fontFamily:'Lato-Regular'}}>Otp sent to {email} please verify</Text>
                                 <TextInput
                                     style={{ fontSize: Hp(1.8), fontFamily:'Lato-Regular' }}
                                     className="border-b border-gray-400 pt-5 pb-2 ios:py-5 text-black"
@@ -175,6 +180,7 @@ export default function ForgotPassword({ navigation }) {
                                     placeholder="Email"
                                     value={email}
                                 />
+                                {errors.email && <Text style={{ color: 'red', marginTop: 5 }}>{errors.email}</Text>}
                                 <TextInput
                                     style={{ fontSize: Hp(1.8), fontFamily:'Lato-Regular' }}
                                     className="border-b border-gray-400 pt-5 pb-2 text-black hidden"

@@ -5,6 +5,7 @@ import { Hp } from '../../../utils/constants/themes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Sharing from 'expo-sharing';
 import * as FileSystem from 'expo-file-system';
+import { StatusBar } from 'expo-status-bar';
 
 
 const ThankYou = ({ navigation }) => {
@@ -38,6 +39,7 @@ const ThankYou = ({ navigation }) => {
   };
   return (
     <View className="flex-1 bg-white">
+      <StatusBar style="dark" translucent backgroundColor="transparent" />
       <TouchableOpacity
         className="flex-row mt-20 mx-5 p-3 justify-end"
         onPress={handleCloseModal}

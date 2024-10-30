@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, View, Text, TouchableOpacity, Image, StatusBar, Platform } from 'react-native';
+import { ScrollView, View, Text, TouchableOpacity, Image, Platform } from 'react-native';
 import BannerSwiper from '../../../components/BannerSwiper';
 import { useNavigation } from '@react-navigation/native';
 import SelectLanguage from '../../../components/SelectLanguage';
@@ -7,6 +7,7 @@ import { Hp } from '../../../utils/constants/themes';
 import { useTranslation } from 'react-i18next';
 import i18next from '../../../../i18n';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StatusBar } from 'expo-status-bar';
 
 const HomeScreen = () => {
     const { t } = useTranslation();
@@ -23,6 +24,7 @@ const HomeScreen = () => {
                 backgroundColor="transparent"
                 translucent={true}
             /> */}
+            <StatusBar style="dark" translucent backgroundColor="transparent" />
             <View className="flex-row items-center gap-2 pt-[20%] px-2 pb-5" style={{
                 backgroundColor: '#fff',
                 ...Platform.select({

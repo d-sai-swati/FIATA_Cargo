@@ -12,6 +12,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import * as FileSystem from 'expo-file-system';
+import { StatusBar } from 'expo-status-bar';
 
 const { width } = Dimensions.get('window');
 
@@ -29,6 +30,8 @@ const Checklist = ({ navigation }) => {
     const [responsiblePerson, setResponsiblePerson] = useState('');
     const [isChecklist, setIsChecklist] = useState(false)
     const [errors, setErrors] = useState({});
+    const [showDatePicker, setShowDatePicker] = useState(false);
+    const [isDatePickerVisible, setDatePickerVisible] = useState(false);
 
     const localImages = {
         question1: require('../../../../assets/images/que1.jpg'),
@@ -108,28 +111,6 @@ const Checklist = ({ navigation }) => {
         await AsyncStorage.setItem('shipmentData', jsonValue);
 
         setIsChecklist(!isChecklist);
-    };
-
-    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-
-    const showDatePicker = () => {
-        setDatePickerVisibility(true);
-        setErrors(prevErrors => ({ ...prevErrors, date: null }));
-    };
-
-    const hideDatePicker = () => {
-        setDatePickerVisibility(false);
-    };
-
-    const handleConfirm = (selectedDate) => {
-        console.warn("A date has been picked: ", selectedDate);
-        setDate(selectedDate);
-        hideDatePicker();
-    };
-
-    const formatDate = (date) => {
-        if (!date) return '';
-        return date.toLocaleDateString();
     };
 
     useFocusEffect(() => {
@@ -216,23 +197,33 @@ const Checklist = ({ navigation }) => {
         if (currentIndex + 1 <= 29) return t('sectionTitles.closingContainer');
         return t('sectionTitles.dispatchingContainer')
     };
+    const handleDateConfirm = (selectedDate) => {
+        const formattedDate = selectedDate.toLocaleDateString('en-GB');
+        setDate(formattedDate);
+        setDatePickerVisible(false);
+    };
+
+    const handleDatePickerCancel = () => {
+        setDatePickerVisible(false);
+    };
     return (
         <>
+            <StatusBar style="light" translucent backgroundColor="transparent" />
             {!isChecklist ?
                 <View className="flex-1 bg-white">
                     <Header title={t('containerHeading')} />
-                        <KeyboardAvoidingView
-                            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                            style={{ flex: 1 }}
-                        >
-                    <ScrollView className="ios:pt-10">
-                        <View className="p-4">
-                            <Text style={[{ fontSize: Hp(2.2), fontFamily: 'Lato-Bold', textAlign: 'justify' }, Platform.select({ ios: { fontSize: Hp(2) } })]} className="text-center pb-5">{t('containerTitle')}</Text>
-                            <Text style={[{ fontSize: Hp(2), fontFamily: 'Lato-Regular', textAlign: 'justify' }, Platform.select({ ios: { fontSize: Hp(1.8) } })]} className="text-center">{t('containerDescription')}</Text>
-                        </View>
+                    <KeyboardAvoidingView
+                        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                        style={{ flex: 1 }}
+                    >
+                        <ScrollView className="ios:pt-10">
+                            <View className="p-4">
+                                <Text style={[{ fontSize: Hp(2.2), fontFamily: 'Lato-Bold', textAlign: 'justify' }, Platform.select({ ios: { fontSize: Hp(2) } })]} className="text-center pb-5">{t('containerTitle')}</Text>
+                                <Text style={[{ fontSize: Hp(2), fontFamily: 'Lato-Regular', textAlign: 'justify' }, Platform.select({ ios: { fontSize: Hp(1.8) } })]} className="text-center">{t('containerDescription')}</Text>
+                            </View>
                             <View className="p-4">
                                 <TextInput
-                                    style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular',}}
+                                    style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular', }}
                                     className="border-b border-gray-300 p-3 rounded-lg mb-1 hidden"
                                     placeholder="Language"
                                     value={language}
@@ -249,13 +240,12 @@ const Checklist = ({ navigation }) => {
                                     }}
                                 />
                                 {errors.containerNumber && <Text className="text-red-500 ml-3" style={{ fontSize: Hp(1.5) }}>{errors.containerNumber}</Text>}
-
                                 <TouchableOpacity
-                                    onPress={showDatePicker}
+                                    onPress={() => setDatePickerVisible(true)}
                                     className="border-b border-gray-300 p-3 py-4 ios:py-5 rounded-lg mb-1"
                                 >
                                     <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }} className={`${date ? 'text-black' : 'text-gray-400'}`}>
-                                        {formatDate(date) || t('select_date')}
+                                    {date ? date : t('select_date')}
                                     </Text>
                                 </TouchableOpacity>
                                 {errors.date && <Text className="text-red-500 ml-3" style={{ fontSize: Hp(1.5) }}>{errors.date}</Text>}
@@ -288,13 +278,14 @@ const Checklist = ({ navigation }) => {
                                     <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Bold' }} className="text-white py-1">Proceed</Text>
                                 </TouchableOpacity>
                             </View>
-                    </ScrollView>
-                        </KeyboardAvoidingView>
+                        </ScrollView>
+                    </KeyboardAvoidingView>
                     <DateTimePickerModal
                         isVisible={isDatePickerVisible}
-                        mode="date"
-                        onConfirm={handleConfirm}
-                        onCancel={hideDatePicker}
+                        mode="date" // Set mode to date only
+                        onConfirm={handleDateConfirm}
+                        onCancel={handleDatePickerCancel}
+                        minimumDate={new Date()}
                     />
                 </View> :
                 <View className="flex-1 bg-white">
@@ -316,7 +307,7 @@ const Checklist = ({ navigation }) => {
                                 <View className="flex-row justify-around p-4">
                                     {question.options.map((option, i) => (
                                         <TouchableOpacity key={i} className="flex-row items-center mr-4" onPress={() => handleInputChange(option, index)}>
-                                            <Image source={answers[index] === option ? require('../../../../assets/icons/Checkbox.png') : require('../../../../assets/icons/UnCheckbox.png')} className="w-4 h-4" />
+                                            <Image source={answers[index] === option ? require('../../../../assets/icons/Checkbox.png') : require('../../../../assets/icons/UnCheckbox.png')} className="w-5 h-5" />
                                             <Text className="ml-2">{option}</Text>
                                         </TouchableOpacity>
                                     ))}
