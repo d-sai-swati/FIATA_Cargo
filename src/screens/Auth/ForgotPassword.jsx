@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, Image, ScrollView, Alert, Acti
 import { Hp, Wp } from '../../utils/constants/themes';
 import axiosInstance from '../../utils/axiosInstance';
 import { Eye, EyeSlash } from 'iconsax-react-native';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function ForgotPassword({ navigation }) {
     const [loading, setLoading] = useState(false);
@@ -35,7 +36,7 @@ export default function ForgotPassword({ navigation }) {
             if (error.response && error.response.data && error.response.data.errors) {
                 setErrors(error.response.data.errors);
             }
-            console.log('invalid email=======================',error)
+            console.log('invalid email=======================', error)
             // Alert.alert('Error', error.response.data.message);
         } finally {
             setLoading(false);
@@ -56,7 +57,10 @@ export default function ForgotPassword({ navigation }) {
                 Alert.alert('Invalid OTP');
             }
         } catch (error) {
-            Alert.alert('Error', error.response.data.message);
+            if (error.response && error.response.data && error.response.data.errors) {
+                setErrors(error.response.data.errors);
+            }
+            // Alert.alert('Error', error.response.data.message);
             console.log(error.response.data.message);
         } finally {
             setLoading(false);
@@ -121,13 +125,14 @@ export default function ForgotPassword({ navigation }) {
                         {/* Email Input */}
                         {!otpSent && (
                             <>
-                            <Text style={{ fontSize: Hp(2.5) , fontFamily:'Lato-Bold'}} className="font-bold ios:pb-3">Reset Password</Text>
+                                <Text style={{ fontSize: Hp(2.5), fontFamily: 'Lato-Bold' }} className="font-bold ios:pb-3">Reset Password</Text>
                                 <TextInput
-                                    style={{ fontSize: Hp(1.8), fontFamily:'Lato-Regular'}}
+                                    style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
                                     className="border-b border-gray-400 pt-5 pb-2 ios:py-5 text-black"
                                     placeholder="Email"
                                     value={email}
                                     onChangeText={(text) => setEmail(text)}
+                                    onFocus={() => setErrors((prevErrors) => ({ ...prevErrors, email: null }))}
                                 />
                                 {errors.email && <Text style={{ color: 'red', marginTop: 5 }}>{errors.email}</Text>}
 
@@ -138,7 +143,7 @@ export default function ForgotPassword({ navigation }) {
                                     {loading ? (
                                         <ActivityIndicator color="white" />
                                     ) : (
-                                        <Text style={{ fontSize: Hp(1.8) , fontFamily:'Lato-Bold'}} className="text-white py-1 font-bold">Send OTP</Text>
+                                        <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Bold' }} className="text-white py-1 font-bold">Send OTP</Text>
                                     )}
                                 </TouchableOpacity>
                             </>
@@ -147,14 +152,15 @@ export default function ForgotPassword({ navigation }) {
                         {/* Verification Code Input */}
                         {otpSent && !emailVerified && (
                             <>
-                            <Text style={{ fontSize: Hp(2.5) , fontFamily:'Lato-Bold'}} className="font-bold ios:pb-3">Verification Code</Text>
-                            <Text className="pt-2 text-gray-500" style={{ fontSize: Hp(1.5) , fontFamily:'Lato-Regular'}}>Otp sent to {email} please verify</Text>
+                                <Text style={{ fontSize: Hp(2.5), fontFamily: 'Lato-Bold' }} className="font-bold ios:pb-3">Verification Code</Text>
+                                <Text className="pt-2 text-gray-500" style={{ fontSize: Hp(1.5), fontFamily: 'Lato-Regular' }}>Otp sent to {email} please verify</Text>
                                 <TextInput
-                                    style={{ fontSize: Hp(1.8), fontFamily:'Lato-Regular' }}
+                                    style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
                                     className="border-b border-gray-400 pt-5 pb-2 ios:py-5 text-black"
                                     placeholder="Verification Code"
                                     value={otp}
                                     onChangeText={setOtp}
+                                    onFocus={() => setErrors((prevErrors) => ({ ...prevErrors, otp: null }))}
                                 />
                                 {errors.otp && <Text style={{ color: 'red', marginTop: 5 }}>{errors.otp}</Text>}
 
@@ -162,9 +168,9 @@ export default function ForgotPassword({ navigation }) {
                                     className="bg-primary py-3 rounded-full items-center mt-5 ios:mt-8"
                                     onPress={handleVerifyOtp}
                                 >
-                                    <Text style={{ fontSize: Hp(1.8), fontFamily:'Lato-Bold' }} className="text-white py-1 font-bold">Confirm</Text>
+                                    <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Bold' }} className="text-white py-1 font-bold">Confirm</Text>
                                 </TouchableOpacity>
-                                <Text style={{ fontSize: Hp(1.5), textAlign: 'center' , fontFamily:'Lato-Regular' }} className=" mt-6">
+                                <Text style={{ fontSize: Hp(1.5), textAlign: 'center', fontFamily: 'Lato-Regular' }} className="mt-6">
                                     Didn't receive OTP? <Text className="text-primary" onPress={handleSendOtp}>Resend OTP</Text>
                                 </Text>
                             </>
@@ -175,28 +181,29 @@ export default function ForgotPassword({ navigation }) {
                         {emailVerified && (
                             <>
                                 <TextInput
-                                    style={{ fontSize: Hp(1.8), fontFamily:'Lato-Regular' }}
-                                    className="border-b border-gray-400 pt-5 pb-2 text-black hidden"
+                                    style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
+                                    className="border-b border-gray-400 text-black hidden"
                                     placeholder="Email"
                                     value={email}
                                 />
                                 {errors.email && <Text style={{ color: 'red', marginTop: 5 }}>{errors.email}</Text>}
                                 <TextInput
-                                    style={{ fontSize: Hp(1.8), fontFamily:'Lato-Regular' }}
-                                    className="border-b border-gray-400 pt-5 pb-2 text-black hidden"
+                                    style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
+                                    className="border-b border-gray-400 text-black hidden"
                                     placeholder="Email Verification Token"
                                     value={emailVerificationToken}
                                 />
                                 <View className="flex-row items-center border-b border-gray-400 ios:pb-3 ios:pt-6 pt-4">
                                     <TextInput
-                                        style={{ fontSize: Hp(1.8), fontFamily:'Lato-Regular' }}
+                                        style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
                                         className="flex-1 pb-2 text-black"
-                                        placeholder="Reset Password"
+                                        placeholder="New Password"
                                         value={resetpassword}
                                         onChangeText={(text) => setResetPassword(text)}
                                         secureTextEntry={!showPassword}
+                                        onFocus={() => setErrors((prevErrors) => ({ ...prevErrors, resetpassword: null }))}
                                     />
-
+                                    {errors.password && <Text style={{ color: 'red' }}>{errors.password}</Text>}
                                     <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
                                         {showPassword ? (
                                             <Eye size={Hp(3)} color="gray" />
@@ -208,12 +215,13 @@ export default function ForgotPassword({ navigation }) {
 
                                 <View className="flex-row items-center border-b border-gray-400 ios:pb-3 ios:pt-6 pt-4">
                                     <TextInput
-                                        style={{ fontSize: Hp(1.8), fontFamily:'Lato-Regular' }}
+                                        style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
                                         className="flex-1 pb-2 text-black"
                                         placeholder="Confirm Password"
                                         value={confirmpassword}
                                         onChangeText={(text) => setConfirmPassword(text)}
                                         secureTextEntry={!showConfirmPassword}
+                                        onFocus={() => setErrors((prevErrors) => ({ ...prevErrors, confirmpassword: null }))}
                                     />
                                     <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
                                         {showConfirmPassword ? (
@@ -232,7 +240,7 @@ export default function ForgotPassword({ navigation }) {
                                     {loading ? (
                                         <ActivityIndicator color="white" />
                                     ) : (
-                                        <Text style={{ fontSize: Hp(1.8), fontFamily:'Lato-Bold' }} className="text-white py-1 font-bold">Reset Password</Text>
+                                        <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Bold' }} className="text-white py-1 font-bold">Reset Password</Text>
                                     )}
                                 </TouchableOpacity>
 

@@ -245,7 +245,7 @@ const Checklist = ({ navigation }) => {
                                     className="border-b border-gray-300 p-3 py-4 ios:py-5 rounded-lg mb-1"
                                 >
                                     <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }} className={`${date ? 'text-black' : 'text-gray-400'}`}>
-                                    {date ? date : t('select_date')}
+                                        {date ? date : t('select_date')}
                                     </Text>
                                 </TouchableOpacity>
                                 {errors.date && <Text className="text-red-500 ml-3" style={{ fontSize: Hp(1.5) }}>{errors.date}</Text>}
@@ -329,8 +329,9 @@ const Checklist = ({ navigation }) => {
 
                         {currentIndex === questions.length - 1 ? (
                             <TouchableOpacity
-                                className="bg-primary p-3 rounded-lg flex-row justify-end items-center"
-                                onPress={handleSubmit}
+                                className={`bg-primary p-3 rounded-lg flex-row justify-end items-center ${loading ? 'opacity-50' : ''}`}
+                                onPress={!loading ? handleSubmit : null}
+                                disabled={loading}
                             >
                                 {loading ? (
                                     <ActivityIndicator color="white" />
@@ -338,6 +339,7 @@ const Checklist = ({ navigation }) => {
                                     <Text className="text-white">{t('submit')}</Text>
                                 )}
                             </TouchableOpacity>
+
                         ) : (
 
                             <TouchableOpacity

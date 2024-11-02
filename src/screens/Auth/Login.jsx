@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, ScrollView, Alert, ActivityIndicator, Platform, KeyboardAvoidingView } from 'react-native';
-import { Hp} from '../../utils/constants/themes';
+import { Hp } from '../../utils/constants/themes';
 import axiosInstance from '../../utils/axiosInstance';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
@@ -13,11 +13,20 @@ export default function LoginScreen({ }) {
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
     const navigation = useNavigation();
+    useFocusEffect(
+        React.useCallback(() => {
+            setErrors({});
+            return () => {
+                setErrors({});
+            };
+        }, [])
+    );
+
 
     const handleLogin = async () => {
         const userData = {
-            email,
-            password,
+            email: email,
+            password: password
         };
         try {
             setLoading(true);
@@ -42,29 +51,7 @@ export default function LoginScreen({ }) {
             setLoading(false);
         }
     };
-    // Update the email and clear error on change
-    const handleEmailChange = (text) => {
-        setEmail(text);
-        if (errors.email) {
-            setErrors((prevErrors) => ({ ...prevErrors, email: null }));
-        }
-    };
-
-    // Update the password and clear error on change
-    const handlePasswordChange = (text) => {
-        setPassword(text);
-        if (errors.password) {
-            setErrors((prevErrors) => ({ ...prevErrors, password: null }));
-        }
-    };
-    useFocusEffect(
-        React.useCallback(() => {
-            return () => {
-                setEmail('');
-                setPassword('');
-            };
-        }, [])
-    );
+   
 
     return (
         <KeyboardAvoidingView
@@ -81,14 +68,16 @@ export default function LoginScreen({ }) {
                 </View>
                 <View className="flex-1 justify-end">
                     <View className="px-5 py-10 ios:px-5 ios:py-10 bg-bgBlue rounded-t-3xl">
-                        <Text style={{ fontSize: Hp(2.5), fontFamily: 'Calibri-Regular'}} className="font-bold">Log In</Text>
+                        <Text style={{ fontSize: Hp(2.5), fontFamily: 'Calibri-Regular' }} className="font-bold">Log In</Text>
                         <TextInput
                             style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
                             className="border-b border-gray-400 py-3 ios:pb-3 ios:pt-8 text-black"
                             placeholder="Email"
                             value={email}
-                            onChangeText={handleEmailChange}
+                            onChangeText={(text) => setEmail(text)}
+                            onFocus={() => setErrors((prevErrors) => ({ ...prevErrors, email: null }))}
                         />
+
                         {errors.email && <Text style={{ color: 'red', marginTop: 5 }}>{errors.email[0]}</Text>}
 
                         <View className="flex-row items-center pt-4 ios:pb-2 ios:pt-6 border-b border-gray-400">
@@ -97,8 +86,9 @@ export default function LoginScreen({ }) {
                                 className="flex-1 ios:pb-2 pb-2 text-black"
                                 placeholder="Password"
                                 value={password}
-                                onChangeText={handlePasswordChange}
+                                onChangeText={(text) => setPassword(text)}
                                 secureTextEntry={!showPassword}
+                                onFocus={() => setErrors((prevErrors) => ({ ...prevErrors, password: null }))}
                             />
                             <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
                                 {showPassword ? (
@@ -109,6 +99,7 @@ export default function LoginScreen({ }) {
                             </TouchableOpacity>
 
                         </View>
+                        
                         {errors.password && <TextInput style={{ color: 'red' }}>{errors.password[0]}</TextInput>}
 
                         <TouchableOpacity className="bg-primary ios:py-3 mt-5 ios:mt-8 py-3 rounded-full items-center " onPress={handleLogin}>

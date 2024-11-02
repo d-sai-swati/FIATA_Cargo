@@ -133,7 +133,7 @@ const ProfileScreen = () => {
                 await AsyncStorage.removeItem('token');
                 await AsyncStorage.removeItem('shipments');
                 setDeleteModalVisible(false);
-                Alert.alert(response.data.message);
+                // Alert.alert(response.data.message);
 
                 navigation.navigate('Login');
             } else {
