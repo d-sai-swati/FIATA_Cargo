@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, View, Text, TouchableOpacity, Image, Platform } from 'react-native';
+import { ScrollView, View, Text, TouchableOpacity, Image, Platform, StatusBar } from 'react-native';
 import BannerSwiper from '../../../components/BannerSwiper';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import SelectLanguage from '../../../components/SelectLanguage';
 import { Hp } from '../../../utils/constants/themes';
 import { useTranslation } from 'react-i18next';
 import i18next from '../../../../i18n';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { StatusBar } from 'expo-status-bar';
+// import { StatusBar } from 'expo-status-bar';
 
 const HomeScreen = () => {
     const { t } = useTranslation();
@@ -17,14 +17,25 @@ const HomeScreen = () => {
     };
 
     const navigation = useNavigation();
+    useFocusEffect(
+        React.useCallback(() => {
+            StatusBar.setBarStyle('dark-content', true);
+            StatusBar.setBackgroundColor('transparent');
+
+            // Optional: return a cleanup function to reset StatusBar when leaving the screen
+            return () => {
+                StatusBar.setBarStyle('light-content', true);
+            };
+        }, [])
+    );
     return (
         <View className="bg-white flex-1">
-            {/* <StatusBar
+            <StatusBar
                 barStyle="dark-content"
                 backgroundColor="transparent"
                 translucent={true}
-            /> */}
-            <StatusBar style="dark" translucent backgroundColor="transparent" />
+            />
+            {/* <StatusBar style="dark" translucent backgroundColor="transparent" /> */}
             <View className="flex-row items-center gap-2 pt-[20%] px-2 pb-5" style={{
                 backgroundColor: '#fff',
                 ...Platform.select({
@@ -44,7 +55,7 @@ const HomeScreen = () => {
                         <Text style={[{ fontSize: Hp(2.2), fontFamily: 'Calibri-Bold' }]} className="text-primary">{t('companyName')}</Text>
                     </View>
                     <View>
-                        <Text style={{ fontSize: Hp(2), fontStyle: 'italic', fontFamily: 'Calibri-Regular' }} className="text-primary">{t('companyDescription')}</Text>
+                        <Text style={{ fontSize: Hp(2), fontFamily: 'Calibri-Italic' }} className="text-primary">{t('companyDescription')}</Text>
                     </View>
                 </View>
                 <View className="flex-row items-center">

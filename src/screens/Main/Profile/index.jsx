@@ -1,14 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Text, View, Image, TouchableOpacity, ScrollView, Modal, TextInput, Button, Alert, Platform, KeyboardAvoidingView, FlatList } from 'react-native';
+import { Text, View, Image, TouchableOpacity, ScrollView, Modal, TextInput, Button, Alert, Platform, KeyboardAvoidingView, FlatList, StatusBar, DeviceEventEmitter } from 'react-native';
 import Header from '../../../components/Header';
-import { Edit2, LogoutCurve, ProfileDelete, Verify } from 'iconsax-react-native';
+import { ArrowDown2, ArrowUp2, Edit2, LogoutCurve, ProfileDelete, Verify } from 'iconsax-react-native';
 import { Hp } from '../../../utils/constants/themes';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axiosInstance from '../../../utils/axiosInstance';
+import axiosInstance, { logoutEvent } from '../../../utils/axiosInstance';
 import i18next from 'i18next';
-import { StatusBar } from 'expo-status-bar';
+import { getNameList, getNames } from 'country-list';
+// import { StatusBar } from 'expo-status-bar';
 
 const ProfileScreen = () => {
     const { t } = useTranslation();
@@ -21,6 +22,7 @@ const ProfileScreen = () => {
 
     const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false);
     const [isGenderDropdownOpen, setIsGenderDropdownOpen] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
     const [updatedUser, setUpdatedUser] = useState({
         name: '',
         mobile: '',
@@ -29,11 +31,25 @@ const ProfileScreen = () => {
         gender: '',
 
     });
-    const countries = ['India', 'USA', 'UK', 'Canada', 'Australia', 'France', 'China', 'Russia', 'Germany', 'Italy', 'Spain', 'Arabic'];
+    const countries = getNames();
+    const filteredCountries = countries.filter(country =>
+        country.toLowerCase().includes(searchTerm.toLowerCase())
+    );
     const genders = ['Male', 'Female', 'Other'];
     const openSettings = () => {
         setSidebarVisible(true);
     };
+    useFocusEffect(
+        React.useCallback(() => {
+            StatusBar.setBarStyle('light-content', true);
+            StatusBar.setBackgroundColor('transparent');
+
+            // Optional: return a cleanup function to reset StatusBar when leaving the screen
+            return () => {
+                StatusBar.setBarStyle('dark-content', true);
+            };
+        }, [])
+    );
 
     // useEffect(() => {
     const fetchUserData = async () => {
@@ -102,6 +118,7 @@ const ProfileScreen = () => {
             await AsyncStorage.removeItem('user');
             await AsyncStorage.removeItem('token');
             await AsyncStorage.removeItem('shipments');
+            await AsyncStorage.removeItem('draftForm');
             i18next.changeLanguage("en");
 
             navigation.navigate('Login');
@@ -114,6 +131,11 @@ const ProfileScreen = () => {
             Alert.alert('Logout Error', 'There was an error logging out. Please try again.');
         }
     };
+    useEffect(() => {
+        const logoutListener = DeviceEventEmitter.addListener('logout', handleLogout);
+        return () => logoutListener.remove(); // Clean up on unmount
+    }, []);
+
     const handleDeleteAccount = async () => {
         try {
             const token = await AsyncStorage.getItem('token');
@@ -132,6 +154,8 @@ const ProfileScreen = () => {
                 await AsyncStorage.removeItem('user');
                 await AsyncStorage.removeItem('token');
                 await AsyncStorage.removeItem('shipments');
+                await AsyncStorage.removeItem('historyData');
+                await AsyncStorage.removeItem('draftForm')
                 setDeleteModalVisible(false);
                 // Alert.alert(response.data.message);
 
@@ -154,7 +178,12 @@ const ProfileScreen = () => {
     }
     return (
         <View className="bg-white flex-1">
-            <StatusBar style="light" translucent backgroundColor="transparent" />
+            {/* <StatusBar style="light" translucent backgroundColor="transparent" /> */}
+            <StatusBar
+                barStyle="light-content"
+                backgroundColor="transparent"
+                translucent={true}
+            />
             <Header title="Profile" isRightIcon={true} onPress={openSettings} />
             <View>
                 <View className="bg-bgBlue mx-5 p-5 h-[400px] ios:h-[450px] rounded-2xl shadow-lg items-center relative mt-[20%]">
@@ -185,18 +214,7 @@ const ProfileScreen = () => {
 
                             <Text style={[{ fontSize: Hp(2.2), fontFamily: 'Lato-Regular' }, Platform.select({ ios: { fontSize: Hp(2) } })]} className="text-gray-500 mt-4">Gender</Text>
                             <Text style={[{ fontSize: Hp(2), fontFamily: 'Lato-Regular' }, Platform.select({ ios: { fontSize: Hp(1.8) } })]} className="text-black mt-2">{user.gender}</Text>
-                            {/* <TouchableOpacity className="flex-row items-center justify-center mt-5 p-5" onPress={() => setLogoutModal(true)}>
-                                <Text style={[{ fontSize: Hp(2), fontFamily: 'Lato-Regular' }, Platform.select({ ios: { fontSize: Hp(1.8) } })]} className="text-red-500 mr-2">{t('Log Out')}</Text>
-                                <LogoutCurve
-                                    size={Hp(2.2)}
-                                    color="red"
-                                />
-                            </TouchableOpacity>
-                            <TouchableOpacity className="flex-row items-center my-5" onPress={() => setDeleteModalVisible(true)}>
-                                <Text style={[{ fontSize: Hp(2), fontFamily: 'Lato-Regular' }, Platform.select({ ios: { fontSize: Hp(1.8) } })]} className="text-red-500 mr-2">{t('Delete Account')}</Text>
-                                <ProfileDelete size={Hp(2.2)}
-                                    color="red" />
-                            </TouchableOpacity> */}
+
                         </View>
 
                     </View>
@@ -213,7 +231,7 @@ const ProfileScreen = () => {
                 <View className="flex-1 justify-end items-end" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
                     <View className="w-64 ios:w-72 h-full bg-white p-5 shadow-lg ios:pt-14">
                         <View className="flex-row items-center justify-between">
-                            <Text className="font-bold" style={{ fontSize: Hp(2.2) }}>Settings</Text>
+                            <Text style={{ fontSize: Hp(2.2), fontFamily: 'Calibri-Bold' }}>Settings</Text>
                             <TouchableOpacity className="p-3" onPress={() => setSidebarVisible(false)}>
                                 <Image source={require('../../../../assets/icons/cross-icon.png')} className="w-4 h-4" onPress={() => setSidebarVisible(false)} />
                             </TouchableOpacity>
@@ -245,15 +263,15 @@ const ProfileScreen = () => {
             >
                 <View className="flex-1 justify-center items-center" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
                     <View className="bg-white p-5 rounded-xl shadow-lg w-11/12">
-                        <Text className="font-bold text-center mb-4" style={{ fontSize: Hp(2.2) }}>Log Out</Text>
-                        <Text className="text-center mb-4">Are you sure you want to log out?</Text>
+                        <Text className="text-center mb-4" style={{ fontSize: Hp(2.2), fontFamily: 'Calibri-Bold' }}>Log Out</Text>
+                        <Text className="text-center mb-4" style={{ fontSize: Hp(2), fontFamily: 'Lato-Regular' }}>Are you sure you want to log out?</Text>
 
-                        <View className="flex-row justify-around">
+                        <View className="flex-row justify-around pt-3">
                             <TouchableOpacity className="bg-gray-300 py-2 px-5 rounded-full" onPress={() => setLogoutModal(false)}>
-                                <Text>Cancel</Text>
+                                <Text className="text-black" style={{ fontSize: Hp(2), fontFamily: 'Lato-Regular' }}>Cancel</Text>
                             </TouchableOpacity>
                             <TouchableOpacity className="bg-red-500 py-2 px-5 rounded-full" onPress={handleLogout}>
-                                <Text className="text-white">Log Out</Text>
+                                <Text className="text-white" style={{ fontSize: Hp(2), fontFamily: 'Lato-Regular' }}>Log Out</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -269,14 +287,14 @@ const ProfileScreen = () => {
             >
                 <View className="flex-1 justify-center items-center" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
                     <View className="bg-white p-5 rounded-xl shadow-lg w-11/12">
-                        <Text className="font-bold text-center mb-4" style={{ fontSize: Hp(2.2) }}>Delete Account</Text>
-                        <Text className="text-center mb-4">Are you sure you want to delete your account? This action cannot be undone.</Text>
-                        <View className="flex-row justify-around">
+                        <Text className="text-center mb-4" style={{ fontSize: Hp(2.2), fontFamily: 'Calibri-Bold' }}>Delete Account</Text>
+                        <Text className="text-center mb-4" style={{ fontSize: Hp(2), fontFamily: 'Lato-Regular' }}>Are you sure you want to delete your account? This action cannot be undone.</Text>
+                        <View className="flex-row justify-around pt-3">
                             <TouchableOpacity className="bg-gray-300 py-2 px-5 rounded-full" onPress={() => setDeleteModalVisible(false)}>
-                                <Text>Cancel</Text>
+                                <Text className="text-black" style={{ fontSize: Hp(2), fontFamily: 'Lato-Regular' }} >Cancel</Text>
                             </TouchableOpacity>
                             <TouchableOpacity className="bg-red-500 py-2 px-5 rounded-full" onPress={handleDeleteAccount}>
-                                <Text className="text-white">Delete</Text>
+                                <Text className="text-white" style={{ fontSize: Hp(2), fontFamily: 'Lato-Regular' }}>Delete</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -296,7 +314,7 @@ const ProfileScreen = () => {
                     <View className="flex-1 justify-center items-center" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
                         <View className="bg-white p-5 rounded-xl shadow-lg w-11/12">
                             <View className="flex-row items-center justify-between">
-                                <Text className="font-bold text-center" style={{ fontSize: Hp(2.2) }}>Edit Profile</Text>
+                                <Text className="text-center" style={{ fontSize: Hp(2.2), fontFamily: 'Calibri-Bold' }}>Edit Profile</Text>
                                 <TouchableOpacity onPress={() => setModalVisible(false)} className="p-3" >
                                     <Image source={require('../../../../assets/icons/cross-icon.png')} className="w-3 h-3" />
                                 </TouchableOpacity>
@@ -308,6 +326,7 @@ const ProfileScreen = () => {
                                 onChangeText={(text) => setUpdatedUser({ ...updatedUser, name: text })}
                                 placeholder="Name"
                                 className="border-b border-gray-300 pt-5 pb-2 text-black"
+                                style={{ fontSize: Hp(2), fontFamily: 'Lato-Regular' }}
                             />
 
                             <TextInput
@@ -316,6 +335,7 @@ const ProfileScreen = () => {
                                 placeholder="Mobile Phone"
                                 className="border-b border-gray-300 pt-5 pb-2 text-black"
                                 keyboardType="phone-pad"
+                                style={{ fontSize: Hp(2), fontFamily: 'Lato-Regular' }}
                             />
                             <TextInput
                                 value={updatedUser.email}
@@ -324,43 +344,48 @@ const ProfileScreen = () => {
                                 className="border-b border-gray-300 pt-5 pb-2 ios:text-gray-300"
                                 keyboardType="email-address"
                                 editable={false}
+                                style={{ fontSize: Hp(2), fontFamily: 'Lato-Regular' }}
                             />
-                            {/* <TextInput
-                                value={updatedUser.country}
-                                onChangeText={(text) => setUpdatedUser({ ...updatedUser, country: text })}
-                                placeholder="Country"
-                                className="border-b border-gray-300 pt-5 pb-2 text-black"
-                            /> */}
+
                             {/* ============ country ================ */}
-                            <TouchableOpacity onPress={handleCountryDropdown} className="border-b border-gray-300">
-                                <Text className="border-b border-gray-300 pt-5 pb-2 text-black">{updatedUser.country || 'Select Country'}</Text>
+                            <TouchableOpacity onPress={handleCountryDropdown} className="border-b border-gray-300 ios:py-5 flex-row justify-between items-center">
+                                <Text style={{ fontSize: Hp(2), fontFamily: 'Lato-Regular' }} className="pt-5 pb-2 text-black">{updatedUser.country || 'Select Country'}</Text>
+                                {isCountryDropdownOpen ? <ArrowUp2 size="16" color="black" /> :<ArrowDown2 size="16" color="black" />}
                             </TouchableOpacity>
 
                             {isCountryDropdownOpen && (
-                                <View className='border border-gray-400 w-full rounded-md mt-2'>
-                                    <FlatList
-                                        data={countries}
-                                        renderItem={({ item }) => (
-                                            <TouchableOpacity onPress={() => { setUpdatedUser({ ...updatedUser, country: item }); setIsCountryDropdownOpen(false); }}>
-                                                <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }} className="p-2">{item}</Text>
-                                            </TouchableOpacity>
-                                        )}
-                                        keyExtractor={(item) => item}
-                                        initialNumToRender={4}
-                                        showsVerticalScrollIndicator={false}
-                                        style={{ maxHeight: 100 }}
+                                <View className="border border-gray-400 w-full rounded-md mt-2">
+                                    <TextInput
+                                        style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
+                                        placeholder="Search country"
+                                        value={searchTerm}
+                                        onChangeText={setSearchTerm}
+                                        className="border-b border-gray-300 px-2 py-1"
                                     />
+                                    <ScrollView
+                                        style={{ maxHeight: Hp(13) }}
+                                        nestedScrollEnabled={true}
+                                    >
+                                        {filteredCountries.map((item, index) => (
+                                            <TouchableOpacity
+                                                key={index}
+                                                onPress={() => {
+                                                    setCountry(item);
+                                                    setIsCountryDropdownOpen(false);
+                                                    setSearchTerm(''); // Clear search term after selection
+                                                }}
+                                                className="p-2"
+                                            >
+                                                <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}>{item}</Text>
+                                            </TouchableOpacity>
+                                        ))}
+                                    </ScrollView>
                                 </View>
                             )}
 
-                            {/* <TextInput
-                                value={updatedUser.gender}
-                                onChangeText={(text) => setUpdatedUser({ ...updatedUser, gender: text })}
-                                placeholder="Gender"
-                                className="border-b border-gray-300 pt-5 pb-2 text-black"
-                            /> */}
-                            <TouchableOpacity onPress={handleGenderDropdown} className="">
-                                <Text className="border-b border-gray-300 pt-5 pb-2 text-black">{updatedUser.gender || 'Select Gender'}</Text>
+                            <TouchableOpacity onPress={handleGenderDropdown} className="border-b border-gray-300 ios:py-5 flex-row justify-between items-center">
+                                <Text style={{ fontSize: Hp(2), fontFamily: 'Lato-Regular' }} className="pt-5 pb-2 text-black">{updatedUser.gender || 'Select Gender'}</Text>
+                                {isGenderDropdownOpen ? <ArrowUp2 size="16" color="black" /> :<ArrowDown2 size="16" color="black" />}
                             </TouchableOpacity>
                             {isGenderDropdownOpen && (
                                 <View className='border border-gray-400 w-1/2 rounded-md mt-2'>

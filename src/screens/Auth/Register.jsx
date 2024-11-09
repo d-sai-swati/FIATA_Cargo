@@ -3,7 +3,8 @@ import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Image, Scr
 import { Hp } from '../../utils/constants/themes';
 import axiosInstance from '../../utils/axiosInstance';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ArrowDown2, Eye, EyeSlash } from 'iconsax-react-native';
+import { ArrowDown2, ArrowUp2, Eye, EyeSlash } from 'iconsax-react-native';
+import countryList, { getNames } from 'country-list';
 
 export default function RegisterScreen({ navigation }) {
     const [name, setName] = useState('');
@@ -20,12 +21,18 @@ export default function RegisterScreen({ navigation }) {
     const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false);
     const [isGenderDropdownOpen, setIsGenderDropdownOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
     // OTP states
     const [otp, setOtp] = useState('');
     const [otpModalVisible, setOtpModalVisible] = useState(false);
+    const [otpSuccessMessage, setOtpSuccessMessage] = useState('');
 
-    const countries = ['India', 'USA', 'UK', 'Canada', 'Australia', 'France', 'China', 'Russia', 'Germany', 'Italy', 'Spain', 'Arabic'];
+    const countries = getNames();
     const genders = ['Male', 'Female'];
+
+    const filteredCountries = countries.filter(country =>
+        country.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     const handleRegister = async () => {
         const userData = {
@@ -43,11 +50,7 @@ export default function RegisterScreen({ navigation }) {
             setLoading(true);
             const response = await axiosInstance.post('/register', userData);
             console.log('Registration Response:', response.data);
-
-            // Alert.alert(response.data.message);
-            // navigation.navigate('Login');
             if (response) {
-                // Alert.alert('OTP sent to your email');
                 setOtpModalVisible(true);
             } else {
                 Alert.alert('Registration failed');
@@ -60,7 +63,6 @@ export default function RegisterScreen({ navigation }) {
         } finally {
             setLoading(false);
         }
-
     };
     const handleInputChange = (field, value) => {
         setErrors(prevErrors => ({
@@ -109,9 +111,18 @@ export default function RegisterScreen({ navigation }) {
     };
 
     const handleVerifyOtp = async () => {
+        console.log(email)
+        setLoading(true);
         try {
-            setLoading(true);
             const response = await axiosInstance.get(`/verify-otp?otp=${otp}&email=${email}`);
+            console.log(email)
+            // if (response) {
+            //     console.log(response.data);
+            //     setEmailVerified(true);
+            //     setEmailVerificationToken(response.data.user.email_verification_token);
+            // } else {
+            //     Alert.alert('Invalid OTP');
+            // }
             if (response) {
                 console.log(response.data);
                 setOtpModalVisible(false);
@@ -120,14 +131,47 @@ export default function RegisterScreen({ navigation }) {
                 Alert.alert('Invalid OTP');
             }
         } catch (error) {
-            if (error.response && error.response.data && error.response.data.errors) {
-                setErrors(error.response.data.errors);
+            if (error.response && error.response.data) {
+                // setErrors(error.response.data.errors);
+                if (error.response.data.message) {
+                    setErrors({ otp: error.response.data.message }); // Store OTP error message here
+                }
             }
-            // Alert.alert('OTP verification failed');
+            // Alert.alert('Error', error.response.data.message);
+            console.log(error.response.data.message);
         } finally {
             setLoading(false);
         }
     };
+
+    const handleSendOtp = async () => {
+        if (!email) {
+            setErrors({ email: 'Email is required' });
+            return;
+        }
+        setLoading(true);
+
+        try {
+            console.log("helxxxxxxxxxxxxxxxxxxxxxxxxxxlidoihfuh")
+            const response = await axiosInstance.post('/resendotp', { email });
+            setOtpModalVisible(true);
+            setOtpSuccessMessage('OTP sent successfully!');
+            console.log(response)
+            // Alert.alert('Success', response.data.message);
+            setTimeout(() => {
+                setOtpSuccessMessage('');
+            }, 3000);
+        } catch (error) {
+            if (error.response && error.response.data && error.response.data.errors) {
+                setErrors(error.response.data.errors);
+            }
+            console.log('invalid email=======================', error)
+            // Alert.alert('Error', error.response.data.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
 
     return (
         <KeyboardAvoidingView
@@ -138,16 +182,16 @@ export default function RegisterScreen({ navigation }) {
                 <View className="py-10 ios:py-20 mb-7 rounded-b-3xl items-center">
                 </View>
                 <View className="flex-grow px-5 py-10 bg-bgBlue rounded-t-3xl">
-                    <Text style={{ fontSize: Hp(2.5) }} className="font-bold">Create Account</Text>
+                    <Text style={{ fontSize: Hp(2.5), fontFamily: 'Calibri-Bold' }}>Create Account</Text>
                     <TextInput
-                        style={{ fontSize: Hp(1.8) }}
+                        style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
                         className="border-b border-gray-400 py-3 ios:py-5 text-black"
                         placeholder="Full Name"
                         value={name}
                         onChangeText={(value) => handleInputChange('name', value)} />
-                    {errors.name && <TextInput style={{ color: 'red' }}>{errors.name[0]}</TextInput>}
+                    {errors.name && <Text style={{ color: 'red', fontFamily: 'Lato-Regular' }}>{errors.name[0]}</Text>}
                     <TextInput
-                        style={{ fontSize: Hp(1.8) }}
+                        style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
                         className="border-b border-gray-400 py-3 ios:py-5 text-black"
                         placeholder="Email"
                         value={email}
@@ -155,77 +199,84 @@ export default function RegisterScreen({ navigation }) {
                         autoCapitalize="none"
                         onFocus={() => setErrors({})}
                     />
-                    {errors.email && <TextInput style={{ color: 'red' }}>{errors.email[0]}</TextInput>}
+                    {errors.email && <Text style={{ color: 'red', fontFamily: 'Lato-Regular' }}>{errors.email[0]}</Text>}
                     <TextInput
-                        style={{ fontSize: Hp(1.8) }}
+                        style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
                         className="border-b border-gray-400 py-3 ios:py-5 text-black"
                         placeholder="Mobile Number"
                         value={mobile}
                         onChangeText={(value) => handleInputChange('mobile', value)}
                         keyboardType="phone-pad"
                     />
-                    {errors.mobile && <TextInput style={{ color: 'red' }}>{errors.mobile[0]}</TextInput>}
+                    {errors.mobile && <Text style={{ color: 'red', fontFamily: 'Lato-Regular' }}>{errors.mobile[0]}</Text>}
                     <TextInput
-                        style={{ fontSize: Hp(1.8) }}
+                        style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
                         className="border-b border-gray-400 py-3 ios:py-5 text-black"
                         placeholder="Address"
                         value={address}
                         onChangeText={(value) => handleInputChange('address', value)}
                     />
-                    {errors.address && <TextInput style={{ color: 'red' }}>{errors.address[0]}</TextInput>}
+                    {errors.address && <Text style={{ color: 'red', fontFamily: 'Lato-Regular' }}>{errors.address[0]}</Text>}
+    
                     <TouchableOpacity
                         onPress={handleCountryDropdown}
                         className="border-b border-gray-400 py-3 ios:py-5 flex-row justify-between items-center"
                     >
                         <TextInput
-                            style={{ fontSize: Hp(1.8) }}
-                            className="text-black"
+                            style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
+                            className="text-black w-40"
                             placeholder="Country"
-                            onChangeText={(value) => handleInputChange('country', value)}
+                            onChangeText={(value) => setCountry(value)}
                             value={country}
                             editable={false}
                         />
-                        <ArrowDown2 size="16" color="black" />
+                        {isCountryDropdownOpen ? <ArrowUp2 size="16" color="black" /> : <ArrowDown2 size="16" color="black" />}
+
                     </TouchableOpacity>
 
                     {isCountryDropdownOpen && (
                         <View className="border border-gray-400 w-full rounded-md mt-2">
+                            <TextInput
+                                style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
+                                placeholder="Search country"
+                                value={searchTerm}
+                                onChangeText={setSearchTerm}
+                                className="border-b border-gray-300 p-2"
+                            />
                             <ScrollView
                                 style={{ maxHeight: Hp(13) }}
                                 nestedScrollEnabled={true}
                             >
-                                {countries.map((item, index) => (
+                                {filteredCountries.map((item, index) => (
                                     <TouchableOpacity
                                         key={index}
                                         onPress={() => {
                                             setCountry(item);
                                             setIsCountryDropdownOpen(false);
+                                            setSearchTerm(''); // Clear search term after selection
                                         }}
                                         className="p-2"
                                     >
-                                        <Text style={{ fontSize: Hp(1.8) }}>
-                                            {item}
-                                        </Text>
+                                        <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}>{item}</Text>
                                     </TouchableOpacity>
                                 ))}
                             </ScrollView>
                         </View>
                     )}
-
-                    {errors.country && <TextInput style={{ color: 'red' }}>{errors.country[0]}</TextInput>}
+                    {errors.country && <TextInput style={{ color: 'red', fontFamily: 'Lato-Regular' }}>{errors.country[0]}</TextInput>}
                     <TouchableOpacity
                         onPress={handleGenderDropdown}
                         className="border-b border-gray-400 py-3 ios:py-5 flex-row justify-between items-center"
                     >
                         <TextInput
-                            style={{ fontSize: Hp(1.8) }}
-                            className="text-black"
+                            style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
+                            className="text-black w-40"
                             placeholder="Gender"
                             onChangeText={(value) => handleInputChange('gender', value)}
                             value={gender}
                             editable={false}
                         />
-                        <ArrowDown2 size="16" color="black" />
+                        {isGenderDropdownOpen ? <ArrowUp2 size="16" color="black" /> : <ArrowDown2 size="16" color="black" />}
 
                     </TouchableOpacity>
                     {isGenderDropdownOpen && (
@@ -237,17 +288,17 @@ export default function RegisterScreen({ navigation }) {
                                         setGender(item);
                                         setIsGenderDropdownOpen(false);
                                     }}>
-                                    <Text style={{ fontSize: Hp(1.8) }} className="p-2 text-base">
+                                    <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }} className="p-2 text-base">
                                         {item}
                                     </Text>
                                 </TouchableOpacity>
                             ))}
                         </View>
                     )}
-                    {errors.gender && <TextInput style={{ color: 'red' }}>{errors.gender[0]}</TextInput>}
+                    {errors.gender && <TextInput style={{ color: 'red', fontFamily: 'Lato-Regular' }}>{errors.gender[0]}</TextInput>}
                     <View className="flex-row items-center border-b ios:pb-3 ios:pt-5 border-gray-400 pt-4">
                         <TextInput
-                            style={{ fontSize: Hp(1.8) }}
+                            style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
                             className="flex-1 pb-2 text-black"
                             placeholder="Password"
                             value={password}
@@ -263,10 +314,10 @@ export default function RegisterScreen({ navigation }) {
                             )}
                         </TouchableOpacity>
                     </View>
-                    {errors.password && <TextInput style={{ color: 'red' }}>{errors.password[0]}</TextInput>}
+                    {errors.password && <TextInput style={{ color: 'red', fontFamily: 'Lato-Regular' }}>{errors.password[0]}</TextInput>}
                     <View className="flex-row items-center border-b ios:pb-3 ios:pt-5 border-gray-400 pt-4">
                         <TextInput
-                            style={{ fontSize: Hp(1.8) }}
+                            style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
                             className="flex-1 pb-2 text-black"
                             placeholder="Confirm Password"
                             value={confirmPassword}
@@ -282,12 +333,12 @@ export default function RegisterScreen({ navigation }) {
                             )}
                         </TouchableOpacity>
                     </View>
-                    {errors.password && <TextInput style={{ color: 'red' }}>{errors.password[0]}</TextInput>}
+                    {errors.password && <TextInput style={{ color: 'red', fontFamily: 'Lato-Regular' }}>{errors.password[0]}</TextInput>}
                     <TouchableOpacity className="bg-primary py-3 mt-8 rounded-full items-center" onPress={handleRegister}>
                         {loading ? (
                             <ActivityIndicator color="white" />
                         ) : (
-                            <Text style={{ fontSize: Hp(1.8) }} className="text-white text-base font-bold">Register</Text>
+                            <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Bold' }} className="text-white">Register</Text>
                         )}
                     </TouchableOpacity>
 
@@ -298,9 +349,9 @@ export default function RegisterScreen({ navigation }) {
                     <Text style={{ fontSize: Hp(1.8) }} className="text-black font-semibold">Google</Text>
                 </TouchableOpacity> */}
 
-                    <Text style={{ fontSize: Hp(1.8) }} className="text-center text-black py-5">
+                    <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }} className="text-center text-gray-500 py-5">
                         Already have an account?{' '}
-                        <Text style={{ fontSize: Hp(1.8) }} className="text-primary font-bold" onPress={() => navigation.navigate('Login')}>Login now</Text>
+                        <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Bold' }} className="text-primary" onPress={() => navigation.navigate('Login')}>Login now</Text>
                     </Text>
                 </View>
                 <Modal
@@ -320,17 +371,25 @@ export default function RegisterScreen({ navigation }) {
                                 value={otp}
                                 onChangeText={setOtp}
                                 keyboardType="numeric"
+                                onFocus={() => setErrors((prevErrors) => ({ ...prevErrors, otp: null }))}
                             />
-                            {errors.otp && <TextInput style={{ color: 'red' }}>{errors.otp[0]}</TextInput>}
+                            {errors.otp && <TextInput style={{ color: 'red', fontFamily: 'Lato-Regular' }}>{errors.otp}</TextInput>}
+
                             <TouchableOpacity onPress={handleVerifyOtp} className="bg-primary py-3 mt-5 rounded-full items-center">
                                 <Text className="text-white font-bold">Verify OTP</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => setOtpModalVisible(false)} className="mt-5">
                                 <Text className="text-center text-red-500">Cancel</Text>
                             </TouchableOpacity>
-                            <Text className="mt-5" style={{ fontSize: Hp(1.5), textAlign: 'center', fontFamily: 'Lato-Regular' }}>
-                                Didn't receive OTP? <Text className="text-primary">Resend OTP</Text>
+                            <Text className="mt-5" style={{ fontSize: Hp(1.8), textAlign: 'center', fontFamily: 'Lato-Regular' }}>
+                                Didn't receive OTP? <Text className="text-primary" onPress={handleSendOtp}> Resend OTP</Text>
                             </Text>
+                            {otpSuccessMessage && (
+                                <Text style={{ textAlign: 'center', color: 'green', fontSize: Hp(1.8), marginTop: 10, fontFamily: 'Lato-Regular' }}>
+                                    {otpSuccessMessage}
+                                </Text>
+                            )}
+
                         </View>
                     </View>
                 </Modal>

@@ -3,10 +3,11 @@ import React from 'react'
 import HomeScreen from '../screens/Main/Home';
 import ProfileScreen from '../screens/Main/Profile';
 import HistoryScreen from '../screens/Main/History';
-import { Clock, DocumentText, Home, User } from 'iconsax-react-native';
+import { Clock, DocumentText, Home, Save2, User } from 'iconsax-react-native';
 import Checklist from '../screens/Main/CheckList';
 import { Hp } from '../utils/constants/themes';
 import { Platform } from 'react-native';
+import DraftScreen from '../screens/Main/Draft/DraftScreen';
 
 const Tab = createBottomTabNavigator();
 const Tabs = () => {
@@ -23,6 +24,8 @@ const Tabs = () => {
                         IconComponent = DocumentText;
                     } else if (route.name === 'History') {
                         IconComponent = Clock;
+                    } else if (route.name === 'Draft') {
+                        IconComponent = Save2;
                     } else if (route.name === 'Profile') {
                         IconComponent = User;
                     }
@@ -47,11 +50,13 @@ const Tabs = () => {
                 tabBarActiveBackgroundColor: '#0092C8',
                 tabBarLabelStyle: {
                     fontSize: 12,
+                    fontFamily: 'Calibri-Bold',
                 },
             })}>
                 <Tab.Screen name="Home" component={HomeScreen} />
                 <Tab.Screen name="Form" component={Checklist} />
                 <Tab.Screen name="History" component={HistoryScreen} />
+                <Tab.Screen name="Draft" component={DraftScreen}/>
                 <Tab.Screen name="Profile" component={ProfileScreen} />
             </Tab.Navigator>
         </>

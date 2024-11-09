@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useRef, useState } from 'react'
-import { ScrollView, TextInput, Alert, Dimensions, Image, Text, TouchableOpacity, View, Platform, ActivityIndicator, KeyboardAvoidingView } from 'react-native'
+import { ScrollView, TextInput, Alert, Dimensions, Image, Text, TouchableOpacity, View, Platform, ActivityIndicator, KeyboardAvoidingView, StatusBar, Modal } from 'react-native'
 
 import Swiper from 'react-native-swiper'
 import { ArrowLeft2, ArrowRight2 } from 'iconsax-react-native';
@@ -12,7 +12,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import * as FileSystem from 'expo-file-system';
-import { StatusBar } from 'expo-status-bar';
+import NetInfo from '@react-native-community/netinfo';
 
 const { width } = Dimensions.get('window');
 
@@ -30,8 +30,8 @@ const Checklist = ({ navigation }) => {
     const [responsiblePerson, setResponsiblePerson] = useState('');
     const [isChecklist, setIsChecklist] = useState(false)
     const [errors, setErrors] = useState({});
-    const [showDatePicker, setShowDatePicker] = useState(false);
     const [isDatePickerVisible, setDatePickerVisible] = useState(false);
+    const [showOfflineModal, setShowOfflineModal] = useState(false);
 
     const localImages = {
         question1: require('../../../../assets/images/que1.jpg'),
@@ -85,9 +85,19 @@ const Checklist = ({ navigation }) => {
     useFocusEffect(
         React.useCallback(() => {
             resetForm();
+            setErrors({});
+            StatusBar.setBarStyle('light-content', true);
+            StatusBar.setBackgroundColor('transparent');
+
+            // Optional: return a cleanup function to reset StatusBar when leaving the screen
+            return () => {
+                StatusBar.setBarStyle('dark-content', true);
+            };
         }, [])
     );
+
     const handleProceed = async () => {
+
         let newErrors = {};
 
         // Validate each field and add error messages if necessary
@@ -100,6 +110,7 @@ const Checklist = ({ navigation }) => {
             setErrors(newErrors);
             return;
         }
+        setLoading(true);
         const shipmentData = {
             language: language,
             container_number: containerNumber,
@@ -110,7 +121,11 @@ const Checklist = ({ navigation }) => {
         const jsonValue = JSON.stringify(shipmentData);
         await AsyncStorage.setItem('shipmentData', jsonValue);
 
-        setIsChecklist(!isChecklist);
+        // setIsChecklist(!isChecklist);
+        setTimeout(() => {
+            setIsChecklist(!isChecklist);
+            setLoading(false); // Stop loading after navigation
+        }, 1000);
     };
 
     useFocusEffect(() => {
@@ -141,9 +156,13 @@ const Checklist = ({ navigation }) => {
         }
         return btoa(binary);
     };
+
     const handleSubmit = async () => {
         setLoading(true);
+
         try {
+            // Check network connectivity
+            const state = await NetInfo.fetch();
             const token = await AsyncStorage.getItem('token');
             const shipmentData = await AsyncStorage.getItem('shipmentData');
             const parsedShipmentData = JSON.parse(shipmentData);
@@ -153,30 +172,49 @@ const Checklist = ({ navigation }) => {
                 options: answers,
             };
 
-            const response = await axiosInstance.post('/container-form', payload, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-                responseType: 'arraybuffer',
-            });
+            if (state.isConnected) {
+                // If online, submit form to the server
+                const response = await axiosInstance.post('/container-form', payload, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                    responseType: 'arraybuffer',
+                });
 
-            if (response) {
-                console.log('Form submission successful:', response.data);
-                // Convert ArrayBuffer to Base64
-                const base64Pdf = arrayBufferToBase64(response.data);
+                if (response) {
+                    console.log('Form submission successful:', response.data);
+                    // Convert ArrayBuffer to Base64
+                    const base64Pdf = arrayBufferToBase64(response.data);
 
-                // Save the received PDF file locally
-                const pdfUri = `${FileSystem.documentDirectory}container_form.pdf`;
-                await FileSystem.writeAsStringAsync(pdfUri, base64Pdf, { encoding: FileSystem.EncodingType.Base64 });
-                // Store PDF URI in AsyncStorage to be accessed later in ThankYou screen
-                await AsyncStorage.setItem('pdfUri', pdfUri);
+                    // Save the received PDF file locally
+                    const pdfUri = `${FileSystem.documentDirectory}container_form.pdf`;
+                    await FileSystem.writeAsStringAsync(pdfUri, base64Pdf, { encoding: FileSystem.EncodingType.Base64 });
 
-                await AsyncStorage.removeItem('shipmentData');
-                await AsyncStorage.removeItem('language');
+                    // Store PDF URI in AsyncStorage to be accessed later in ThankYou screen
+                    await AsyncStorage.setItem('pdfUri', pdfUri);
 
-                navigation.navigate('ThankYou');
+                    // Clear shipment data and language data after submission
+                    await AsyncStorage.removeItem('shipmentData');
+                    await AsyncStorage.removeItem('language');
+
+                    navigation.navigate('ThankYou');
+                } else {
+                    console.error('Unexpected response:', response);
+                }
             } else {
-                console.error('Unexpected response:', response);
+                // If offline, store data in AsyncStorage with "pending" status
+                const draftData = {
+                    ...payload,
+                    status: 'pending',
+                };
+
+                // await AsyncStorage.setItem('draftForm', JSON.stringify(draftData));
+                const existingData = JSON.parse(await AsyncStorage.getItem('draftForm')) || [];
+                await AsyncStorage.setItem('draftForm', JSON.stringify([...existingData, draftData]));
+
+                // Alert.alert('Submission Pending', 'Your form has been saved and will be submitted once you are online.');
+                // navigation.navigate('DraftScreen', { reload: true });
+                setShowOfflineModal(true);
             }
         } catch (error) {
             console.error('Error during form submission:', error);
@@ -208,78 +246,101 @@ const Checklist = ({ navigation }) => {
     };
     return (
         <>
-            <StatusBar style="light" translucent backgroundColor="transparent" />
+            {/* <StatusBar style="light" translucent backgroundColor="transparent" /> */}
+            <StatusBar
+                barStyle="light-content"
+                backgroundColor="transparent"
+                translucent={true}
+            />
             {!isChecklist ?
                 <View className="flex-1 bg-white">
                     <Header title={t('containerHeading')} />
-                    <KeyboardAvoidingView
+                    {/* <KeyboardAvoidingView
                         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                         style={{ flex: 1 }}
-                    >
-                        <ScrollView className="ios:pt-10">
-                            <View className="p-4">
-                                <Text style={[{ fontSize: Hp(2.2), fontFamily: 'Lato-Bold', textAlign: 'justify' }, Platform.select({ ios: { fontSize: Hp(2) } })]} className="text-center pb-5">{t('containerTitle')}</Text>
-                                <Text style={[{ fontSize: Hp(2), fontFamily: 'Lato-Regular', textAlign: 'justify' }, Platform.select({ ios: { fontSize: Hp(1.8) } })]} className="text-center">{t('containerDescription')}</Text>
-                            </View>
-                            <View className="p-4">
-                                <TextInput
-                                    style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular', }}
-                                    className="border-b border-gray-300 p-3 rounded-lg mb-1 hidden"
-                                    placeholder="Language"
-                                    value={language}
-                                    editable={false}
-                                />
-                                <TextInput
-                                    style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular', }}
-                                    className="border-b border-gray-300 p-3 ios:py-5 rounded-lg mb-1"
-                                    placeholder={t('container_number')}
-                                    value={containerNumber}
-                                    onChangeText={setContainerNumber}
-                                    onFocus={() => {
-                                        setErrors(prevErrors => ({ ...prevErrors, containerNumber: null }));
-                                    }}
-                                />
-                                {errors.containerNumber && <Text className="text-red-500 ml-3" style={{ fontSize: Hp(1.5) }}>{errors.containerNumber}</Text>}
-                                <TouchableOpacity
-                                    onPress={() => setDatePickerVisible(true)}
-                                    className="border-b border-gray-300 p-3 py-4 ios:py-5 rounded-lg mb-1"
-                                >
-                                    <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }} className={`${date ? 'text-black' : 'text-gray-400'}`}>
-                                        {date ? date : t('select_date')}
+                    > */}
+                    <ScrollView className="ios:pt-10">
+                        <View className="p-4">
+                            <Text style={[{ fontSize: Hp(2.2), fontFamily: 'Lato-Bold', textAlign: 'justify' }, Platform.select({ ios: { fontSize: Hp(2) } })]} className="text-center pb-5">{t('containerTitle')}</Text>
+                            <Text style={[{ fontSize: Hp(2), fontFamily: 'Lato-Regular', textAlign: 'justify' }, Platform.select({ ios: { fontSize: Hp(1.8) } })]} className="text-center">{t('containerDescription')}</Text>
+                        </View>
+                        <View className="p-4">
+                            <TextInput
+                                style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular', }}
+                                className="border-b border-gray-300 p-3 rounded-lg mb-1 hidden"
+                                placeholder="Language"
+                                value={language}
+                                editable={false}
+                            />
+                            <TextInput
+                                style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular', }}
+                                className="border-b border-gray-300 p-3 ios:py-5 rounded-lg mb-1"
+                                placeholder={t('container_number')}
+                                value={containerNumber}
+                                onChangeText={setContainerNumber}
+                                onFocus={() => {
+                                    setErrors(prevErrors => ({ ...prevErrors, containerNumber: null }));
+                                }}
+                            />
+                            {errors.containerNumber && <Text className="text-red-500 ml-3" style={{ fontSize: Hp(1.5), fontFamily: 'Lato-Regular' }}>{errors.containerNumber}</Text>}
+                            <TouchableOpacity
+                                onPress={() => {
+                                    setDatePickerVisible(true),
+                                        setErrors(prevErrors => ({ ...prevErrors, date: null }))
+                                }
+                                }
+                                className="border-b border-gray-300 p-3 py-4 ios:py-5 rounded-lg mb-1"
+                            >
+                                <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }} className={`${date ? 'text-black' : 'text-gray-400'}`}>
+                                    {date ? date : t('select_date')}
+                                </Text>
+                            </TouchableOpacity>
+                            {errors.date && <Text className="text-red-500 ml-3" style={{ fontSize: Hp(1.5), fontFamily: 'Lato-Regular' }}>{errors.date}</Text>}
+
+                            <TextInput
+                                style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
+                                className="border-b border-gray-300 p-3 ios:py-5 rounded-lg mb-1"
+                                placeholder={t('packing_address')}
+                                value={packingAddress}
+                                onChangeText={setPackingAddress}
+                                onFocus={() => {
+                                    setErrors(prevErrors => ({ ...prevErrors, packingAddress: null }));
+                                }}
+                            />
+                            {errors.packingAddress && <Text className="text-red-500 ml-3" style={{ fontSize: Hp(1.5), fontFamily: 'Lato-Regular' }}>{errors.packingAddress}</Text>}
+
+                            <TextInput
+                                style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
+                                className="border-b border-gray-300 p-3 ios:py-5 rounded-lg mb-1"
+                                placeholder={t('responsible_person')}
+                                value={responsiblePerson}
+                                onChangeText={setResponsiblePerson}
+                                onFocus={() => {
+                                    setErrors(prevErrors => ({ ...prevErrors, responsiblePerson: null }));
+                                }}
+                            />
+                            {errors.responsiblePerson && <Text className="text-red-500 ml-3" style={{ color: 'red', fontSize: Hp(1.5), fontFamily: 'Lato-Regular' }}>{errors.responsiblePerson}</Text>}
+
+                            {/* <TouchableOpacity className="bg-primary py-3 rounded-full items-center mt-6" onPress={handleProceed}>
+                                <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Bold' }} className="text-white py-1">Proceed</Text>
+                            </TouchableOpacity> */}
+
+                            <TouchableOpacity
+                                className="bg-primary py-3 rounded-full items-center mt-6"
+                                onPress={handleProceed}
+                                disabled={loading} // Disable button while loading
+                            >
+                                {loading ? (
+                                    <ActivityIndicator color="white" size="small" />
+                                ) : (
+                                    <Text style={{ fontSize: 16, fontFamily: 'Lato-Bold' }} className="text-white py-1">
+                                        Proceed
                                     </Text>
-                                </TouchableOpacity>
-                                {errors.date && <Text className="text-red-500 ml-3" style={{ fontSize: Hp(1.5) }}>{errors.date}</Text>}
-
-                                <TextInput
-                                    style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
-                                    className="border-b border-gray-300 p-3 ios:py-5 rounded-lg mb-1"
-                                    placeholder={t('packing_address')}
-                                    value={packingAddress}
-                                    onChangeText={setPackingAddress}
-                                    onFocus={() => {
-                                        setErrors(prevErrors => ({ ...prevErrors, packingAddress: null }));
-                                    }}
-                                />
-                                {errors.packingAddress && <Text className="text-red-500 ml-3" style={{ fontSize: Hp(1.5) }}>{errors.packingAddress}</Text>}
-
-                                <TextInput
-                                    style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
-                                    className="border-b border-gray-300 p-3 ios:py-5 rounded-lg mb-1"
-                                    placeholder={t('responsible_person')}
-                                    value={responsiblePerson}
-                                    onChangeText={setResponsiblePerson}
-                                    onFocus={() => {
-                                        setErrors(prevErrors => ({ ...prevErrors, responsiblePerson: null }));
-                                    }}
-                                />
-                                {errors.responsiblePerson && <Text className="text-red-500 ml-3" style={{ color: 'red', fontSize: Hp(1.5) }}>{errors.responsiblePerson}</Text>}
-
-                                <TouchableOpacity className="bg-primary py-3 rounded-full items-center mt-6" onPress={handleProceed}>
-                                    <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Bold' }} className="text-white py-1">Proceed</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </ScrollView>
-                    </KeyboardAvoidingView>
+                                )}
+                            </TouchableOpacity>
+                        </View>
+                    </ScrollView>
+                    {/* </KeyboardAvoidingView> */}
                     <DateTimePickerModal
                         isVisible={isDatePickerVisible}
                         mode="date" // Set mode to date only
@@ -290,7 +351,7 @@ const Checklist = ({ navigation }) => {
                 </View> :
                 <View className="flex-1 bg-white">
                     <Header title={currentTitle()} onBackPress={goBackToContainerDetails} />
-                    <Text className="text-sm text-center font-semibold text-primary my-5">
+                    <Text style={{ fontSize: Hp(2), fontFamily: 'Lato-Regular', textAlign: 'center' }} className="text-primary my-5">
                         {`${currentIndex + 1} out of ${questions.length}`}
                     </Text>
                     <Swiper
@@ -308,7 +369,7 @@ const Checklist = ({ navigation }) => {
                                     {question.options.map((option, i) => (
                                         <TouchableOpacity key={i} className="flex-row items-center mr-4" onPress={() => handleInputChange(option, index)}>
                                             <Image source={answers[index] === option ? require('../../../../assets/icons/Checkbox.png') : require('../../../../assets/icons/UnCheckbox.png')} className="w-5 h-5" />
-                                            <Text className="ml-2">{option}</Text>
+                                            <Text style={{ fontSize: Hp(2), fontFamily: 'Lato-Regular', textAlign: 'justify' }} className="ml-2">{option}</Text>
                                         </TouchableOpacity>
                                     ))}
                                 </View>
@@ -336,7 +397,7 @@ const Checklist = ({ navigation }) => {
                                 {loading ? (
                                     <ActivityIndicator color="white" />
                                 ) : (
-                                    <Text className="text-white">{t('submit')}</Text>
+                                    <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Bold' }} className="text-white">{t('submit')}</Text>
                                 )}
                             </TouchableOpacity>
 
@@ -351,6 +412,30 @@ const Checklist = ({ navigation }) => {
                             </TouchableOpacity>
                         )}
                     </View>
+                    <Modal
+                        visible={showOfflineModal}
+                        transparent={true}
+                        animationType="slide"
+                        onRequestClose={() => setShowOfflineModal(false)}
+                    >
+                        <View className="flex-1 justify-center items-center" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+                            <View className="bg-white p-5 rounded-xl shadow-lg w-11/12">
+                                <Text className="mb-4 text-center border-b pb-2 border-gray-300" style={{ fontSize: Hp(2.2), fontFamily: 'Calibri-Bold' }}>Submission Pending</Text>
+                                <Text className="text-center mb-4" style={{ fontSize: Hp(2), fontFamily: 'Lato-Regular' }}>Your form has been saved and will be submitted once you are online.</Text>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        setShowOfflineModal(false); // Hide the modal
+                                        navigation.navigate('Draft'); // Navigate to Draft screen
+                                    }}
+                                    className="flex-row justify-center"
+                                >
+                                    <View className="py-2 px-5 rounded-full bg-[#0092C8]">
+                                        <Text className="text-white text-center" style={{ fontSize: Hp(2), fontFamily: 'Lato-Regular' }}>OK</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </Modal>
                 </View>
             }
         </>

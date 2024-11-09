@@ -17,6 +17,7 @@ export default function ForgotPassword({ navigation }) {
     const [emailVerified, setEmailVerified] = useState(false);
     const [emailVerificationToken, setEmailVerificationToken] = useState('');
     const [otp, setOtp] = useState('');
+    const [otpSuccessMessage, setOtpSuccessMessage] = useState('');
     console.log(otp)
 
     const handleSendOtp = async () => {
@@ -30,8 +31,12 @@ export default function ForgotPassword({ navigation }) {
             console.log("helxxxxxxxxxxxxxxxxxxxxxxxxxxlidoihfuh")
             const response = await axiosInstance.post('/resendotp', { email });
             setOtpSent(true);
+            setOtpSuccessMessage('OTP sent successfully!');
             console.log(response)
-            Alert.alert('Success', response.data.message);
+            // Alert.alert('Success', response.data.message);
+            setTimeout(() => {
+                setOtpSuccessMessage('');
+            }, 2000);
         } catch (error) {
             if (error.response && error.response.data && error.response.data.errors) {
                 setErrors(error.response.data.errors);
@@ -42,7 +47,6 @@ export default function ForgotPassword({ navigation }) {
             setLoading(false);
         }
     };
-
     const handleVerifyOtp = async () => {
         console.log(email)
         try {
@@ -57,8 +61,11 @@ export default function ForgotPassword({ navigation }) {
                 Alert.alert('Invalid OTP');
             }
         } catch (error) {
-            if (error.response && error.response.data && error.response.data.errors) {
-                setErrors(error.response.data.errors);
+            if (error.response && error.response.data) {
+                // setErrors(error.response.data.errors);
+                if (error.response.data.message) {
+                    setErrors({ otp: error.response.data.message }); // Store OTP error message here
+                }
             }
             // Alert.alert('Error', error.response.data.message);
             console.log(error.response.data.message);
@@ -66,7 +73,6 @@ export default function ForgotPassword({ navigation }) {
             setLoading(false);
         }
     };
-
 
     const handleResetPassword = async () => {
         if (!resetpassword || !confirmpassword) {
@@ -125,7 +131,7 @@ export default function ForgotPassword({ navigation }) {
                         {/* Email Input */}
                         {!otpSent && (
                             <>
-                                <Text style={{ fontSize: Hp(2.5), fontFamily: 'Lato-Bold' }} className="font-bold ios:pb-3">Reset Password</Text>
+                                <Text style={{ fontSize: Hp(2.5), fontFamily: 'Calibri-Bold' }} className="ios:pb-3">Reset Password</Text>
                                 <TextInput
                                     style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
                                     className="border-b border-gray-400 pt-5 pb-2 ios:py-5 text-black"
@@ -134,7 +140,7 @@ export default function ForgotPassword({ navigation }) {
                                     onChangeText={(text) => setEmail(text)}
                                     onFocus={() => setErrors((prevErrors) => ({ ...prevErrors, email: null }))}
                                 />
-                                {errors.email && <Text style={{ color: 'red', marginTop: 5 }}>{errors.email}</Text>}
+                                {errors.email && <Text style={{ color: 'red', marginTop: 5, fontFamily: 'Lato-Regular' }}>{errors.email}</Text>}
 
                                 <TouchableOpacity
                                     className="bg-primary py-3 rounded-full items-center mt-5 ios:mt-8"
@@ -143,7 +149,7 @@ export default function ForgotPassword({ navigation }) {
                                     {loading ? (
                                         <ActivityIndicator color="white" />
                                     ) : (
-                                        <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Bold' }} className="text-white py-1 font-bold">Send OTP</Text>
+                                        <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Bold' }} className="text-white py-1">Send OTP</Text>
                                     )}
                                 </TouchableOpacity>
                             </>
@@ -152,7 +158,7 @@ export default function ForgotPassword({ navigation }) {
                         {/* Verification Code Input */}
                         {otpSent && !emailVerified && (
                             <>
-                                <Text style={{ fontSize: Hp(2.5), fontFamily: 'Lato-Bold' }} className="font-bold ios:pb-3">Verification Code</Text>
+                                <Text style={{ fontSize: Hp(2.5), fontFamily: 'Calibri-Bold' }} className=" ios:pb-3">Verification Code</Text>
                                 <Text className="pt-2 text-gray-500" style={{ fontSize: Hp(1.5), fontFamily: 'Lato-Regular' }}>Otp sent to {email} please verify</Text>
                                 <TextInput
                                     style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
@@ -162,17 +168,22 @@ export default function ForgotPassword({ navigation }) {
                                     onChangeText={setOtp}
                                     onFocus={() => setErrors((prevErrors) => ({ ...prevErrors, otp: null }))}
                                 />
-                                {errors.otp && <Text style={{ color: 'red', marginTop: 5 }}>{errors.otp}</Text>}
+                                {errors.otp && <Text style={{ color: 'red', marginTop: 5, fontFamily: 'Lato-Regular' }}>{errors.otp}</Text>}
 
                                 <TouchableOpacity
                                     className="bg-primary py-3 rounded-full items-center mt-5 ios:mt-8"
                                     onPress={handleVerifyOtp}
                                 >
-                                    <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Bold' }} className="text-white py-1 font-bold">Confirm</Text>
+                                    <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Bold' }} className="text-white py-1">Confirm</Text>
                                 </TouchableOpacity>
-                                <Text style={{ fontSize: Hp(1.5), textAlign: 'center', fontFamily: 'Lato-Regular' }} className="mt-6">
-                                    Didn't receive OTP? <Text className="text-primary" onPress={handleSendOtp}>Resend OTP</Text>
+                                <Text style={{ fontSize: Hp(1.5), textAlign: 'center', fontFamily: 'Lato-Regular' }} className="text-gray-500 mt-6">
+                                    Didn't receive OTP? <Text style={{ fontFamily: 'Lato-Bold' }} className="text-primary" onPress={handleSendOtp}>Resend OTP</Text>
                                 </Text>
+                                {otpSuccessMessage && (
+                                    <Text style={{ textAlign: 'center', color: 'green', fontSize: Hp(1.8), marginTop: 10, fontFamily: 'Lato-Regular' }}>
+                                        {otpSuccessMessage}
+                                    </Text>
+                                )}
                             </>
 
                         )}
@@ -186,7 +197,7 @@ export default function ForgotPassword({ navigation }) {
                                     placeholder="Email"
                                     value={email}
                                 />
-                                {errors.email && <Text style={{ color: 'red', marginTop: 5 }}>{errors.email}</Text>}
+                                {errors.email && <Text style={{ color: 'red', marginTop: 5, fontFamily: 'Lato-Regular' }}>{errors.email}</Text>}
                                 <TextInput
                                     style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Regular' }}
                                     className="border-b border-gray-400 text-black hidden"
@@ -231,7 +242,7 @@ export default function ForgotPassword({ navigation }) {
                                         )}
                                     </TouchableOpacity>
                                 </View>
-                                {errors.confirmpassword && <Text style={{ color: 'red' }}>{errors.confirmpassword}</Text>}
+                                {errors.confirmpassword && <Text style={{ color: 'red', fontFamily: 'Lato-Regular' }}>{errors.confirmpassword}</Text>}
 
                                 <TouchableOpacity
                                     className="bg-primary py-3 rounded-full items-center mt-5 ios:mt-8"
@@ -240,7 +251,7 @@ export default function ForgotPassword({ navigation }) {
                                     {loading ? (
                                         <ActivityIndicator color="white" />
                                     ) : (
-                                        <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Bold' }} className="text-white py-1 font-bold">Reset Password</Text>
+                                        <Text style={{ fontSize: Hp(1.8), fontFamily: 'Lato-Bold' }} className="text-white py-1">Reset Password</Text>
                                     )}
                                 </TouchableOpacity>
 
